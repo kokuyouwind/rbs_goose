@@ -2,6 +2,6 @@
 
 RSpec.describe RbsGoose do
   it "has a version number" do
-    expect(RbsGoose::VERSION).not_to be nil
+    expect(RbsGoose::VERSION).not_to be_nil
   end
 end
