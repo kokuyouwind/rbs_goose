@@ -3,6 +3,13 @@
 require 'rbs_goose'
 
 require 'dotenv/load'
+require 'vcr'
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  config.hook_into :webmock
+  config.filter_sensitive_data('<openai_access_token>') { ENV.fetch('OPENAI_ACCESS_TOKEN') }
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

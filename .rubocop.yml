@@ -17,3 +17,9 @@ Layout/LineLength:
 
 Style/Documentation:
   Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/ExampleWithoutDescription:
+  EnforcedStyle: single_line_only

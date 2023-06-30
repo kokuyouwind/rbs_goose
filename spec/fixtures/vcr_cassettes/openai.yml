@@ -1,0 +1,94 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo","messages":[{"role":"user","content":"Hello!"}],"temperature":0}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <openai_access_token>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 30 Jun 2023 11:53:19 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-0613
+      Openai-Organization:
+      - user-fcumb6z4e8siumcgotnefqex
+      Openai-Processing-Ms:
+      - '1136'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '3500'
+      X-Ratelimit-Limit-Tokens:
+      - '90000'
+      X-Ratelimit-Remaining-Requests:
+      - '3499'
+      X-Ratelimit-Remaining-Tokens:
+      - '89980'
+      X-Ratelimit-Reset-Requests:
+      - 17ms
+      X-Ratelimit-Reset-Tokens:
+      - 12ms
+      X-Request-Id:
+      - 957452d1a006c313cd61a6b09ef47261
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 7df6353dfa9baf25-NRT
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-7X6ycYE8w1zzlewjMmq4nU3aq7Qza",
+          "object": "chat.completion",
+          "created": 1688125998,
+          "model": "gpt-3.5-turbo-0613",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Hello! How can I assist you today?"
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 9,
+            "completion_tokens": 9,
+            "total_tokens": 18
+          }
+        }
+  recorded_at: Fri, 30 Jun 2023 11:53:19 GMT
+recorded_with: VCR 6.2.0
