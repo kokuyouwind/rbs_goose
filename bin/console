@@ -2,14 +2,129 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'dotenv/load'
+require 'langchain'
 require 'rbs_goose'
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
+def llm
+  @llm ||= Langchain::LLM::OpenAI.new(
+    api_key: ENV['OPENAI_ACCESS_TOKEN'],
+    default_options: {
+      completion_model_name: 'gpt-3.5-turbo-0613',
+      chat_completion_model_name: 'gpt-3.5-turbo-0613'
+    }
+  )
+end
 
-# (If you use this, don't forget to add pry to your Gemfile!)
-# require "pry"
-# Pry.start
+def input_template_string
+  "========Input========\n{ruby}\n{rbs}\n\n========Output========"
+end
+
+def example_prompt
+  Langchain::Prompt::PromptTemplate.new(
+    template: "#{input_template_string}\n{refined_rbs}",
+    input_variables: %w[ruby rbs refined_rbs]
+  )
+end
+
+def user_factory_code
+  <<~RUBY
+    ```ruby:user_factory.rb
+    class UserFactory
+      def name(name)
+        @name = name
+        self
+      end
+    
+      def build
+        User.new(name: name)
+      end
+    end
+    ```
+RUBY
+end
+
+def user_factory_rbs
+  <<~RBS
+    ```rbs:user_factory.rbs
+    class UserFactory
+      def name: (untyped name) -> untyped
+    
+      def build: () -> untyped
+    end
+    ```
+RBS
+end
+
+def user_factory_refined_rbs
+  <<~REFINED_RBS
+    ```rbs:user_factory.rbs
+    class UserFactory
+      def name: (String name) -> UserFactory
+    
+      def build: () -> User
+    end
+    ```
+REFINED_RBS
+end
+
+def company_repository_code
+  <<~RUBY
+    ```ruby:company_repository.rb
+    class CompanyRepository
+      def find
+        Company.find_by(id: params[:id])
+      end
+    end
+    ```
+RUBY
+end
+
+def company_repository_rbs
+  <<~RBS
+    ```rbs:company_repository.rbs
+    class CompanyRepository
+      def find: (untyped id) -> untyped
+    end
+    ```
+RBS
+end
+
+def company_repository_refined_rbs
+  <<~RBS
+    ```rbs:company_repository.rbs
+    class CompanyRepository
+      def find: (id: Integer) -> Company
+    end
+    ```
+  RBS
+end
+
+def few_shot_template
+  Langchain::Prompt::FewShotPromptTemplate.new(
+    prefix: 'Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.',
+    suffix: input_template_string,
+    example_prompt: example_prompt,
+    examples: [
+      {
+        ruby: company_repository_code,
+        rbs: company_repository_rbs,
+        refined_rbs: company_repository_refined_rbs
+      }
+    ],
+    input_variables: %w[ruby rbs]
+  )
+end
+
+def infer_user_factory
+  prompt = few_shot_template.format(ruby: user_factory_code, rbs: user_factory_rbs)
+  puts "========Prompt========\n#{prompt}\n\n"
+
+  complete = llm.complete(prompt: prompt).completion
+  puts "========Completion========\n#{complete}\n\n"
+end
 
 require 'irb'
 IRB.start(__FILE__)
