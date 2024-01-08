@@ -10,7 +10,7 @@ require 'rbs_goose'
 # with your gem easier. You can also use a different console, if you like.
 def llm
   @llm ||= Langchain::LLM::OpenAI.new(
-    api_key: ENV['OPENAI_ACCESS_TOKEN'],
+    api_key: ENV.fetch('OPENAI_ACCESS_TOKEN', nil),
     default_options: {
       completion_model_name: 'gpt-3.5-turbo-0613',
       chat_completion_model_name: 'gpt-3.5-turbo-0613'
@@ -37,13 +37,13 @@ def user_factory_code
         @name = name
         self
       end
-    
+
       def build
         User.new(name: name)
       end
     end
     ```
-RUBY
+  RUBY
 end
 
 def user_factory_rbs
@@ -51,11 +51,11 @@ def user_factory_rbs
     ```rbs:user_factory.rbs
     class UserFactory
       def name: (untyped name) -> untyped
-    
+
       def build: () -> untyped
     end
     ```
-RBS
+  RBS
 end
 
 def user_factory_refined_rbs
@@ -63,11 +63,11 @@ def user_factory_refined_rbs
     ```rbs:user_factory.rbs
     class UserFactory
       def name: (String name) -> UserFactory
-    
+
       def build: () -> User
     end
     ```
-REFINED_RBS
+  REFINED_RBS
 end
 
 def company_repository_code
@@ -79,7 +79,7 @@ def company_repository_code
       end
     end
     ```
-RUBY
+  RUBY
 end
 
 def company_repository_rbs
@@ -89,7 +89,7 @@ def company_repository_rbs
       def find: (untyped id) -> untyped
     end
     ```
-RBS
+  RBS
 end
 
 def company_repository_refined_rbs
@@ -102,9 +102,9 @@ def company_repository_refined_rbs
   RBS
 end
 
-def few_shot_template
+def few_shot_template # rubocop:disable Metrics/MethodLength
   Langchain::Prompt::FewShotPromptTemplate.new(
-    prefix: 'Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.',
+    prefix: 'Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.', # rubocop:disable Layout/LineLength
     suffix: input_template_string,
     example_prompt: example_prompt,
     examples: [
