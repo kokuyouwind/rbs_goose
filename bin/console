@@ -96,7 +96,7 @@ def company_repository_refined_rbs
   <<~RBS
     ```rbs:company_repository.rbs
     class CompanyRepository
-      def find: (id: Integer) -> Company
+      def find: (Integer id) -> Company
     end
     ```
   RBS

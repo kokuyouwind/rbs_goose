@@ -5,7 +5,16 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-3.5-turbo-0613","temperature":0.0,"n":1,"messages":[{"role":"user","content":"Hello!"}],"max_tokens":4087}'
+      string: '{"model":"gpt-3.5-turbo-0613","temperature":0.0,"n":1,"messages":[{"role":"user","content":"Act
+        as Ruby type inferrer. When ruby source codes and RBS type signatures are
+        given, refine RBS type signatures. Use class names, variable names, etc.,
+        to infer type.\n\n========Input========\n```ruby:company_repository.rb\nclass
+        CompanyRepository\n  def find\n    Company.find_by(id: params[:id])\n  end\nend\n```\n\n```rbs:company_repository.rbs\nclass
+        CompanyRepository\n  def find: (untyped id) -> untyped\nend\n```\n\n\n========Output========\n```rbs:company_repository.rbs\nclass
+        CompanyRepository\n  def find: (Integer id) -> Company\nend\n```\n\n\n========Input========\n```ruby:user_factory.rb\nclass
+        UserFactory\n  def name(name)\n    @name = name\n    self\n  end\n\n  def
+        build\n    User.new(name: name)\n  end\nend\n```\n\n```rbs:user_factory.rbs\nclass
+        UserFactory\n  def name: (untyped name) -> untyped\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========"}],"max_tokens":3866}'
     headers:
       Content-Type:
       - application/json
@@ -23,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jan 2024 09:18:35 GMT
+      - Tue, 09 Jan 2024 13:18:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '958'
+      - '2121'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -48,61 +57,55 @@ http_interactions:
       - '10000'
       X-Ratelimit-Limit-Tokens:
       - '60000'
-      X-Ratelimit-Limit-Tokens-Usage-Based:
-      - '60000'
       X-Ratelimit-Remaining-Requests:
       - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '55910'
-      X-Ratelimit-Remaining-Tokens-Usage-Based:
-      - '55910'
+      - '55924'
       X-Ratelimit-Reset-Requests:
       - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 4.09s
-      X-Ratelimit-Reset-Tokens-Usage-Based:
-      - 4.09s
+      - 4.076s
       X-Request-Id:
-      - 66c97b8ee297a514b05595af4ac70707
+      - 5590a54942c33e5384d1cc832377fc99
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=4fa5BQ1PEhCmqWfHMsgmT5MH7Zi4OuyZjzORFbbG.38-1704705515-1-AamvWySjoZY906NW/TD/bMXKEvwJx1ARxwKokyW1bEc5CfyAGPsxaxtKcy+jHlm8Ae9qkMDijeXOps/3S9drAPY=;
-        path=/; expires=Mon, 08-Jan-24 09:48:35 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=czIsCNT0lvI9wpnRStPPAFrObGWuiB2VWb3Q2Sfdn.w-1704806304-1-AUdbZ5tUjTiwmMt35xHvsZSvCIc4a12UeNwfm+oSduR+S3uJmwSWXFyfv4JzE0NnLAG7LOLjNmS5sZOdzxEmdDQ=;
+        path=/; expires=Tue, 09-Jan-24 13:48:24 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=LjAzR2rr9Fa0ab.pbmy8y.F2Tp1oujBK8V7BBJtR_sM-1704705515377-0-604800000;
+      - _cfuvid=qc4ey5KRNJtNYGMH6owLgYEdpmdQ87hx2WcYczZ6alU-1704806304547-0-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 84235a973caa1a15-KIX
+      - 842cf73c2abe0a6e-KIX
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-8eg4AHxsXRoZKEqaXsFN2NOcD2qNN",
+          "id": "chatcmpl-8f6HmyWZi3dm5G9VsEQi1Ty59KyAP",
           "object": "chat.completion",
-          "created": 1704705514,
+          "created": 1704806302,
           "model": "gpt-3.5-turbo-0613",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Hello! How can I assist you today?"
+                "content": "```rbs:user_factory.rbs\nclass UserFactory\n  def name: (String name) -> UserFactory\n\n  def build: () -> User\nend\n```"
               },
               "logprobs": null,
               "finish_reason": "stop"
             }
           ],
           "usage": {
-            "prompt_tokens": 9,
-            "completion_tokens": 9,
-            "total_tokens": 18
+            "prompt_tokens": 230,
+            "completion_tokens": 35,
+            "total_tokens": 265
           },
           "system_fingerprint": null
         }
-  recorded_at: Mon, 08 Jan 2024 09:18:35 GMT
+  recorded_at: Tue, 09 Jan 2024 13:18:24 GMT
 recorded_with: VCR 6.2.0

@@ -9,6 +9,10 @@ VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
   config.hook_into :webmock
   config.filter_sensitive_data('<openai_access_token>') { ENV.fetch('OPENAI_ACCESS_TOKEN') }
+  config.default_cassette_options = {
+    match_requests_on: %i[method uri body],
+    record: ENV.fetch('RECORD', :once).to_sym
+  }
 end
 
 RSpec.configure do |config|
