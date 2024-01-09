@@ -10,3 +10,11 @@ require 'rubocop/rake_task'
 RuboCop::RakeTask.new
 
 task default: %i[spec rubocop]
+task :spec do
+  Rake::Task['spec'].invoke
+end
+
+task :'spec:record' do
+  ENV['RECORD'] = 'all'
+  Rake::Task['spec'].invoke
+end

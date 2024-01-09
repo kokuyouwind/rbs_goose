@@ -32,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 09 Jan 2024 13:18:24 GMT
+      - Tue, 09 Jan 2024 23:41:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '2121'
+      - '1650'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -66,28 +66,28 @@ http_interactions:
       X-Ratelimit-Reset-Tokens:
       - 4.076s
       X-Request-Id:
-      - 5590a54942c33e5384d1cc832377fc99
+      - d0e6cb368711c074b516e0850a6fe889
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=czIsCNT0lvI9wpnRStPPAFrObGWuiB2VWb3Q2Sfdn.w-1704806304-1-AUdbZ5tUjTiwmMt35xHvsZSvCIc4a12UeNwfm+oSduR+S3uJmwSWXFyfv4JzE0NnLAG7LOLjNmS5sZOdzxEmdDQ=;
-        path=/; expires=Tue, 09-Jan-24 13:48:24 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=efmho2NDb9RbbUYIo0U.0PM4RTAN48cJXQeOBhhEH4s-1704843707-1-Ac0X/CMCV0SdL1h630ghLZ2kj4bmnfh47yfktUm/RWTqXvAE105lqr2tkK3vXakrUogNERTPHCKfoXW/+4+qkew=;
+        path=/; expires=Wed, 10-Jan-24 00:11:47 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=qc4ey5KRNJtNYGMH6owLgYEdpmdQ87hx2WcYczZ6alU-1704806304547-0-604800000;
+      - _cfuvid=LChnImjdPd6wLv5F36sCILYlemUAIp3oMkkv3VbdDck-1704843707064-0-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 842cf73c2abe0a6e-KIX
+      - 84308865697619fe-KIX
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-8f6HmyWZi3dm5G9VsEQi1Ty59KyAP",
+          "id": "chatcmpl-8fG135sm3qTAt7qMYAu48IZXDBINm",
           "object": "chat.completion",
-          "created": 1704806302,
+          "created": 1704843705,
           "model": "gpt-3.5-turbo-0613",
           "choices": [
             {
@@ -107,5 +107,5 @@ http_interactions:
           },
           "system_fingerprint": null
         }
-  recorded_at: Tue, 09 Jan 2024 13:18:24 GMT
+  recorded_at: Tue, 09 Jan 2024 23:41:47 GMT
 recorded_with: VCR 6.2.0

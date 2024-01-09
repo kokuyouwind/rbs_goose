@@ -9,6 +9,7 @@ on:
 
 env:
   OPENAI_ACCESS_TOKEN: DUMMY_TOKEN
+  RECORD: none
 
 jobs:
   build:
