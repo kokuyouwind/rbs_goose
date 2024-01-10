@@ -16,7 +16,7 @@ module RBSGoose
     end
 
     def to_markdown
-      "```#{type}:#{path}\n#{content}\n```"
+      "```#{type}:#{path}\n#{content}\n```\n"
     end
 
     def content=(content)

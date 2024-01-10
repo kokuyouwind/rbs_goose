@@ -62,7 +62,7 @@ RSpec.describe RBSGoose::FileIO do
 
     context 'when ruby file' do
       it 'returns ruby markdown' do
-        expect(subject).to eq(<<~MARKDOWN.strip)
+        expect(subject).to eq(<<~MARKDOWN)
           ```ruby:user_factory.rb
           #{user_factory_code.strip}
           ```
@@ -74,7 +74,7 @@ RSpec.describe RBSGoose::FileIO do
       subject { rbs_file.to_markdown }
 
       it 'returns rbs markdown' do
-        expect(subject).to eq(<<~MARKDOWN.strip)
+        expect(subject).to eq(<<~MARKDOWN)
           ```rbs:user_factory.rbs
           #{user_factory_rbs.strip}
           ```

@@ -2,6 +2,7 @@
 
 require 'openai'
 require 'langchain'
+require_relative 'file_io'
 
 module RbsGoose
   class TypeInferrer
@@ -42,9 +43,9 @@ module RbsGoose
         example_prompt: example_prompt,
         examples: [
           {
-            ruby: company_repository_code,
-            rbs: company_repository_rbs,
-            refined_rbs: company_repository_refined_rbs
+            ruby: company_repository_code.to_markdown,
+            rbs: company_repository_rbs.to_markdown,
+            refined_rbs: company_repository_refined_rbs.to_markdown
           }
         ],
         input_variables: %w[ruby rbs]
@@ -52,34 +53,28 @@ module RbsGoose
     end
 
     def company_repository_code
-      <<~RUBY
-        ```ruby:company_repository.rb
+      RBSGoose::FileIO.new('company_repository.rb', content: <<~RUBY)
         class CompanyRepository
           def find
             Company.find_by(id: params[:id])
           end
         end
-        ```
       RUBY
     end
 
     def company_repository_rbs
-      <<~RBS
-        ```rbs:company_repository.rbs
+      RBSGoose::FileIO.new('company_repository.rbs', content: <<~RBS)
         class CompanyRepository
           def find: (untyped id) -> untyped
         end
-        ```
       RBS
     end
 
     def company_repository_refined_rbs
-      <<~RBS
-        ```rbs:company_repository.rbs
+      RBSGoose::FileIO.new('company_repository.rbs', content: <<~RBS)
         class CompanyRepository
           def find: (Integer id) -> Company
         end
-        ```
       RBS
     end
   end
