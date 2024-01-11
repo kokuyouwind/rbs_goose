@@ -23,3 +23,6 @@ RSpec/NamedSubject:
 
 RSpec/ExampleWithoutDescription:
   EnforcedStyle: single_line_only
+
+RSpec/ExampleLength:
+  Max: 20

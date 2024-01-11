@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RBSGoose
+module RbsGoose
   class FileIO
     def initialize(path, content: nil)
       @path = path

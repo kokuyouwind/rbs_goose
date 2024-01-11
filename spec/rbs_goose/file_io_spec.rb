@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RBSGoose::FileIO do
+RSpec.describe RbsGoose::FileIO do
   let(:ruby_file) { described_class.new('user_factory.rb', content: user_factory_code) }
   let(:rbs_file) { described_class.new('user_factory.rbs', content: user_factory_rbs) }
 
