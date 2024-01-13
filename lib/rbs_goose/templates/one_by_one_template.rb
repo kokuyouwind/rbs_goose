@@ -5,18 +5,12 @@ require 'langchain'
 module RbsGoose
   module Templates
     class OneByOneTemplate
-      def initialize(instruction:, examples:) # rubocop:disable Metrics/MethodLength
+      def initialize(instruction:, examples:)
         @template = Langchain::Prompt::FewShotPromptTemplate.new(
           prefix: instruction,
           suffix: input_template_string,
           example_prompt: example_prompt,
-          examples: examples.map do |example|
-            {
-              ruby: example[:ruby].to_markdown,
-              rbs: example[:rbs].to_markdown,
-              refined_rbs: example[:refined_rbs].to_markdown
-            }
-          end,
+          examples: examples,
           input_variables: %w[ruby rbs]
         )
       end

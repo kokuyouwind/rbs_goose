@@ -57,8 +57,8 @@ RSpec.describe RbsGoose::FileIO do
     end
   end
 
-  describe '#to_markdown' do
-    subject { ruby_file.to_markdown }
+  describe '#to_s' do
+    subject { ruby_file.to_s }
 
     context 'when ruby file' do
       it 'returns ruby markdown' do
@@ -71,7 +71,7 @@ RSpec.describe RbsGoose::FileIO do
     end
 
     context 'when rbs file' do
-      subject { rbs_file.to_markdown }
+      subject { rbs_file.to_s }
 
       it 'returns rbs markdown' do
         expect(subject).to eq(<<~MARKDOWN)

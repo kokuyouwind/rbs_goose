@@ -15,7 +15,7 @@ module RbsGoose
       @content = content.strip
     end
 
-    def to_markdown
+    def to_s
       "```#{type}:#{path}\n#{content}\n```\n"
     end
 
