@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'openai'
+require 'langchain'
+
 module RbsGoose
   class Configuration
     def initialize(&block)
