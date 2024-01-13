@@ -66,9 +66,9 @@ RSpec.describe RbsGoose do
     it 'returns examples' do
       expect(subject).to match(
         [{
-          ruby: be_a(RbsGoose::FileIO),
-          rbs: be_a(RbsGoose::FileIO),
-          refined_rbs: be_a(RbsGoose::FileIO)
+          ruby: be_a(RbsGoose::IO::File),
+          rbs: be_a(RbsGoose::IO::File),
+          refined_rbs: be_a(RbsGoose::IO::File)
         }]
       )
     end
