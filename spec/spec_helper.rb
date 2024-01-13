@@ -25,4 +25,14 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.before(:example, :configure) do
+    RbsGoose.configure do |c|
+      c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
+    end
+  end
+
+  config.after do
+    RbsGoose.reset_configuration
+  end
 end

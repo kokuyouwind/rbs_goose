@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RbsGoose::TypeInferrer do
+RSpec.describe RbsGoose::TypeInferrer, :configure do
   let(:user_factory_code) do
     <<~RUBY
       ```ruby:user_factory.rb

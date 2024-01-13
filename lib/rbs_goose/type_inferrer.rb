@@ -6,19 +6,9 @@ require_relative 'file_io'
 
 module RbsGoose
   class TypeInferrer
-    def initialize(llm = nil)
-      @llm = llm || ::Langchain::LLM::OpenAI.new(
-        api_key: ENV.fetch('OPENAI_ACCESS_TOKEN', nil),
-        default_options: {
-          completion_model_name: 'gpt-3.5-turbo-0613',
-          chat_completion_model_name: 'gpt-3.5-turbo-0613'
-        }
-      )
-    end
-
     def infer(ruby, rbs)
       prompt = few_shot_template.format(ruby: ruby, rbs: rbs)
-      llm.complete(prompt: prompt).completion
+      RbsGoose.llm.complete(prompt: prompt).completion
     end
 
     private
@@ -37,45 +27,20 @@ module RbsGoose
     end
 
     def few_shot_template # rubocop:disable Metrics/MethodLength
+      examples = RbsGoose.examples.map do |example|
+        {
+          ruby: example[:ruby].to_markdown,
+          rbs: example[:rbs].to_markdown,
+          refined_rbs: example[:refined_rbs].to_markdown
+        }
+      end
       Langchain::Prompt::FewShotPromptTemplate.new(
-        prefix: 'Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.', # rubocop:disable Layout/LineLength
+        prefix: RbsGoose.instruction,
         suffix: input_template_string,
         example_prompt: example_prompt,
-        examples: [
-          {
-            ruby: company_repository_code.to_markdown,
-            rbs: company_repository_rbs.to_markdown,
-            refined_rbs: company_repository_refined_rbs.to_markdown
-          }
-        ],
+        examples: examples,
         input_variables: %w[ruby rbs]
       )
-    end
-
-    def company_repository_code
-      FileIO.new('company_repository.rb', content: <<~RUBY)
-        class CompanyRepository
-          def find
-            Company.find_by(id: params[:id])
-          end
-        end
-      RUBY
-    end
-
-    def company_repository_rbs
-      FileIO.new('company_repository.rbs', content: <<~RBS)
-        class CompanyRepository
-          def find: (untyped id) -> untyped
-        end
-      RBS
-    end
-
-    def company_repository_refined_rbs
-      FileIO.new('company_repository.rbs', content: <<~RBS)
-        class CompanyRepository
-          def find: (Integer id) -> Company
-        end
-      RBS
     end
   end
 end

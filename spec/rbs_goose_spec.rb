@@ -33,4 +33,44 @@ RSpec.describe RbsGoose do
       end
     end
   end
+
+  describe '.reset_configuration', :configure do
+    subject do
+      described_class.reset_configuration
+    end
+
+    it 'resets configuration' do
+      expect { subject }.to change(described_class, :configuration).from(be_a(RbsGoose::Configuration)).to(nil)
+    end
+  end
+
+  describe '.llm', :configure do
+    subject { described_class.llm }
+
+    it 'returns llm' do
+      expect(subject).to be_a(Langchain::LLM::OpenAI)
+    end
+  end
+
+  describe '.instruction', :configure do
+    subject { described_class.instruction }
+
+    it 'returns instruction' do
+      expect(subject).to be_a(String)
+    end
+  end
+
+  describe '.examples', :configure do
+    subject { described_class.examples }
+
+    it 'returns examples' do
+      expect(subject).to match(
+        [{
+          ruby: be_a(RbsGoose::FileIO),
+          rbs: be_a(RbsGoose::FileIO),
+          refined_rbs: be_a(RbsGoose::FileIO)
+        }]
+      )
+    end
+  end
 end
