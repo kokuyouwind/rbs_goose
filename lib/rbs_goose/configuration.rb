@@ -31,10 +31,16 @@ module RbsGoose
 
     def default_examples
       [{
-        ruby: company_repository_code,
-        rbs: company_repository_rbs,
+        typed_ruby: company_repository_typed,
         refined_rbs: company_repository_refined_rbs
       }]
+    end
+
+    def company_repository_typed
+      RbsGoose::IO::TypedRuby.new(
+        company_repository_code,
+        company_repository_rbs
+      )
     end
 
     def company_repository_code

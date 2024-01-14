@@ -11,8 +11,7 @@ RSpec.describe RbsGoose::Configuration do
     it 'sets default examples' do
       expect(subject.examples).to match(
         [{
-          ruby: be_a(RbsGoose::IO::File),
-          rbs: be_a(RbsGoose::IO::File),
+          typed_ruby: be_a(RbsGoose::IO::TypedRuby),
           refined_rbs: be_a(RbsGoose::IO::File)
         }]
       )

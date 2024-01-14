@@ -11,12 +11,12 @@ module RbsGoose
           suffix: input_template_string,
           example_prompt: example_prompt,
           examples: examples,
-          input_variables: %w[ruby rbs]
+          input_variables: %w[typed_ruby]
         )
       end
 
-      def format(ruby:, rbs:)
-        template.format(ruby: ruby, rbs: rbs)
+      def format(typed_ruby)
+        template.format(typed_ruby: typed_ruby)
       end
 
       private
@@ -26,12 +26,12 @@ module RbsGoose
       def example_prompt
         Langchain::Prompt::PromptTemplate.new(
           template: "#{input_template_string}\n{refined_rbs}",
-          input_variables: %w[ruby rbs refined_rbs]
+          input_variables: %w[typed_ruby refined_rbs]
         )
       end
 
       def input_template_string
-        "========Input========\n{ruby}\n{rbs}\n\n========Output========"
+        "========Input========\n{typed_ruby}\n\n========Output========"
       end
     end
   end
