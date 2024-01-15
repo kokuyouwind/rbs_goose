@@ -44,7 +44,7 @@ module RbsGoose
     end
 
     def company_repository_code
-      RbsGoose::IO::File.new('company_repository.rb', content: <<~RUBY)
+      RbsGoose::IO::File.new(path: 'company_repository.rb', content: <<~RUBY)
         class CompanyRepository
           def find
             Company.find_by(id: params[:id])
@@ -54,7 +54,7 @@ module RbsGoose
     end
 
     def company_repository_rbs
-      RbsGoose::IO::File.new('company_repository.rbs', content: <<~RBS)
+      RbsGoose::IO::File.new(path: 'company_repository.rbs', content: <<~RBS)
         class CompanyRepository
           def find: (untyped id) -> untyped
         end
@@ -62,7 +62,7 @@ module RbsGoose
     end
 
     def company_repository_refined_rbs
-      RbsGoose::IO::File.new('company_repository.rbs', content: <<~RBS)
+      RbsGoose::IO::File.new(path: 'company_repository.rbs', content: <<~RBS)
         class CompanyRepository
           def find: (Integer id) -> Company
         end

@@ -28,8 +28,8 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
 
   let(:user_factory_typed) do
     RbsGoose::IO::TypedRuby.new(
-      RbsGoose::IO::File.new('user_factory.rb', content: user_factory_code),
-      RbsGoose::IO::File.new('user_factory.rbs', content: user_factory_rbs)
+      RbsGoose::IO::File.new(path: 'user_factory.rb', content: user_factory_code),
+      RbsGoose::IO::File.new(path: 'user_factory.rbs', content: user_factory_rbs)
     )
   end
 

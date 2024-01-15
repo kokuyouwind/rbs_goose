@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe RbsGoose::IO::File do
-  let(:ruby_file) { described_class.new('user_factory.rb', content: user_factory_code) }
-  let(:rbs_file) { described_class.new('user_factory.rbs', content: user_factory_rbs) }
+  let(:ruby_file) { described_class.new(path: 'user_factory.rb', content: user_factory_code) }
+  let(:rbs_file) { described_class.new(path: 'user_factory.rbs', content: user_factory_rbs) }
 
   let(:user_factory_code) do
     <<~RUBY

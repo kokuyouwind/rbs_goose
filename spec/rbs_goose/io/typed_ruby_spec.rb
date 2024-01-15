@@ -3,7 +3,7 @@
 RSpec.describe RbsGoose::IO::TypedRuby do
   let(:ruby_file) do
     RbsGoose::IO::File.new(
-      'ruby_file.rb',
+      path: 'ruby_file.rb',
       content: <<~RUBY)
         ruby_line_1
         ruby_line_2
@@ -13,7 +13,7 @@ RSpec.describe RbsGoose::IO::TypedRuby do
 
   let(:rbs_file) do
     RbsGoose::IO::File.new(
-      'rbs_file.rbs',
+      path: 'rbs_file.rbs',
       content: <<~RBS)
         rbs_line_1
         rbs_line_2

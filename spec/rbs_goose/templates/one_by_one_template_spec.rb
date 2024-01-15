@@ -3,7 +3,7 @@
 RSpec.describe RbsGoose::Templates::OneByOneTemplate do
   let(:example_ruby) do
     RbsGoose::IO::File.new(
-      'example_ruby.rb',
+      path: 'example_ruby.rb',
       content: <<~RUBY
         example_ruby_line_1
         example_ruby_line_2
@@ -14,7 +14,7 @@ RSpec.describe RbsGoose::Templates::OneByOneTemplate do
 
   let(:example_rbs) do
     RbsGoose::IO::File.new(
-      'example_rbs.rbs',
+      path: 'example_rbs.rbs',
       content: <<~RBS
         example_rbs_line_1
         example_rbs_line_2
@@ -25,7 +25,7 @@ RSpec.describe RbsGoose::Templates::OneByOneTemplate do
 
   let(:example_refined_rbs) do
     RbsGoose::IO::File.new(
-      'example_rbs.rbs',
+      path: 'example_rbs.rbs',
       content: <<~RBS
         example_refined_rbs_line_1
         example_refined_rbs_line_2
@@ -36,7 +36,7 @@ RSpec.describe RbsGoose::Templates::OneByOneTemplate do
 
   let(:input_ruby) do
     RbsGoose::IO::File.new(
-      'input_ruby.rb',
+      path: 'input_ruby.rb',
       content: <<~RUBY
         input_ruby_line_1
         input_ruby_line_2
@@ -47,7 +47,7 @@ RSpec.describe RbsGoose::Templates::OneByOneTemplate do
 
   let(:input_rbs) do
     RbsGoose::IO::File.new(
-      'input_rbs.rbs',
+      path: 'input_rbs.rbs',
       content: <<~RBS
         input_rbs_line_1
         input_rbs_line_2

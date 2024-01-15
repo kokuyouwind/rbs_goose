@@ -10,11 +10,11 @@ module RbsGoose
           parsed = markdown.match(MARKDOWN_REGEXP)
           raise ArgumentError, "Ruby or RBS Markdown parsing failed.\n#{markdown}" unless parsed
 
-          new(parsed[:path], content: parsed[:content])
+          new(path: parsed[:path], content: parsed[:content])
         end
       end
 
-      def initialize(path, content: nil)
+      def initialize(path:, content: nil)
         @path = path
         @type = case path
                 in /\.rb\z/
