@@ -19,6 +19,10 @@ module RbsGoose
         template.format(typed_ruby: typed_ruby)
       end
 
+      def parse_result(result)
+        [IO::File.from_markdown(result)]
+      end
+
       private
 
       attr_reader :template

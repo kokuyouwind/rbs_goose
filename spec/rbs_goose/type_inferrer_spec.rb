@@ -35,13 +35,11 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
 
   let(:user_factory_refined_rbs) do
     <<~REFINED_RBS
-      ```rbs:user_factory.rbs
       class UserFactory
         def name: (String name) -> UserFactory
 
         def build: () -> User
       end
-      ```
     REFINED_RBS
   end
 
@@ -50,7 +48,13 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
 
     it 'returns refined rbs' do
       VCR.use_cassette('openai/infer_user_factory') do
-        expect(subject).to eq(user_factory_refined_rbs.strip)
+        expect(subject).to contain_exactly(
+          be_a(RbsGoose::IO::File)
+            .and(have_attributes(
+                   path: 'user_factory.rbs',
+                   content: user_factory_refined_rbs.strip
+                 ))
+        )
       end
     end
   end

@@ -5,10 +5,10 @@ require_relative 'templates'
 module RbsGoose
   class TypeInferrer
     def infer(typed_ruby)
-      prompt = Templates::OneByOneTemplate
-               .new(instruction: RbsGoose.instruction, examples: RbsGoose.examples)
-               .format(typed_ruby)
-      RbsGoose.llm.complete(prompt: prompt).completion
+      template = Templates::OneByOneTemplate
+                 .new(instruction: RbsGoose.instruction, examples: RbsGoose.examples)
+      result = RbsGoose.llm.complete(prompt: template.format(typed_ruby)).completion
+      template.parse_result(result)
     end
   end
 end

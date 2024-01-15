@@ -109,4 +109,32 @@ RSpec.describe RbsGoose::Templates::OneByOneTemplate do
       PROMPT
     end
   end
+
+  describe '#parse_result' do
+    subject { described_class.new(instruction: '', examples: []).parse_result(result) }
+
+    let(:result) do
+      <<~RESULT
+        ```rbs:result_rbs.rbs
+        result_rbs_line_1
+        result_rbs_line_2
+        result_rbs_line_3
+        ```
+      RESULT
+    end
+
+    it 'returns parsed files' do
+      expect(subject).to contain_exactly(
+        be_a(RbsGoose::IO::File)
+          .and(have_attributes(
+                 path: 'result_rbs.rbs',
+                 content: <<~RBS.strip
+                   result_rbs_line_1
+                   result_rbs_line_2
+                   result_rbs_line_3
+                 RBS
+               ))
+      )
+    end
+  end
 end
