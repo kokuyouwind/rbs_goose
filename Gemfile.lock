@@ -8,16 +8,34 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    activesupport (7.1.2)
+      base64
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      mutex_m
+      tzinfo (~> 2.0)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     baran (0.1.10)
+    base64 (0.2.0)
+    bigdecimal (3.1.5)
     colorize (0.8.1)
+    concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     crack (0.4.5)
       rexml
     diff-lcs (1.5.0)
     dotenv (2.8.1)
+    drb (2.2.0)
+      ruby2_keywords
     event_stream_parser (0.3.0)
+    factory_bot (6.4.5)
+      activesupport (>= 5.0.0)
     faraday (2.7.9)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -25,6 +43,8 @@ GEM
       multipart-post (~> 2)
     faraday-net_http (3.0.2)
     hashdiff (1.0.1)
+    i18n (1.14.1)
+      concurrent-ruby (~> 1.0)
     json (2.6.3)
     json-schema (4.0.0)
       addressable (>= 2.8)
@@ -39,7 +59,9 @@ GEM
       zeitwerk (~> 2.5)
     language_server-protocol (3.17.0.3)
     matrix (0.4.2)
+    minitest (5.21.1)
     multipart-post (2.3.0)
+    mutex_m (0.2.0)
     parallel (1.23.0)
     parser (3.2.2.3)
       ast (~> 2.4.1)
@@ -98,6 +120,8 @@ GEM
     tiktoken_ruby (0.0.6)
       rb_sys (~> 0.9.68)
     to_bool (2.0.0)
+    tzinfo (2.0.6)
+      concurrent-ruby (~> 1.0)
     unicode (0.4.4.4)
     unicode-display_width (2.4.2)
     vcr (6.2.0)
@@ -114,10 +138,12 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv (~> 2.8.1)
+  factory_bot (~> 6.4.5)
   rake (~> 13.0)
   rbs_goose!
   rspec (~> 3.0)
   rubocop (~> 1.21)
+  rubocop-factory_bot (~> 2.25.1)
   rubocop-rake (~> 0.6.0)
   rubocop-rspec (~> 2.22)
   ruby-openai (~> 6.1.0)

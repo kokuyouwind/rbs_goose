@@ -6,9 +6,11 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'dotenv', '~> 2.8.1'
+gem 'factory_bot', '~> 6.4.5'
 gem 'rake', '~> 13.0'
 gem 'rspec', '~> 3.0'
 gem 'rubocop', '~> 1.21'
+gem 'rubocop-factory_bot', '~> 2.25.1'
 gem 'rubocop-rake', '~> 0.6.0'
 gem 'rubocop-rspec', '~> 2.22'
 gem 'ruby-openai', '~> 6.1.0'
