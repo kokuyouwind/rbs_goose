@@ -3,6 +3,17 @@
 module RbsGoose
   module IO
     class File
+      MARKDOWN_REGEXP = /\A```(?<type>ruby|rbs):(?<path>.+)\n(?<content>[\s\S]+)```\Z/
+
+      class << self
+        def from_markdown(markdown)
+          parsed = markdown.match(MARKDOWN_REGEXP)
+          raise ArgumentError, "Ruby or RBS Markdown parsing failed.\n#{markdown}" unless parsed
+
+          new(parsed[:path], content: parsed[:content])
+        end
+      end
+
       def initialize(path, content: nil)
         @path = path
         @type = case path
