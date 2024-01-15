@@ -66,7 +66,7 @@ RSpec.describe RbsGoose::Templates::OneByOneTemplate do
     let(:instruction) { 'This is example instruction.' }
 
     it 'returns formatted prompt' do
-      expect(subject).to eq(<<~PROMPT.strip)
+      expect(subject).to eq(<<~PROMPT)
         This is example instruction.
 
         ========Input========

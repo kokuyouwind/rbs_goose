@@ -8,7 +8,7 @@ module RbsGoose
       def initialize(instruction:, examples:)
         @template = Langchain::Prompt::FewShotPromptTemplate.new(
           prefix: instruction,
-          suffix: input_template_string,
+          suffix: input_template_string + "\n",
           example_prompt: example_prompt,
           examples: examples,
           input_variables: %w[typed_ruby]

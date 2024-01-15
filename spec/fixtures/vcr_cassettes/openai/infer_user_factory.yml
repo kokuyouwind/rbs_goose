@@ -14,7 +14,7 @@ http_interactions:
         CompanyRepository\n  def find: (Integer id) -> Company\nend\n```\n\n\n========Input========\n```ruby:user_factory.rb\nclass
         UserFactory\n  def name(name)\n    @name = name\n    self\n  end\n\n  def
         build\n    User.new(name: name)\n  end\nend\n```\n\n```rbs:user_factory.rbs\nclass
-        UserFactory\n  def name: (untyped name) -> untyped\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========"}],"max_tokens":3866}'
+        UserFactory\n  def name: (untyped name) -> untyped\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========\n"}],"max_tokens":3866}'
     headers:
       Content-Type:
       - application/json
@@ -32,7 +32,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 09 Jan 2024 23:41:47 GMT
+      - Mon, 15 Jan 2024 12:42:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '1650'
+      - '2310'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -60,34 +60,34 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '55924'
+      - '55923'
       X-Ratelimit-Reset-Requests:
       - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 4.076s
+      - 4.077s
       X-Request-Id:
-      - d0e6cb368711c074b516e0850a6fe889
+      - 0aed45040755fd4fb8c743289a87c03c
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=efmho2NDb9RbbUYIo0U.0PM4RTAN48cJXQeOBhhEH4s-1704843707-1-Ac0X/CMCV0SdL1h630ghLZ2kj4bmnfh47yfktUm/RWTqXvAE105lqr2tkK3vXakrUogNERTPHCKfoXW/+4+qkew=;
-        path=/; expires=Wed, 10-Jan-24 00:11:47 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=Z_ujr8czOgWe1Zps1QWyWnHoqly8y8qgVun2vppceMk-1705322533-1-AaXNkoJ+Ty2WMHkLKQNcSAbnTyLbGPi/gSITgLcxHTvAR+uqc3ITMzKay7ltjN+IHJhbQMbMPauYnC5Oy99qyHg=;
+        path=/; expires=Mon, 15-Jan-24 13:12:13 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=LChnImjdPd6wLv5F36sCILYlemUAIp3oMkkv3VbdDck-1704843707064-0-604800000;
+      - _cfuvid=KzjVnaeX2rHardaIPM_9vXOcjYXuTi7YhyNLOyHjxEA-1705322533301-0-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 84308865697619fe-KIX
+      - 845e3278be2419e4-KIX
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-8fG135sm3qTAt7qMYAu48IZXDBINm",
+          "id": "chatcmpl-8hGa3GaovWmTdkDFEQ4rZgvUYAJUn",
           "object": "chat.completion",
-          "created": 1704843705,
+          "created": 1705322531,
           "model": "gpt-3.5-turbo-0613",
           "choices": [
             {
@@ -107,5 +107,5 @@ http_interactions:
           },
           "system_fingerprint": null
         }
-  recorded_at: Tue, 09 Jan 2024 23:41:47 GMT
+  recorded_at: Mon, 15 Jan 2024 12:42:13 GMT
 recorded_with: VCR 6.2.0
