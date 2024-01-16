@@ -77,28 +77,28 @@ RSpec.describe RbsGoose::IO::File do
     subject { file.to_s }
 
     context 'when ruby file' do
-      let(:file) { build(:file, :ruby) }
+      let(:file) { build(:file, :ruby, :with_multi_line_content) }
 
       it 'returns ruby markdown' do
         expect(subject).to eq(<<~MARKDOWN)
           ```ruby:example_ruby.rb
-          ruby_line_1
-          ruby_line_2
-          ruby_line_3
+          line_1
+          line_2
+          line_3
           ```
         MARKDOWN
       end
     end
 
     context 'when rbs file' do
-      let(:file) { build(:file, :rbs) }
+      let(:file) { build(:file, :rbs, :with_multi_line_content) }
 
       it 'returns rbs markdown' do
         expect(subject).to eq(<<~MARKDOWN)
           ```rbs:example_rbs.rbs
-          rbs_line_1
-          rbs_line_2
-          rbs_line_3
+          line_1
+          line_2
+          line_3
           ```
         MARKDOWN
       end

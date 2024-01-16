@@ -30,3 +30,6 @@ RSpec/ExampleLength:
 
 RSpec/MultipleMemoizedHelpers:
   Max: 10
+
+FactoryBot/FactoryAssociationWithStrategy:
+  Enabled: false
