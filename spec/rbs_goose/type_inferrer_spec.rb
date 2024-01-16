@@ -27,9 +27,10 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
   end
 
   let(:user_factory_typed) do
-    RbsGoose::IO::TypedRuby.new(
-      ruby: RbsGoose::IO::File.new(path: 'user_factory.rb', content: user_factory_code),
-      rbs: RbsGoose::IO::File.new(path: 'user_factory.rbs', content: user_factory_rbs)
+    build(
+      :typed_ruby,
+      ruby: build(:file, path: 'user_factory.rb', content: user_factory_code),
+      rbs: build(:file, path: 'user_factory.rbs', content: user_factory_rbs)
     )
   end
 
