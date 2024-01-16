@@ -38,8 +38,8 @@ module RbsGoose
 
     def company_repository_typed
       RbsGoose::IO::TypedRuby.new(
-        company_repository_code,
-        company_repository_rbs
+        ruby: company_repository_code,
+        rbs: company_repository_rbs
       )
     end
 

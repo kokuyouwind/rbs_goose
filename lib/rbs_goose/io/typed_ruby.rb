@@ -3,7 +3,7 @@
 module RbsGoose
   module IO
     class TypedRuby
-      def initialize(ruby, rbs)
+      def initialize(ruby:, rbs:)
         raise ArgumentError, 'ruby must have ".rb" extension' unless ruby.type == :ruby
         raise ArgumentError, 'rbs must have ".rbs" extension' unless rbs.type == :rbs
 

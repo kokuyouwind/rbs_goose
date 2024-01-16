@@ -56,8 +56,8 @@ RSpec.describe RbsGoose::Templates::OneByOneTemplate do
     )
   end
 
-  let(:input_typed_ruby) { RbsGoose::IO::TypedRuby.new(input_ruby, input_rbs) }
-  let(:example_typed_ruby) { RbsGoose::IO::TypedRuby.new(example_ruby, example_rbs) }
+  let(:input_typed_ruby) { RbsGoose::IO::TypedRuby.new(ruby: input_ruby, rbs: input_rbs) }
+  let(:example_typed_ruby) { RbsGoose::IO::TypedRuby.new(ruby: example_ruby, rbs: example_rbs) }
   let(:examples) { [{ typed_ruby: example_typed_ruby, refined_rbs: example_refined_rbs }] }
 
   describe '#format' do

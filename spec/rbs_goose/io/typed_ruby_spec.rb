@@ -1,38 +1,18 @@
 # frozen_string_literal: true
 
 RSpec.describe RbsGoose::IO::TypedRuby do
-  let(:ruby_file) do
-    RbsGoose::IO::File.new(
-      path: 'ruby_file.rb',
-      content: <<~RUBY)
-        ruby_line_1
-        ruby_line_2
-        ruby_line_3
-      RUBY
-  end
-
-  let(:rbs_file) do
-    RbsGoose::IO::File.new(
-      path: 'rbs_file.rbs',
-      content: <<~RBS)
-        rbs_line_1
-        rbs_line_2
-        rbs_line_3
-      RBS
-  end
-
   describe '#to_s' do
-    subject { described_class.new(ruby_file, rbs_file).to_s }
+    subject { build(:typed_ruby).to_s }
 
     it 'returns ruby and rbs markdowns' do
       expect(subject).to eq(<<~TYPED_RUBY)
-        ```ruby:ruby_file.rb
+        ```ruby:example_ruby.rb
         ruby_line_1
         ruby_line_2
         ruby_line_3
         ```
 
-        ```rbs:rbs_file.rbs
+        ```rbs:example_rbs.rbs
         rbs_line_1
         rbs_line_2
         rbs_line_3
