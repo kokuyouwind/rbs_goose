@@ -1,48 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe RbsGoose::IO::File do
-  let(:ruby_file) { described_class.new(path: 'user_factory.rb', content: user_factory_code) }
-  let(:rbs_file) { described_class.new(path: 'user_factory.rbs', content: user_factory_rbs) }
-
-  let(:user_factory_code) do
-    <<~RUBY
-      class UserFactory
-        def name(name)
-          @name = name
-          self
-        end
-
-        def build
-          User.new(name: name)
-        end
-      end
-    RUBY
-  end
-
-  let(:user_factory_rbs) do
-    <<~RBS
-      class UserFactory
-        def name: (untyped name) -> untyped
-
-        def build: () -> untyped
-      end
-    RBS
-  end
-
-  let(:user_factory_refined_rbs) do
-    <<~REFINED_RBS
-      class UserFactory
-        def name: (String name) -> UserFactory
-
-        def build: () -> User
-      end
-    REFINED_RBS
-  end
-
   describe '.from_markdown' do
     subject { described_class.from_markdown(markdown) }
 
-    context 'when ruby file' do
+    context 'when ruby markdown' do
       let(:markdown) do
         <<~MARKDOWN
           ```ruby:path/to/ruby.rb
@@ -66,7 +28,7 @@ RSpec.describe RbsGoose::IO::File do
       end
     end
 
-    context 'when rbs file' do
+    context 'when rbs markdown' do
       let(:markdown) do
         <<~MARKDOWN
           ```rbs:path/to/rbs.rbs
@@ -92,8 +54,10 @@ RSpec.describe RbsGoose::IO::File do
   end
 
   describe '#type' do
+    subject { file.type }
+
     context 'when ruby file' do
-      subject { ruby_file.type }
+      let(:file) { build(:file, :ruby) }
 
       it 'returns ruby' do
         expect(subject).to eq(:ruby)
@@ -101,7 +65,7 @@ RSpec.describe RbsGoose::IO::File do
     end
 
     context 'when rbs file' do
-      subject { rbs_file.type }
+      let(:file) { build(:file, :rbs) }
 
       it 'returns rbs' do
         expect(subject).to eq(:rbs)
@@ -110,25 +74,31 @@ RSpec.describe RbsGoose::IO::File do
   end
 
   describe '#to_s' do
-    subject { ruby_file.to_s }
+    subject { file.to_s }
 
     context 'when ruby file' do
+      let(:file) { build(:file, :ruby) }
+
       it 'returns ruby markdown' do
         expect(subject).to eq(<<~MARKDOWN)
-          ```ruby:user_factory.rb
-          #{user_factory_code.strip}
+          ```ruby:example_ruby.rb
+          ruby_line_1
+          ruby_line_2
+          ruby_line_3
           ```
         MARKDOWN
       end
     end
 
     context 'when rbs file' do
-      subject { rbs_file.to_s }
+      let(:file) { build(:file, :rbs) }
 
       it 'returns rbs markdown' do
         expect(subject).to eq(<<~MARKDOWN)
-          ```rbs:user_factory.rbs
-          #{user_factory_rbs.strip}
+          ```rbs:example_rbs.rbs
+          rbs_line_1
+          rbs_line_2
+          rbs_line_3
           ```
         MARKDOWN
       end
@@ -137,12 +107,14 @@ RSpec.describe RbsGoose::IO::File do
 
   describe '#content=' do
     subject do
-      rbs_file.content = user_factory_refined_rbs
-      rbs_file.content
+      file.content = 'updated_content'
+      file.content
     end
 
+    let(:file) { build(:file) }
+
     it 'sets content' do
-      expect(subject).to eq(user_factory_refined_rbs.strip)
+      expect(subject).to eq('updated_content')
     end
   end
 end

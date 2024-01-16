@@ -3,6 +3,7 @@
 require 'rbs_goose'
 
 require 'dotenv/load'
+require 'factory_bot'
 require 'vcr'
 
 VCR.configure do |config|
@@ -24,6 +25,15 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  # FactoryBot
+  config.include FactoryBot::Syntax::Methods
+  config.before(:suite) do
+    FactoryBot.define do
+      initialize_with { new(**attributes) }
+    end
+    FactoryBot.find_definitions
   end
 
   config.before(:example, :configure) do
