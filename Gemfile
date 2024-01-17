@@ -7,6 +7,7 @@ gemspec
 
 gem 'dotenv', '~> 2.8.1'
 gem 'factory_bot', '~> 6.4.5'
+gem 'orthoses', '~> 1.13.0'
 gem 'rake', '~> 13.0'
 gem 'rspec', '~> 3.0'
 gem 'rubocop', '~> 1.21'

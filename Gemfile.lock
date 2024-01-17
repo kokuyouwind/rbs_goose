@@ -8,6 +8,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    abbrev (0.1.2)
     activesupport (7.1.2)
       base64
       bigdecimal
@@ -62,6 +63,8 @@ GEM
     minitest (5.21.1)
     multipart-post (2.3.0)
     mutex_m (0.2.0)
+    orthoses (1.13.0)
+      rbs (~> 3.0)
     parallel (1.23.0)
     parser (3.2.2.3)
       ast (~> 2.4.1)
@@ -73,6 +76,8 @@ GEM
     rainbow (3.1.1)
     rake (13.0.6)
     rb_sys (0.9.86)
+    rbs (3.4.1)
+      abbrev
     regexp_parser (2.8.1)
     rexml (3.2.5)
     rspec (3.12.0)
@@ -139,6 +144,7 @@ PLATFORMS
 DEPENDENCIES
   dotenv (~> 2.8.1)
   factory_bot (~> 6.4.5)
+  orthoses (~> 1.13.0)
   rake (~> 13.0)
   rbs_goose!
   rspec (~> 3.0)

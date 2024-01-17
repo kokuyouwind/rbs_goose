@@ -21,3 +21,24 @@ task :'spec:record' do
   ENV['RECORD'] = 'all'
   Rake::Task['spec'].invoke
 end
+
+namespace :sig do
+  desc 'build RBS prototypes to sig directory'
+  task :prototype do
+    require 'orthoses'
+    require_relative 'lib/rbs_goose'
+
+    Orthoses::Builder.new do
+      use Orthoses::CreateFileByName,
+          to: 'sig',
+          rmtree: true
+      # use Orthoses::PP
+      use Orthoses::Filter do |name, _|
+        name.start_with?('RbsGoose')
+      end
+      use Orthoses::Mixin
+      use Orthoses::RBSPrototypeRB, paths: Dir.glob('lib/**/*.rb')
+      run -> {}
+    end.call
+  end
+end
