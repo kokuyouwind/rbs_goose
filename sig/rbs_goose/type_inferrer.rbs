@@ -1,0 +1,3 @@
+class RbsGoose::TypeInferrer
+  def infer: (untyped typed_ruby) -> untyped
+end

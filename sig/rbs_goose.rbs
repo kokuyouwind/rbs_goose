@@ -1,4 +1,13 @@
 module RbsGoose
-  VERSION: String
-  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+  VERSION: "0.1.0"
+
+  self.@configuration: untyped
+
+  extend Forwardable
+
+  def self.configure: () { () -> untyped } -> untyped
+
+  def self.reset_configuration: () -> untyped
+
+  attr_reader self.configuration: untyped
 end

@@ -1,0 +1,2 @@
+class RbsGoose::Error < ::StandardError
+end
