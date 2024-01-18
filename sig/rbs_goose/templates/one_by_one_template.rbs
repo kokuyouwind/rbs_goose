@@ -1,9 +1,9 @@
 class RbsGoose::Templates::OneByOneTemplate
-  @template: untyped
-  def initialize: (instruction: untyped, examples: untyped) -> void
-  def format: (untyped typed_ruby) -> untyped
-  def parse_result: (untyped result) -> ::Array[untyped]
-  private attr_reader template: untyped
-  private def example_prompt: () -> untyped
+  @template: Langchain::Prompt::FewShotPromptTemplate
+  def initialize: (instruction: String, examples: Array) -> void
+  def format: (String typed_ruby) -> String
+  def parse_result: (String result) -> ::Array[IO::File]
+  private attr_reader template: Langchain::Prompt::FewShotPromptTemplate
+  private def example_prompt: () -> Langchain::Prompt::PromptTemplate
   private def input_template_string: () -> "========Input========\n{typed_ruby}\n\n========Output========"
 end

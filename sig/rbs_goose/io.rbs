@@ -1,2 +1,7 @@
 module RbsGoose::IO
+  module File
+  end
+
+  module TypedRuby
+  end
 end

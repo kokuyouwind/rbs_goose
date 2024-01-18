@@ -1,8 +1,8 @@
 class RbsGoose::IO::TypedRuby
-  @ruby: untyped
-  @rbs: untyped
-  def initialize: (ruby: untyped, rbs: untyped) -> void
-  def to_s: () -> ::String
-  private attr_reader ruby: untyped
-  private attr_reader rbs: untyped
+  @ruby: String
+  @rbs: String
+  def initialize: (ruby: String, rbs: String) -> void
+  def to_s: () -> String
+  private attr_reader ruby: String
+  private attr_reader rbs: String
 end
