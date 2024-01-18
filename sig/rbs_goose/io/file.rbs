@@ -7,6 +7,7 @@ class RbsGoose::IO::File
   def initialize: (path: untyped, ?content: untyped?) -> void
   def to_s: () -> ::String
   def content=: (untyped content) -> untyped
+  def write: () -> untyped
   attr_reader path: untyped
   attr_reader type: untyped
   attr_reader content: untyped
