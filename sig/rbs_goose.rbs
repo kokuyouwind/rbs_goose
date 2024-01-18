@@ -1,15 +1,13 @@
 module RbsGoose
-  VERSION: String
+  VERSION: "0.1.0"
 
-  self.@configuration: Configuration
+  self.@configuration: untyped
 
   extend Forwardable
 
-  def self.configure: () { () -> Configuration } -> untyped
+  def self.configure: () { () -> untyped } -> untyped
 
   def self.reset_configuration: () -> untyped
 
-  attr_reader self.configuration: Configuration
-
-  def_delegators self.configuration: llm, instruction, examples
+  attr_reader self.configuration: untyped
 end

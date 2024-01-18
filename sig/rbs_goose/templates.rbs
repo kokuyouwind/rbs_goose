@@ -1,3 +1,2 @@
 module RbsGoose::Templates
-  include OneByOneTemplate
 end

@@ -1,14 +1,14 @@
 class RbsGoose::Configuration
-  @llm: ::Langchain::LLM::OpenAI
+  @llm: untyped
   def initialize: () ?{ () -> untyped } -> void
-  attr_accessor llm: ::Langchain::LLM::OpenAI
-  attr_accessor instruction: String
-  attr_accessor examples: ::Array[{ typed_ruby: RbsGoose::IO::TypedRuby, refined_rbs: RbsGoose::IO::File }]
-  def use_open_ai: (String open_ai_access_token, ?default_options: ::Hash[Symbol, String]) -> untyped
-  private def default_instruction: () -> String
-  private def default_examples: () -> ::Array[{ typed_ruby: RbsGoose::IO::TypedRuby, refined_rbs: RbsGoose::IO::File }]
-  private def company_repository_typed: () -> RbsGoose::IO::TypedRuby
-  private def company_repository_code: () -> RbsGoose::IO::File
-  private def company_repository_rbs: () -> RbsGoose::IO::File
-  private def company_repository_refined_rbs: () -> RbsGoose::IO::File
+  attr_accessor llm: untyped
+  attr_accessor instruction: untyped
+  attr_accessor examples: untyped
+  def use_open_ai: (untyped open_ai_access_token, ?default_options: ::Hash[untyped, untyped]) -> untyped
+  private def default_instruction: () -> "Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type."
+  private def default_examples: () -> ::Array[{ typed_ruby: untyped, refined_rbs: untyped }]
+  private def company_repository_typed: () -> untyped
+  private def company_repository_code: () -> untyped
+  private def company_repository_rbs: () -> untyped
+  private def company_repository_refined_rbs: () -> untyped
 end
