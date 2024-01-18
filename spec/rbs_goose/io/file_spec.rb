@@ -53,6 +53,34 @@ RSpec.describe RbsGoose::IO::File do
     end
   end
 
+  describe '.initialize' do
+    let(:path) { fixture_path('example.rb') }
+
+    context 'with content' do
+      subject { described_class.new(path: path, content: 'example_line') }
+
+      it 'sets content from arguments' do
+        expect(subject).to have_attributes(
+          path: path,
+          type: :ruby,
+          content: 'example_line'
+        )
+      end
+    end
+
+    context 'without content' do
+      subject { described_class.new(path: path) }
+
+      it 'sets content from file' do
+        expect(subject).to have_attributes(
+          path: path,
+          type: :ruby,
+          content: "# frozen_string_literal: true\n# example_file_line"
+        )
+      end
+    end
+  end
+
   describe '#type' do
     subject { file.type }
 
@@ -115,6 +143,16 @@ RSpec.describe RbsGoose::IO::File do
 
     it 'sets content' do
       expect(subject).to eq('updated_content')
+    end
+  end
+
+  describe '#write' do
+    let(:file) { build(:file, :ruby, content: 'example_content') }
+
+    it 'writes content to file' do
+      allow(File).to receive(:write).and_return(nil)
+      file.write
+      expect(File).to have_received(:write).with(file.path, file.content)
     end
   end
 end

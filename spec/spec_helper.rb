@@ -6,6 +6,11 @@ require 'dotenv/load'
 require 'factory_bot'
 require 'vcr'
 
+RSPEC_ROOT = File.dirname __FILE__
+def fixture_path(path)
+  File.join(RSPEC_ROOT, 'fixtures', path)
+end
+
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
   config.hook_into :webmock

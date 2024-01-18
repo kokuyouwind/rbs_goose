@@ -24,7 +24,7 @@ module RbsGoose
                 else
                   raise ArgumentError, "Unknown file type: #{path}"
                 end
-        @content = content.strip
+        @content = content.nil? ? ::File.read(@path).strip : content.strip
       end
 
       def to_s
@@ -33,6 +33,10 @@ module RbsGoose
 
       def content=(content)
         @content = content.strip
+      end
+
+      def write
+        ::File.write(path, content)
       end
 
       attr_reader :path, :type, :content
