@@ -12,8 +12,6 @@ module RbsGoose
         { typed_ruby: typed_ruby, refined_rbs: refined_rbs }
       end
 
-      private
-
       attr_reader :typed_ruby, :refined_rbs
     end
   end
