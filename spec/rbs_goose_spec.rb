@@ -64,12 +64,7 @@ RSpec.describe RbsGoose do
     subject { described_class.examples }
 
     it 'returns examples' do
-      expect(subject).to match(
-        [{
-          typed_ruby: be_a(RbsGoose::IO::TypedRuby),
-          refined_rbs: be_a(RbsGoose::IO::File)
-        }]
-      )
+      expect(subject).to contain_exactly(be_a(RbsGoose::IO::Example))
     end
   end
 end

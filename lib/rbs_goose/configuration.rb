@@ -30,10 +30,10 @@ module RbsGoose
     end
 
     def default_examples
-      [{
+      [RbsGoose::IO::Example.new(
         typed_ruby: company_repository_typed,
         refined_rbs: company_repository_refined_rbs
-      }]
+      )]
     end
 
     def company_repository_typed

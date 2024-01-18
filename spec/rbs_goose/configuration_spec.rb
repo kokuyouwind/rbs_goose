@@ -9,12 +9,7 @@ RSpec.describe RbsGoose::Configuration do
     end
 
     it 'sets default examples' do
-      expect(subject.examples).to match(
-        [{
-          typed_ruby: be_a(RbsGoose::IO::TypedRuby),
-          refined_rbs: be_a(RbsGoose::IO::File)
-        }]
-      )
+      expect(subject.examples).to contain_exactly(be_a(RbsGoose::IO::Example))
     end
 
     context 'when block is given' do

@@ -10,7 +10,7 @@ module RbsGoose
           prefix: instruction,
           suffix: "#{input_template_string}\n",
           example_prompt: example_prompt,
-          examples: examples,
+          examples: examples.map(&:to_h),
           input_variables: %w[typed_ruby]
         )
       end
