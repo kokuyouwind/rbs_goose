@@ -44,18 +44,24 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
     REFINED_RBS
   end
 
-  describe '#infer' do
-    subject { described_class.new.infer(user_factory_typed) }
+  describe '#infer', :configure do
+    context 'with OneByOneTemplate' do
+      subject { described_class.new.infer([user_factory_typed]) }
 
-    it 'returns refined rbs' do
-      VCR.use_cassette('openai/infer_user_factory') do
-        expect(subject).to contain_exactly(
-          be_a(RbsGoose::IO::File)
-            .and(have_attributes(
-                   path: 'user_factory.rbs',
-                   content: user_factory_refined_rbs.strip
-                 ))
-        )
+      before do
+        RbsGoose.configuration.template_class = RbsGoose::Templates::OneByOneTemplate
+      end
+
+      it 'returns refined rbs' do
+        VCR.use_cassette('openai/infer_user_factory') do
+          expect(subject).to contain_exactly(
+            be_a(RbsGoose::IO::File)
+              .and(have_attributes(
+                     path: 'user_factory.rbs',
+                     content: user_factory_refined_rbs.strip
+                   ))
+          )
+        end
       end
     end
   end
