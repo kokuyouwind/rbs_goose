@@ -9,6 +9,7 @@ AllCops:
   Exclude:
     - 'lib/rbs_goose/examples/**/*'
     - 'spec/fixtures/**/*'
+    - 'vendor/bundle/**/*'
 
 Style/StringLiterals:
   Enabled: true
