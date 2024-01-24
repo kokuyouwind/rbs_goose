@@ -15,8 +15,6 @@ module RbsGoose
         "#{ruby}\n#{rbs}"
       end
 
-      private
-
       attr_reader :ruby, :rbs
     end
   end

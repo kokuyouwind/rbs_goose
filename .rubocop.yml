@@ -6,6 +6,9 @@ require:
 AllCops:
   TargetRubyVersion: 3.0
   NewCops: enable
+  Exclude:
+    - 'lib/rbs_goose/examples/**/*'
+    - 'spec/fixtures/**/*'
 
 Style/StringLiterals:
   Enabled: true
@@ -30,6 +33,9 @@ RSpec/ExampleLength:
 
 RSpec/MultipleMemoizedHelpers:
   Max: 10
+
+RSpec/MultipleExpectations:
+  Max: 5
 
 FactoryBot/FactoryAssociationWithStrategy:
   Enabled: false

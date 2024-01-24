@@ -1,0 +1,3 @@
+class CompanyRepository
+  def find: (untyped id) -> untyped
+end

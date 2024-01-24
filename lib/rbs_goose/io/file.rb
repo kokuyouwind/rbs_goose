@@ -14,17 +14,30 @@ module RbsGoose
         end
       end
 
-      def initialize(path:, content: nil)
+      def initialize(path:, content: nil, base_path: nil)
         @path = path
-        @type = case path
-                in /\.rb\z/
-                  :ruby
-                in /\.rbs\z/
-                  :rbs
-                else
-                  raise ArgumentError, "Unknown file type: #{path}"
-                end
-        @content = content.nil? ? ::File.read(@path).strip : content.strip
+        @base_path = base_path
+        @content = content&.strip
+        load_content if @content.nil?
+      end
+
+      def load_content
+        @content = ::File.read(absolute_path).strip
+      end
+
+      def absolute_path
+        base_path ? ::File.join(base_path, path) : path
+      end
+
+      def type
+        @type ||= case path
+                  in /\.rb\z/
+                    :ruby
+                  in /\.rbs\z/
+                    :rbs
+                  else
+                    raise ArgumentError, "Unknown file type: #{path}"
+                  end
       end
 
       def to_s
@@ -39,7 +52,7 @@ module RbsGoose
         ::File.write(path, content)
       end
 
-      attr_reader :path, :type, :content
+      attr_reader :path, :content, :base_path
     end
   end
 end
