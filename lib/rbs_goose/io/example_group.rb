@@ -5,13 +5,15 @@ module RbsGoose
     class ExampleGroup < Array
       class << self
         def load_from(base_path, code_dir: 'lib', sig_dir: 'sig', refined_dir: 'refined')
-          Dir.glob('**/*.rb', base: ::File.join(base_path, code_dir)).map do |path|
-            Example.from_path(
-              ruby_path: ::File.join(code_dir, path),
-              rbs_path: to_rbs_path(path, sig_dir),
-              refined_rbs_dir: refined_dir,
-              base_path: base_path
-            )
+          new.tap do |group|
+            Dir.glob('**/*.rb', base: ::File.join(base_path, code_dir)).each do |path|
+              group << Example.from_path(
+                ruby_path: ::File.join(code_dir, path),
+                rbs_path: to_rbs_path(path, sig_dir),
+                refined_rbs_dir: refined_dir,
+                base_path: base_path
+              )
+            end
           end
         end
 

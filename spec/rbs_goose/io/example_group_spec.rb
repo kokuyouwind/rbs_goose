@@ -5,7 +5,7 @@ RSpec.describe RbsGoose::IO::ExampleGroup do
     subject { described_class.load_from(fixture_path('examples/test')) }
 
     it 'load example groups' do
-      expect(subject).to contain_exactly(
+      expect(subject).to be_a(described_class).and contain_exactly(
         be_a(RbsGoose::IO::Example)
       )
       expect(subject[0].typed_ruby.ruby).to have_attributes(
