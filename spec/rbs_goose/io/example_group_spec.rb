@@ -17,8 +17,30 @@ RSpec.describe RbsGoose::IO::ExampleGroup do
         content: 'def test: untyped'
       )
       expect(subject[0].refined_rbs).to have_attributes(
-        path: 'sig.refined/test.rbs',
+        path: 'sig/test.rbs',
         content: 'def test: string'
+      )
+    end
+  end
+
+  describe '.default_examples' do
+    subject { described_class.default_examples }
+
+    it 'returns example groups' do
+      expect(subject).to include(:company_repository)
+      expect(subject[:company_repository].count).to eq(1)
+      expect(subject[:company_repository][0]).to have_attributes(
+        typed_ruby: have_attributes(
+          ruby: have_attributes(
+            path: 'lib/company_repository.rb'
+          ),
+          rbs: have_attributes(
+            path: 'sig/company_repository.rbs'
+          )
+        ),
+        refined_rbs: have_attributes(
+          path: 'sig/company_repository.rbs'
+        )
       )
     end
   end

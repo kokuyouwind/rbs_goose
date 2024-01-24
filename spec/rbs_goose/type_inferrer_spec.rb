@@ -29,8 +29,8 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
   let(:user_factory_typed) do
     build(
       :typed_ruby,
-      ruby: build(:file, path: 'user_factory.rb', content: user_factory_code),
-      rbs: build(:file, path: 'user_factory.rbs', content: user_factory_rbs)
+      ruby: build(:file, path: 'lib/user_factory.rb', content: user_factory_code),
+      rbs: build(:file, path: 'sig/user_factory.rbs', content: user_factory_rbs)
     )
   end
 
@@ -57,7 +57,7 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
           expect(subject).to contain_exactly(
             be_a(RbsGoose::IO::File)
               .and(have_attributes(
-                     path: 'user_factory.rbs',
+                     path: 'sig/user_factory.rbs',
                      content: user_factory_refined_rbs.strip
                    ))
           )

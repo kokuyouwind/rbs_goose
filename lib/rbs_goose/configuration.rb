@@ -39,43 +39,7 @@ module RbsGoose
     end
 
     def default_examples
-      [RbsGoose::IO::Example.new(
-        typed_ruby: company_repository_typed,
-        refined_rbs: company_repository_refined_rbs
-      )]
-    end
-
-    def company_repository_typed
-      RbsGoose::IO::TypedRuby.new(
-        ruby: company_repository_code,
-        rbs: company_repository_rbs
-      )
-    end
-
-    def company_repository_code
-      RbsGoose::IO::File.new(path: 'company_repository.rb', content: <<~RUBY)
-        class CompanyRepository
-          def find
-            Company.find_by(id: params[:id])
-          end
-        end
-      RUBY
-    end
-
-    def company_repository_rbs
-      RbsGoose::IO::File.new(path: 'company_repository.rbs', content: <<~RBS)
-        class CompanyRepository
-          def find: (untyped id) -> untyped
-        end
-      RBS
-    end
-
-    def company_repository_refined_rbs
-      RbsGoose::IO::File.new(path: 'company_repository.rbs', content: <<~RBS)
-        class CompanyRepository
-          def find: (Integer id) -> Company
-        end
-      RBS
+      RbsGoose::IO::ExampleGroup.default_examples[:company_repository]
     end
   end
 end
