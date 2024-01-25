@@ -25,7 +25,7 @@ RSpec.describe RbsGoose::Templates::OneByOneTemplate do
   end
 
   describe '#format' do
-    subject { described_class.new(instruction: instruction, examples: examples).format(input_typed_ruby) }
+    subject { described_class.new(instruction: instruction, example_groups: [examples]).format(input_typed_ruby) }
 
     let(:instruction) { 'This is example instruction.' }
 
@@ -75,7 +75,7 @@ RSpec.describe RbsGoose::Templates::OneByOneTemplate do
   end
 
   describe '#parse_result' do
-    subject { described_class.new(instruction: '', examples: []).parse_result(result) }
+    subject { described_class.new(instruction: '', example_groups: []).parse_result(result) }
 
     let(:result) do
       <<~RESULT

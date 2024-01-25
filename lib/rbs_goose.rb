@@ -23,6 +23,6 @@ module RbsGoose
 
     attr_reader :configuration
 
-    def_delegators :configuration, :llm, :instruction, :examples
+    def_delegators :configuration, :llm, :instruction, :example_groups
   end
 end

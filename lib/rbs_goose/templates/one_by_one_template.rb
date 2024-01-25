@@ -5,12 +5,12 @@ require 'langchain'
 module RbsGoose
   module Templates
     class OneByOneTemplate
-      def initialize(instruction:, examples:)
+      def initialize(instruction:, example_groups:)
         @template = Langchain::Prompt::FewShotPromptTemplate.new(
           prefix: instruction,
           suffix: "#{input_template_string}\n",
           example_prompt: example_prompt,
-          examples: examples.map(&:to_h),
+          examples: example_groups.flat_map { _1.map(&:to_h) },
           input_variables: %w[typed_ruby]
         )
       end

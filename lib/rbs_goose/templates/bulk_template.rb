@@ -5,12 +5,12 @@ require 'langchain'
 module RbsGoose
   module Templates
     class BulkTemplate
-      def initialize(instruction:, examples:)
+      def initialize(instruction:, example_groups:)
         @template = Langchain::Prompt::FewShotPromptTemplate.new(
           prefix: instruction,
           suffix: "#{input_template_string}\n",
           example_prompt: example_prompt,
-          examples: [bulk_examples(examples)],
+          examples: example_groups.map { bulk_examples(_1) },
           input_variables: %w[typed_ruby_list]
         )
       end

@@ -18,7 +18,7 @@ RSpec.describe RbsGoose do
       subject do
         described_class.configure do |c|
           c.instruction = 'dummy_instruction'
-          c.examples = 'dummy_examples'
+          c.example_groups = 'dummy_examples'
           c.use_open_ai('dummy_token')
         end
         described_class.configuration
@@ -27,7 +27,7 @@ RSpec.describe RbsGoose do
       it 'sets configuration attributes' do
         expect(subject).to have_attributes(
           instruction: 'dummy_instruction',
-          examples: 'dummy_examples',
+          example_groups: 'dummy_examples',
           llm: be_a(Langchain::LLM::OpenAI)
         )
       end
@@ -60,11 +60,11 @@ RSpec.describe RbsGoose do
     end
   end
 
-  describe '.examples', :configure do
-    subject { described_class.examples }
+  describe '.example_groups', :configure do
+    subject { described_class.example_groups }
 
-    it 'returns examples' do
-      expect(subject).to contain_exactly(be_a(RbsGoose::IO::Example))
+    it 'returns example groups' do
+      expect(subject).to contain_exactly(be_a(RbsGoose::IO::ExampleGroup))
     end
   end
 end

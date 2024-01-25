@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe RbsGoose::Templates::BulkTemplate do
-  let(:examples) do
-    [
+  let(:example_groups) do
+    [[
       build(:example,
             typed_ruby: build(
               :typed_ruby,
@@ -17,7 +17,7 @@ RSpec.describe RbsGoose::Templates::BulkTemplate do
               rbs: build(:file, content: 'rbs_2', path: 'example_rbs_2.rbs')
             ),
             refined_rbs: build(:file, content: 'refined_rbs_2', path: 'example_rbs_2.rbs'))
-    ]
+    ]]
   end
 
   let(:input_typed_ruby_list) do
@@ -36,7 +36,9 @@ RSpec.describe RbsGoose::Templates::BulkTemplate do
   end
 
   describe '#format' do
-    subject { described_class.new(instruction: instruction, examples: examples).format(input_typed_ruby_list) }
+    subject do
+      described_class.new(instruction: instruction, example_groups: example_groups).format(input_typed_ruby_list)
+    end
 
     let(:instruction) { 'This is example instruction.' }
 

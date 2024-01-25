@@ -8,15 +8,15 @@ RSpec.describe RbsGoose::Configuration do
       expect(subject.instruction).to eq('Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.') # rubocop:disable Layout/LineLength
     end
 
-    it 'sets default examples' do
-      expect(subject.examples).to contain_exactly(be_a(RbsGoose::IO::Example))
+    it 'sets default example groups' do
+      expect(subject.example_groups).to contain_exactly(be_a(RbsGoose::IO::ExampleGroup))
     end
 
     context 'when block is given' do
       subject do
         described_class.new do |c|
           c.instruction = 'dummy_instruction'
-          c.examples = 'dummy_examples'
+          c.example_groups = []
         end
       end
 
@@ -25,7 +25,7 @@ RSpec.describe RbsGoose::Configuration do
       end
 
       it 'sets examples' do
-        expect(subject.examples).to eq('dummy_examples')
+        expect(subject.example_groups).to eq([])
       end
     end
   end

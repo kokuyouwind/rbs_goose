@@ -7,12 +7,12 @@ module RbsGoose
   class Configuration
     def initialize(&block)
       self.instruction = default_instruction
-      self.examples = default_examples
+      self.example_groups = default_example_groups
       self.template_class = default_template_class
       instance_eval(&block) if block_given?
     end
 
-    attr_accessor :llm, :instruction, :examples, :template_class
+    attr_accessor :llm, :instruction, :example_groups, :template_class
 
     def use_open_ai(open_ai_access_token, default_options: {})
       @llm = ::Langchain::LLM::OpenAI.new(
@@ -25,7 +25,7 @@ module RbsGoose
     end
 
     def template
-      @template ||= template_class.new(instruction: instruction, examples: examples)
+      @template ||= template_class.new(instruction: instruction, example_groups: example_groups)
     end
 
     private
@@ -38,8 +38,8 @@ module RbsGoose
       'Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.' # rubocop:disable Layout/LineLength
     end
 
-    def default_examples
-      RbsGoose::IO::ExampleGroup.default_examples[:company_repository]
+    def default_example_groups
+      [RbsGoose::IO::ExampleGroup.default_examples[:company_repository]]
     end
   end
 end
