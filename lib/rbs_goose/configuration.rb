@@ -31,7 +31,7 @@ module RbsGoose
     private
 
     def default_template_class
-      Templates::OneByOneTemplate
+      Templates::DefaultTemplate
     end
 
     def default_instruction

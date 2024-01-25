@@ -45,12 +45,8 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
   end
 
   describe '#infer', :configure do
-    context 'with OneByOneTemplate' do
+    context 'with DefaultTemplate' do
       subject { described_class.new.infer([user_factory_typed]) }
-
-      before do
-        RbsGoose.configuration.template_class = RbsGoose::Templates::OneByOneTemplate
-      end
 
       it 'returns refined rbs' do
         VCR.use_cassette('openai/infer_user_factory') do
