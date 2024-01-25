@@ -1,60 +1,25 @@
 # frozen_string_literal: true
 
 RSpec.describe RbsGoose::TypeInferrer, :configure do
-  let(:user_factory_code) do
-    <<~RUBY
-      class UserFactory
-        def name(name)
-          @name = name
-          self
-        end
-
-        def build
-          User.new(name: name)
-        end
-      end
-    RUBY
+  let(:target_group) do
+    RbsGoose::IO::TargetGroup.load_from(fixture_path('targets/user_factory'))
   end
 
-  let(:user_factory_rbs) do
-    <<~RBS
-      class UserFactory
-        def name: (untyped name) -> untyped
-
-        def build: () -> untyped
-      end
-    RBS
-  end
-
-  let(:user_factory_typed) do
-    build(
-      :typed_ruby,
-      ruby: build(:file, path: 'lib/user_factory.rb', content: user_factory_code),
-      rbs: build(:file, path: 'sig/user_factory.rbs', content: user_factory_rbs)
-    )
-  end
-
-  let(:user_factory_refined_rbs) do
-    <<~REFINED_RBS
-      class UserFactory
-        def name: (String name) -> UserFactory
-
-        def build: () -> User
-      end
-    REFINED_RBS
+  let(:refined_rbs) do
+    RbsGoose::IO::File.new(path: 'sig/user_factory.rbs', base_path: fixture_path('targets/user_factory/refined'))
   end
 
   describe '#infer', :configure do
     context 'with DefaultTemplate' do
-      subject { described_class.new.infer([user_factory_typed]) }
+      subject { described_class.new.infer(target_group) }
 
       it 'returns refined rbs' do
         VCR.use_cassette('openai/infer_user_factory') do
           expect(subject).to contain_exactly(
             be_a(RbsGoose::IO::File)
               .and(have_attributes(
-                     path: 'sig/user_factory.rbs',
-                     content: user_factory_refined_rbs.strip
+                     path: refined_rbs.path,
+                     content: refined_rbs.content
                    ))
           )
         end

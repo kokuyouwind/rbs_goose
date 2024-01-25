@@ -1,0 +1,5 @@
+class UserFactory
+  def name: (String name) -> UserFactory
+
+  def build: () -> User
+end
