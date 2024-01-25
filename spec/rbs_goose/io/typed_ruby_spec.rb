@@ -1,6 +1,28 @@
 # frozen_string_literal: true
 
 RSpec.describe RbsGoose::IO::TypedRuby do
+  describe '.from_path' do
+    subject do
+      described_class.from_path(
+        ruby_path: 'lib/test.rb',
+        rbs_path: 'sig/test.rbs',
+        base_path: fixture_path('targets/test')
+      )
+    end
+
+    it 'load typed ruby' do
+      expect(subject).to be_a(described_class)
+      expect(subject.ruby).to have_attributes(
+        path: 'lib/test.rb',
+        content: 'def test; end'
+      )
+      expect(subject.rbs).to have_attributes(
+        path: 'sig/test.rbs',
+        content: 'def test: untyped'
+      )
+    end
+  end
+
   describe '#to_s' do
     subject { build(:typed_ruby).to_s }
 

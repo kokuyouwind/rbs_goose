@@ -6,10 +6,7 @@ module RbsGoose
       class << self
         def from_path(ruby_path:, rbs_path:, refined_rbs_dir:, base_path:)
           Example.new(
-            typed_ruby: TypedRuby.new(
-              ruby: File.new(path: ruby_path, base_path: base_path),
-              rbs: File.new(path: rbs_path, base_path: base_path)
-            ),
+            typed_ruby: TypedRuby.from_path(ruby_path: ruby_path, rbs_path: rbs_path, base_path: base_path),
             refined_rbs: File.new(path: rbs_path, base_path: ::File.join(base_path, refined_rbs_dir))
           )
         end
