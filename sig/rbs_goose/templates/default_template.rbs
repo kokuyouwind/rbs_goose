@@ -1,10 +1,10 @@
 class RbsGoose::Templates::DefaultTemplate
   @template: Langchain::Prompt::FewShotPromptTemplate
-  def initialize: (instruction: String, example_groups: Array[untyped]) -> void
-  def format: (Array[untyped]) -> untyped
-  def parse_result: (untyped) -> untyped
+  def initialize: (instruction: String, example_groups: Array[RbsGoose::IO::ExampleGroup]) -> void
+  def format: (Array[String] typed_ruby_list) -> String
+  def parse_result: (String result) -> Array[RbsGoose::IO::File]
   private attr_reader template: Langchain::Prompt::FewShotPromptTemplate
   private def example_prompt: () -> Langchain::Prompt::PromptTemplate
   private def input_template_string: () -> String
-  private def transform_example_group: (Array[untyped]) -> { typed_ruby_list: untyped, refined_rbs_list: untyped }
+  private def transform_example_group: (RbsGoose::IO::ExampleGroup example_group) -> { typed_ruby_list: String, refined_rbs_list: String }
 end
