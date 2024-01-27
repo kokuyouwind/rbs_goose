@@ -1,0 +1,6 @@
+target :lib do
+  # signature "sig"
+  signature "refined/sig"
+
+  check "lib"
+end

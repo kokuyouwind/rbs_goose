@@ -1,0 +1,15 @@
+class Phone
+  @country: untyped
+
+  @number: untyped
+
+  attr_reader country: untyped
+
+  attr_reader number: untyped
+
+  def initialize: (country: untyped, number: untyped) -> void
+
+  def ==: (untyped other) -> (untyped | nil)
+
+  def hash: () -> untyped
+end

@@ -6,15 +6,45 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-3.5-turbo-0613","temperature":0.0,"n":1,"messages":[{"role":"user","content":"Act
-        as Ruby type inferrer. When ruby source codes and RBS type signatures are
-        given, refine RBS type signatures. Use class names, variable names, etc.,
-        to infer type.\n\n========Input========\n```ruby:lib/company_repository.rb\nclass
-        CompanyRepository\n  def find\n    Company.find_by(id: params[:id])\n  end\nend\n```\n\n```rbs:sig/company_repository.rbs\nclass
-        CompanyRepository\n  def find: (untyped id) -> untyped\nend\n```\n\n\n========Output========\n```rbs:sig/company_repository.rbs\nclass
-        CompanyRepository\n  def find: (Integer id) -> Company\nend\n```\n\n\n========Input========\n```ruby:lib/user_factory.rb\nclass
-        UserFactory\n  def name(name)\n    @name = name\n    self\n  end\n\n  def
-        build\n    User.new(name: name)\n  end\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass
-        UserFactory\n  def name: (untyped name) -> untyped\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========\n"}],"max_tokens":3859}'
+        as Ruby type inferrer.\nWhen ruby source codes and RBS type signatures are
+        given, refine each RBS type signatures. Each file should be split in markdown
+        code format.\nUse class names, variable names, etc., to infer type.\n\n\n========Input========\n```ruby:lib/email.rb\nclass
+        Email\n  # @dynamic address\n  attr_reader :address\n\n  def initialize(address:)\n    @address
+        = address\n  end\n\n  def ==(other)\n    other.is_a?(self.class) && other.address
+        == address\n  end\n\n  def hash\n    self.class.hash ^ address.hash\n  end\nend\n```\n\n```rbs:sig/email.rbs\nclass
+        Email\n  @address: untyped\n\n  attr_reader address: untyped\n\n  def initialize:
+        (address: untyped) -> void\n\n  def ==: (untyped other) -> untyped\n\n  def
+        hash: () -> untyped\nend\n```\n\n```ruby:lib/person.rb\nclass Person\n  #
+        @dynamic name, contacts\n  attr_reader :name\n  attr_reader :contacts\n\n  def
+        initialize(name:)\n    @name = name\n    @contacts = []\n  end\n\n  def guess_country()\n    contacts.map
+        do |contact|\n      case contact\n      when Phone\n        contact.country\n      end\n    end.compact.first\n  end\nend\n```\n\n```rbs:sig/person.rbs\nclass
+        Person\n  @name: untyped\n\n  @contacts: untyped\n\n  attr_reader name: untyped\n\n  attr_reader
+        contacts: untyped\n\n  def initialize: (name: untyped) -> void\n\n  def guess_country:
+        () -> untyped\nend\n```\n\n```ruby:lib/phone.rb\nclass Phone\n  # @dynamic
+        country, number\n  attr_reader :country, :number\n\n  def initialize(country:,
+        number:)\n    @country = country\n    @number = number\n  end\n\n  def ==(other)\n    if
+        other.is_a?(Phone)\n      # @type var other: Phone\n      other.country ==
+        country && other.number == number\n    else\n      false\n    end\n  end\n\n  def
+        hash\n    self.class.hash ^ country.hash ^ number.hash\n  end\nend\n```\n\n```rbs:sig/phone.rbs\nclass
+        Phone\n  @country: untyped\n\n  @number: untyped\n\n  attr_reader country:
+        untyped\n\n  attr_reader number: untyped\n\n  def initialize: (country: untyped,
+        number: untyped) -> void\n\n  def ==: (untyped other) -> (untyped | nil)\n\n  def
+        hash: () -> untyped\nend\n```\n\n\n========Output========\n```rbs:sig/email.rbs\nclass
+        Email\n  @address: String\n\n  attr_reader address: String\n\n  def initialize:
+        (address: String) -> void\n\n  def ==: (untyped other) -> bool\n\n  def hash:
+        () -> Integer\nend\n```\n\n```rbs:sig/person.rbs\nclass Person\n  @name: String\n\n  @contacts:
+        Array[Email | Phone]\n\n  attr_reader name: String\n\n  attr_reader contacts:
+        Array[Email | Phone]\n\n  def initialize: (name: String) -> void\n\n  def
+        guess_country: () -> (String | nil)\nend\n```\n\n```rbs:sig/phone.rbs\nclass
+        Phone\n  @country: String\n\n  @number: String\n\n  attr_reader country: String\n\n  attr_reader
+        number: String\n\n  def initialize: (country: String, number: String) -> void\n\n  def
+        ==: (untyped other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Input========\n```ruby:lib/user.rb\nclass
+        User\n  def initialize(name:)\n    @name = name\n  end\n\n  attr_reader :name\nend\n```\n\n```rbs:sig/user.rbs\nclass
+        User\n  @name: untyped\n\n  def initialize: (name: untyped) -> void\n\n  attr_reader
+        name: untyped\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
+        name(name)\n    @name = name\n    self\n  end\n\n  def build\n    User.new(name:
+        @name)\n  end\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
+        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========\n"}],"max_tokens":3131}'
     headers:
       Content-Type:
       - application/json
@@ -32,7 +62,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Jan 2024 13:23:00 GMT
+      - Sat, 27 Jan 2024 05:29:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +78,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '560'
+      - '2675'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -60,52 +90,52 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '55925'
+      - '56041'
       X-Ratelimit-Reset-Requests:
       - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 4.075s
+      - 3.959s
       X-Request-Id:
-      - cf2842bdc6ffba03ba157fbdbf34f6ec
+      - 18dc6721128168e258a67031af06fb24
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=KtYljfAH6c_lzryuL1re6HJU0Af2IWlBqQ3oqluwa1Y-1706102580-1-AYlwagfgwOgHEu+NXX6ksIPKiR64VW68Q+IwmPXpADMuwrGp7bNrZIbGZx9qMIjFrHP/t8QQdQLniu1EgOe4OE8=;
-        path=/; expires=Wed, 24-Jan-24 13:53:00 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=kgNG749xktZyPpSMrmU61r2Ru2GZxexPt4ri5wJ_GJw-1706333379-1-AcodZj+nnep/f/vOWG9F4jsJPK2K3dXxEuZG4tEaphmAHQJyVq2lxIVQ7AMOSKD0iDc3+Vyvhe7o6JUgYSKVFeE=;
+        path=/; expires=Sat, 27-Jan-24 05:59:39 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=BiPbjBq_8FH0DKNWMs.7wMJYe2VjDG.X270x.Fnat78-1706102580434-0-604800000;
+      - _cfuvid=soYaGLrDG6gKSTmm2ldCAK5eHjAgH4yZN8DNYohk1bQ-1706333379045-0-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 84a896a22e951a16-KIX
+      - 84be99506ba00aae-KIX
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-8kXVTRtdB9cUJq6eXbb54cbPWiIeo",
+          "id": "chatcmpl-8lVY0LStIdk7ZcmfSVW6wxkDiJBtt",
           "object": "chat.completion",
-          "created": 1706102579,
+          "created": 1706333376,
           "model": "gpt-3.5-turbo-0613",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "```rbs:sig/user_factory.rbs\nclass UserFactory\n  def name: (String name) -> UserFactory\n\n  def build: () -> User\nend\n```"
+                "content": "```rbs:sig/user.rbs\nclass User\n  @name: String\n\n  def initialize: (name: String) -> void\n\n  attr_reader name: String\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name: String\n\n  def name: (String name) -> self\n\n  def build: () -> User\nend\n```"
               },
               "logprobs": null,
               "finish_reason": "stop"
             }
           ],
           "usage": {
-            "prompt_tokens": 237,
-            "completion_tokens": 37,
-            "total_tokens": 274
+            "prompt_tokens": 965,
+            "completion_tokens": 83,
+            "total_tokens": 1048
           },
           "system_fingerprint": null
         }
-  recorded_at: Wed, 24 Jan 2024 13:23:00 GMT
+  recorded_at: Sat, 27 Jan 2024 05:29:39 GMT
 recorded_with: VCR 6.2.0

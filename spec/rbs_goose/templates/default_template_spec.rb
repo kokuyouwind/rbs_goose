@@ -106,10 +106,16 @@ RSpec.describe RbsGoose::Templates::DefaultTemplate do
 
     let(:result) do
       <<~RESULT
-        ```rbs:result_rbs.rbs
-        result_rbs_line_1
-        result_rbs_line_2
-        result_rbs_line_3
+        ```rbs:result_rbs_1.rbs
+        result_rbs_1_line_1
+        result_rbs_1_line_2
+        result_rbs_1_line_3
+        ```
+
+        ```rbs:result_rbs_2.rbs
+        result_rbs_2_line_1
+        result_rbs_2_line_2
+        result_rbs_2_line_3
         ```
       RESULT
     end
@@ -118,11 +124,20 @@ RSpec.describe RbsGoose::Templates::DefaultTemplate do
       expect(subject).to contain_exactly(
         be_a(RbsGoose::IO::File)
           .and(have_attributes(
-                 path: 'result_rbs.rbs',
+                 path: 'result_rbs_1.rbs',
                  content: <<~RBS.strip
-                   result_rbs_line_1
-                   result_rbs_line_2
-                   result_rbs_line_3
+                   result_rbs_1_line_1
+                   result_rbs_1_line_2
+                   result_rbs_1_line_3
+                 RBS
+               )),
+        be_a(RbsGoose::IO::File)
+          .and(have_attributes(
+                 path: 'result_rbs_2.rbs',
+                 content: <<~RBS.strip
+                   result_rbs_2_line_1
+                   result_rbs_2_line_2
+                   result_rbs_2_line_3
                  RBS
                ))
       )

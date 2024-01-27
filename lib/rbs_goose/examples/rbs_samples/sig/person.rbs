@@ -1,0 +1,13 @@
+class Person
+  @name: untyped
+
+  @contacts: untyped
+
+  attr_reader name: untyped
+
+  attr_reader contacts: untyped
+
+  def initialize: (name: untyped) -> void
+
+  def guess_country: () -> untyped
+end

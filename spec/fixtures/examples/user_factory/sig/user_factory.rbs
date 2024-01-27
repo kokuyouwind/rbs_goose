@@ -1,5 +1,7 @@
 class UserFactory
-  def name: (untyped name) -> untyped
+  @name: untyped
+
+  def name: (untyped name) -> self
 
   def build: () -> untyped
 end

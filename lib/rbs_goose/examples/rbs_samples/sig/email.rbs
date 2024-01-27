@@ -1,0 +1,11 @@
+class Email
+  @address: untyped
+
+  attr_reader address: untyped
+
+  def initialize: (address: untyped) -> void
+
+  def ==: (untyped other) -> untyped
+
+  def hash: () -> untyped
+end

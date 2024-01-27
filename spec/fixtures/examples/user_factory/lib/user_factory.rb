@@ -5,6 +5,6 @@ class UserFactory
   end
 
   def build
-    User.new(name: name)
+    User.new(name: @name)
   end
 end

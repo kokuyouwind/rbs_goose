@@ -1,0 +1,7 @@
+class User
+  @name: untyped
+
+  def initialize: (name: untyped) -> void
+
+  attr_reader name: untyped
+end

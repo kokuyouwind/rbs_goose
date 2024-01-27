@@ -20,7 +20,7 @@ module RbsGoose
       end
 
       def parse_result(result)
-        [IO::File.from_markdown(result)]
+        result.scan(/```.+?```/m).map { IO::File.from_markdown(_1) }
       end
 
       private
