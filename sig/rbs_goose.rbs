@@ -1,12 +1,15 @@
 module RbsGoose
   VERSION: "0.1.0"
-  self.@configuration: RbsGoose::Configuration
+
+  self.@configuration: untyped
+
   extend Forwardable
-  def self.configure: () { (RbsGoose::Configuration)[self: RbsGoose::Configuration] -> void } -> void
+
+  def self.configure: () { () -> untyped } -> untyped
+
   def self.reset_configuration: () -> untyped
+
   def self.run: (?code_dir: ::String, ?sig_dir: ::String, ?base_path: untyped) -> untyped
-  attr_reader self.configuration: RbsGoose::Configuration
-  def self.llm: () -> Langchain::LLM::OpenAI
-  def self.instruction: () -> String
-  def self.example_groups: () -> Array[untyped]
+
+  attr_reader self.configuration: untyped
 end
