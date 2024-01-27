@@ -52,7 +52,7 @@ namespace :sig do # rubocop:disable Metrics/BlockLength
       c.use_open_ai(
         ENV.fetch('OPENAI_ACCESS_TOKEN'),
         default_options: {
-          completion_model_name: 'gpt-3.5-turbo-1106'
+          completion_model_name: 'gpt-4-1106-preview'
         }
       )
     end

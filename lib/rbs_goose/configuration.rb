@@ -17,6 +17,9 @@ module RbsGoose
     def use_open_ai(open_ai_access_token, default_options: {})
       @llm = ::Langchain::LLM::OpenAI.new(
         api_key: open_ai_access_token,
+        llm_options: {
+          request_timeout: 240
+        },
         default_options: {
           completion_model_name: 'gpt-3.5-turbo-0613',
           chat_completion_model_name: 'gpt-3.5-turbo-0613'
