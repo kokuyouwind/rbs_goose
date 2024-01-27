@@ -30,6 +30,16 @@ module RbsGoose
           ::File.join(sig_dir, "#{path}s")
         end
       end
+
+      def to_target_group
+        TargetGroup.new.tap do |g|
+          each { g << _1.typed_ruby }
+        end
+      end
+
+      def to_refined_rbs_list
+        map(&:refined_rbs)
+      end
     end
   end
 end

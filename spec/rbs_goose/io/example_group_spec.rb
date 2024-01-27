@@ -44,4 +44,37 @@ RSpec.describe RbsGoose::IO::ExampleGroup do
       )
     end
   end
+
+  describe 'to_target_group' do
+    subject { example_group.to_target_group }
+
+    let(:example_group) { described_class.load_from(fixture_path('examples/test')) }
+
+    it 'returns target group' do
+      expect(subject).to be_a(RbsGoose::IO::TargetGroup)
+        .and contain_exactly(be_a(RbsGoose::IO::TypedRuby))
+      expect(subject[0]).to have_attributes(
+        ruby: have_attributes(
+          path: 'lib/test.rb'
+        ),
+        rbs: have_attributes(
+          path: 'sig/test.rbs'
+        )
+      )
+    end
+  end
+
+  describe 'to_refined_rbs_list' do
+    subject { example_group.to_refined_rbs_list }
+
+    let(:example_group) { described_class.load_from(fixture_path('examples/test')) }
+
+    it 'returns refined rbs list' do
+      expect(subject).to be_a(Array)
+        .and contain_exactly(be_a(RbsGoose::IO::File))
+      expect(subject[0]).to have_attributes(
+        path: 'sig/test.rbs'
+      )
+    end
+  end
 end
