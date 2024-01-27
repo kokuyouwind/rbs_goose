@@ -11,18 +11,6 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
     context 'with DefaultTemplate' do
       subject { described_class.new.infer(target_group) }
 
-      before do
-        RbsGoose.configure do |c|
-          c.instruction = <<~INSTRUCTION
-            Act as Ruby type inferrer.
-            When ruby source codes and RBS type signatures are given, refine each RBS type signatures. Each file should be split in markdown code format.
-            Use class names, variable names, etc., to infer type.
-          INSTRUCTION
-          c.example_groups = [RbsGoose::IO::ExampleGroup.default_examples[:rbs_samples]]
-          c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
-        end
-      end
-
       it 'returns refined rbs' do
         VCR.use_cassette('openai/infer_user_factory') do
           expect(subject).to eq(refined_rbs_list)

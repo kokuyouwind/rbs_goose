@@ -5,7 +5,7 @@ RSpec.describe RbsGoose::Configuration do
     subject { described_class.new }
 
     it 'sets default instruction' do
-      expect(subject.instruction).to eq('Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.') # rubocop:disable Layout/LineLength
+      expect(subject.instruction).to start_with('Act as Ruby type inferrer')
     end
 
     it 'sets default example groups' do

@@ -35,11 +35,15 @@ module RbsGoose
     end
 
     def default_instruction
-      'Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.' # rubocop:disable Layout/LineLength
+      <<~INSTRUCTION
+        Act as Ruby type inferrer.
+        When ruby source codes and RBS type signatures are given, refine each RBS type signatures. Each file should be split in markdown code format.
+        Use class names, variable names, etc., to infer type.
+      INSTRUCTION
     end
 
     def default_example_groups
-      [RbsGoose::IO::ExampleGroup.default_examples[:company_repository]]
+      [RbsGoose::IO::ExampleGroup.default_examples[:rbs_samples]]
     end
   end
 end
