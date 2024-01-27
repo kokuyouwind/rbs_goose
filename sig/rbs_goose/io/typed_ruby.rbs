@@ -1,9 +1,9 @@
 class RbsGoose::IO::TypedRuby
   @ruby: RbsGoose::IO::File
-  @rbs: RbsGoose::IO::File
+  @rbs: RbsGoose::IO::File | nil
   def self.from_path: (ruby_path: String, rbs_path: String, base_path: untyped) -> RbsGoose::IO::TypedRuby
-  def initialize: (ruby: RbsGoose::IO::File, rbs: RbsGoose::IO::File) -> void
+  def initialize: (ruby: RbsGoose::IO::File, rbs: RbsGoose::IO::File | nil) -> void
   def to_s: () -> (untyped | String)
   attr_reader ruby: RbsGoose::IO::File
-  attr_reader rbs: RbsGoose::IO::File
+  attr_reader rbs: RbsGoose::IO::File | nil
 end

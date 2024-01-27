@@ -1,0 +1,3 @@
+class Class
+  def self.def_delegators: (*untyped) -> untyped
+end

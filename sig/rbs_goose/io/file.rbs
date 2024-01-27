@@ -8,7 +8,7 @@ class RbsGoose::IO::File
   def initialize: (path: String, ?content: String, ?base_path: untyped) -> void
   def load_content: () -> String
   def absolute_path: () -> String
-  def type: () -> :ruby | :rbs
+  def type: () -> (:ruby | :rbs)
   def to_s: () -> String
   def content=: (String) -> String
   def write: () -> untyped

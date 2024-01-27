@@ -1,0 +1,19 @@
+module Langchain
+  module LLM
+    class OpenAI
+      def initialize: (untyped) ->void
+      def complete: (untyped) -> untyped
+    end
+  end
+
+  module Prompt
+    class PromptTemplate
+      def initialize: (template: String, input_variables: Array[String]) -> void
+    end
+
+    class FewShotPromptTemplate
+      def initialize: (prefix: String, suffix: String, example_prompt: ::Langchain::Prompt::PromptTemplate, examples: Array[untyped], input_variables: Array[String]) -> void
+      def format: (untyped) -> untyped
+    end
+  end
+end

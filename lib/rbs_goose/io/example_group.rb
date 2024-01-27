@@ -18,7 +18,7 @@ module RbsGoose
         end
 
         def default_examples
-          example_dir = ::File.join(__dir__, '../examples')
+          example_dir = ::File.join(__dir__.to_s, '../examples')
           @default_examples ||= Dir.glob('*', base: example_dir).to_h do |dir|
             [dir.to_sym, load_from(::File.join(example_dir, dir))]
           end

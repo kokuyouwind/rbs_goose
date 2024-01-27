@@ -1,14 +1,14 @@
 class RbsGoose::Configuration
   @llm: Langchain::LLM::OpenAI
   @template: Langchain::Prompt::FewShotPromptTemplate
-  def initialize: () ?{ () -> untyped } -> void
+  def initialize: () ?{ (RbsGoose::Configuration)[self: RbsGoose::Configuration] -> void } -> void
   attr_accessor llm: Langchain::LLM::OpenAI
   attr_accessor instruction: String
   attr_accessor example_groups: Array[untyped]
-  attr_accessor template_class: Templates::DefaultTemplate
+  attr_accessor template_class: singleton(RbsGoose::Templates::DefaultTemplate)
   def use_open_ai: (String open_ai_access_token, ?default_options: ::Hash[untyped, untyped]) -> untyped
-  def template: () -> Langchain::Prompt::FewShotPromptTemplate
-  private def default_template_class: () -> Templates::DefaultTemplate
+  def template: () -> RbsGoose::Templates::DefaultTemplate
+  private def default_template_class: () -> singleton(RbsGoose::Templates::DefaultTemplate)
   private def default_instruction: () -> String
   private def default_example_groups: () -> Array[untyped]
 end

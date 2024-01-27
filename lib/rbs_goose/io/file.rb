@@ -10,7 +10,7 @@ module RbsGoose
           parsed = markdown.match(MARKDOWN_REGEXP)
           raise ArgumentError, "Ruby or RBS Markdown parsing failed.\n#{markdown}" unless parsed
 
-          new(path: parsed[:path], content: parsed[:content])
+          new(path: parsed[:path].to_s, content: parsed[:content].to_s)
         end
       end
 
