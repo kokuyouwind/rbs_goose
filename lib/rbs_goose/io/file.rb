@@ -52,6 +52,12 @@ module RbsGoose
         ::File.write(path, content)
       end
 
+      def ==(other)
+        self.class == other.class &&
+          @path == other.path &&
+          @content == other.content
+      end
+
       attr_reader :path, :content, :base_path
     end
   end

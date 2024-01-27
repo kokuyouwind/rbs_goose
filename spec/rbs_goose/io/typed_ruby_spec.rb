@@ -6,7 +6,7 @@ RSpec.describe RbsGoose::IO::TypedRuby do
       described_class.from_path(
         ruby_path: 'lib/test.rb',
         rbs_path: 'sig/test.rbs',
-        base_path: fixture_path('targets/test')
+        base_path: fixture_path('examples/test')
       )
     end
 

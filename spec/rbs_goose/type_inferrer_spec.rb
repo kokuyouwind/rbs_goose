@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe RbsGoose::TypeInferrer, :configure do
-  let(:target_group) do
-    RbsGoose::IO::TargetGroup.load_from(fixture_path('targets/user_factory'))
+  let(:example_group) do
+    RbsGoose::IO::ExampleGroup.load_from(fixture_path('examples/user_factory'))
   end
-
-  let(:refined_rbs) do
-    RbsGoose::IO::File.new(path: 'sig/user_factory.rbs', base_path: fixture_path('targets/user_factory/refined'))
-  end
+  let(:target_group) { example_group.to_target_group }
+  let(:refined_rbs_list) { example_group.to_refined_rbs_list }
 
   describe '#infer', :configure do
     context 'with DefaultTemplate' do
@@ -15,13 +13,7 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
 
       it 'returns refined rbs' do
         VCR.use_cassette('openai/infer_user_factory') do
-          expect(subject).to contain_exactly(
-            be_a(RbsGoose::IO::File)
-              .and(have_attributes(
-                     path: refined_rbs.path,
-                     content: refined_rbs.content
-                   ))
-          )
+          expect(subject).to eq(refined_rbs_list)
         end
       end
     end

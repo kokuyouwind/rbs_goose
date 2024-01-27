@@ -2,7 +2,7 @@
 
 RSpec.describe RbsGoose::IO::TargetGroup do
   describe '.load_from' do
-    subject { described_class.load_from(fixture_path('targets/test')) }
+    subject { described_class.load_from(fixture_path('examples/test')) }
 
     it 'load target groups' do
       expect(subject).to be_a(described_class).and contain_exactly(
