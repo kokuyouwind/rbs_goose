@@ -49,26 +49,13 @@ namespace :sig do # rubocop:disable Metrics/BlockLength
     require_relative 'lib/rbs_goose'
 
     RbsGoose.configure do |c|
-      c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
-    end
-
-    Dir.glob('lib/**/*.rb').each do |ruby_path|
-      puts "target ruby: #{ruby_path}"
-      rbs_path = ruby_path.gsub(%r{^lib/}, 'sig/').gsub(/\.rb$/, '.rbs')
-      puts "target rbs: #{rbs_path}"
-
-      typed_ruby = RbsGoose::IO::TypedRuby.new(
-        ruby: RbsGoose::IO::File.new(path: ruby_path),
-        rbs: RbsGoose::IO::File.new(path: rbs_path)
+      c.use_open_ai(
+        ENV.fetch('OPENAI_ACCESS_TOKEN'),
+        default_options: {
+          completion_model_name: 'gpt-3.5-turbo-1106'
+        }
       )
-
-      RbsGoose::TypeInferrer.new.infer(typed_ruby).each do |refined_rbs|
-        puts "write refined rbs to #{refined_rbs.path}\n"
-        refined_rbs.write
-        puts "done.\n\n"
-      end
-    rescue StandardError => e
-      puts "Error has occurred. Skip #{ruby_path}.\n#{e}"
     end
+    RbsGoose.run
   end
 end
