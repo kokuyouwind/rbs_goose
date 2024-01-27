@@ -27,20 +27,11 @@ RSpec.describe RbsGoose::IO::ExampleGroup do
     subject { described_class.default_examples }
 
     it 'returns example groups' do
-      expect(subject.keys).to eq(%i[company_repository rbs_samples])
-      expect(subject[:company_repository].count).to eq(1)
-      expect(subject[:company_repository][0]).to have_attributes(
-        typed_ruby: have_attributes(
-          ruby: have_attributes(
-            path: 'lib/company_repository.rb'
-          ),
-          rbs: have_attributes(
-            path: 'sig/company_repository.rbs'
-          )
-        ),
-        refined_rbs: have_attributes(
-          path: 'sig/company_repository.rbs'
-        )
+      expect(subject.keys).to eq(%i[rbs_samples])
+      expect(subject[:rbs_samples]).to contain_exactly(
+        be_a(RbsGoose::IO::Example).and(have_attributes(refined_rbs: have_attributes(path: 'sig/email.rbs'))),
+        be_a(RbsGoose::IO::Example).and(have_attributes(refined_rbs: have_attributes(path: 'sig/person.rbs'))),
+        be_a(RbsGoose::IO::Example).and(have_attributes(refined_rbs: have_attributes(path: 'sig/phone.rbs')))
       )
     end
   end

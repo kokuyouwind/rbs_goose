@@ -1,3 +1,0 @@
-class CompanyRepository
-  def find: (Integer id) -> Company
-end
