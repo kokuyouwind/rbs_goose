@@ -1,14 +1,14 @@
 class RbsGoose::Configuration
   @llm: untyped
+  @template: untyped
   def initialize: () ?{ () -> untyped } -> void
   attr_accessor llm: untyped
   attr_accessor instruction: untyped
-  attr_accessor examples: untyped
+  attr_accessor example_groups: untyped
+  attr_accessor template_class: untyped
   def use_open_ai: (untyped open_ai_access_token, ?default_options: ::Hash[untyped, untyped]) -> untyped
-  private def default_instruction: () -> "Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type."
-  private def default_examples: () -> ::Array[{ typed_ruby: untyped, refined_rbs: untyped }]
-  private def company_repository_typed: () -> untyped
-  private def company_repository_code: () -> untyped
-  private def company_repository_rbs: () -> untyped
-  private def company_repository_refined_rbs: () -> untyped
+  def template: () -> untyped
+  private def default_template_class: () -> untyped
+  private def default_instruction: () -> "Act as Ruby type inferrer.\nWhen ruby source codes and RBS type signatures are given, refine each RBS type signatures. Each file should be split in markdown code format.\nUse class names, variable names, etc., to infer type.\n"
+  private def default_example_groups: () -> ::Array[untyped]
 end
