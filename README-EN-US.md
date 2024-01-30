@@ -5,11 +5,11 @@
 [![en-US README](https://img.shields.io/badge/Multilingual_README-en--US-blue.svg)](/README-EN-US.md)
 [![en-JP README](https://img.shields.io/badge/Multilingual_README-ja--JP-orangered.svg)](/README.md)
 
-[![Ruby](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml/badge.svg)](https://github.com/kokuyouwind/rbs_goose/) actions/workflows/main.yml)
+[![Ruby](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml/badge.svg)](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml)
 
 RBS Goose is a tool that uses ChatGPT and other large language models to infer the RBS signature of Ruby code.
 
-> [!CAUTION].
+> [!CAUTION]
 > Currently undergoing technical validation, so you may get little or no output of the appropriate types.
 > Also, the tool uses ChatGPT API and other tools to infer RBS signatures, so depending on the size of your code, the usage fee may be expensive.
 
