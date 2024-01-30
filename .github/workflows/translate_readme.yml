@@ -1,0 +1,21 @@
+name: Translate README
+
+on:
+  pull_request:
+    paths:
+      - README.md
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: DeepL Translate Github Action
+        uses: lyqht/deepl-translate-github-action@v2.1.1
+        with:
+          target_languages: EN-US
+          input_file_path: README.md
+          output_file_name_pattern: README-{language}.md
+          deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
