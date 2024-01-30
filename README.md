@@ -16,13 +16,17 @@ RBS Goose は ChatGPT などの大規模言語モデルを利用して、 Ruby �
 ## Installation
 
 ```bash
-$ gem install rbs-goose
+$ gem install rbs_goose
+# 利用する LangChain LLM に応じて、対応する gem を合わせてインストールします
+$ gem install ruby-openai
 ```
 
 `bundler` を利用する場合は、代わりに以下を `Gemfile` に追加してください。
 
 ```ruby
-gem 'rbs-goose'
+gem 'rbs_goose'
+# 利用する LangChain LLM に応じて、対応する gem を合わせてインストールします
+gem 'ruby-openai'
 ```
 
 ## Usage
@@ -32,13 +36,16 @@ gem 'rbs-goose'
 [OpenAI API](https://openai.com/blog/openai-api) を利用する場合は以下のようにします。
 
 ```ruby
-  desc 'refine RBS files in sig directory'
-  task :refine do
-    RbsGoose.configure do |c|
-      c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
-    end
-    RbsGoose.run
+require 'rbs_goose'
+require 'openai'
+
+desc 'refine RBS files in sig directory'
+task :refine do
+  RbsGoose.configure do |c|
+    c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
   end
+  RbsGoose.run
+end
 ```
 
 このタスクを実行すると、 `lib` 以下の Ruby コードと `sig` 以下の RBS シグニチャを参照し、推測したシグニチャを上書きします。

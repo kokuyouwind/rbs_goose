@@ -16,29 +16,36 @@ RBS Goose is a tool that uses ChatGPT and other large language models to infer t
 ## Installation
 
 ```bash
-$ gem install rbs-goose
+$ gem install rbs_goose
+## Depending on the LangChain LLM you are using, install the corresponding gem
+$ gem install ruby-openai
 ```
 
 If you use `bundler`, add the following to your `Gemfile` instead.
 
 ```ruby
-gem 'rbs-goose'.
+gem 'rbs_goose'.
+# Depending on your LangChain LLM, install the corresponding gem
+gem 'ruby-openai'
 ```
 
 ## Usage
 
-Currently, the command line tool is not yet available, so please call `RbsGoose.run` directly from `Rakefile` or other sources.
+Currently, command line tools are not yet available, so please call `RbsGoose.run` directly from `Rakefile` or other sources.
 
 If you use [OpenAI API](https://openai.com/blog/openai-api), do the following.
 
 ```ruby
-  desc 'refine RBS files in sig directory'
-  task :refine do
-    RbsGoose.configure do |c|
-      c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
-    end
-    RbsGoose.run
+require 'rbs_goose'
+require 'openai'
+
+desc 'refine RBS files in sig directory' ```ruby require 'rbs_goose' require 'openai'
+task :refine do
+  RbsGoose.configure do |c|
+    c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
   end
+  RbsGoose.run
+end
 ```
 
 Running this task will reference the Ruby code under `lib` and the RBS signature under `sig` and override the guessed signature.
