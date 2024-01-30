@@ -2,43 +2,50 @@
   <img src="https://raw.githubusercontent.com/kokuyouwind/rbs_goose/main/assets/logo.svg" alt="RuboCop Logo"/>
 </p>
 
-[![en-US README](https://img.shields.io/badge/Multilingual_README-en--US-blue.svg)](/README-EN-US.md)
-[![en-JP README](https://img.shields.io/badge/Multilingual_README-ja--JP-orangered.svg)](/README.md)
+[! [en-US README](https://img.shields.io/badge/Multilingual_README-en--US-blue.svg)](/README-EN-US.md)
+[! [en-JP README](https://img.shields.io/badge/Multilingual_README-ja--JP-orangered.svg)](/README.md)
 
-[![Ruby](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml/badge.svg)](https://github.com/kokuyouwind/rbs_goose/) actions/workflows/main.yml)
+[! [Ruby](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml/badge.svg)](https://github.com/kokuyouwind/rbs_goose/) actions/workflows/main.yml)
 
 RBS Goose is a tool that uses ChatGPT and other large language models to infer the RBS signature of Ruby code.
 
-> [!CAUTION].
-> Currently undergoing technical validation, so you may get little or no output of the appropriate types.
-> Also, the tool uses ChatGPT API and other tools to infer RBS signatures, so depending on the size of your code, the usage fee may be expensive.
+&gt; [!CAUTION].
+&gt; &gt; &gt; Currently undergoing technical validation, so you may get little or no output &gt; &gt; of the appropriate types.
+&gt; Also, the tool uses ChatGPT API and other tools to infer RBS signatures, so depending on the size of your code, the usage fee may be expensive.
 
 ## Installation
 
 ```bash
-$ gem install rbs-goose
+$ gem install rbs_goose
+## Depending on the LangChain LLM you are using, install the corresponding gem
+$ gem install ruby-openai
 ```
 
 If you use `bundler`, add the following to your `Gemfile` instead.
 
 ```ruby
-gem 'rbs-goose'.
+gem 'rbs_goose'.
+# Depending on your LangChain LLM, install the corresponding gem
+gem 'ruby-openai'
 ```
 
 ## Usage
 
-Currently, the command line tool is not yet available, so please call `RbsGoose.run` directly from `Rakefile` or other sources.
+Currently, command line tools are not yet available, so please call `RbsGoose.run` directly from `Rakefile` or other sources.
 
 If you use [OpenAI API](https://openai.com/blog/openai-api), do the following.
 
 ```ruby
-  desc 'refine RBS files in sig directory'
-  task :refine do
-    RbsGoose.configure do |c|
-      c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
-    end
-    RbsGoose.run
+require 'rbs_goose'
+require 'openai'
+
+desc 'refine RBS files in sig directory' ```ruby require 'rbs_goose' require 'openai'
+task :refine do
+  RbsGoose.configure do |c|
+    c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
   end
+  RbsGoose.run
+end
 ```
 
 Running this task will reference the Ruby code under `lib` and the RBS signature under `sig` and override the guessed signature.
