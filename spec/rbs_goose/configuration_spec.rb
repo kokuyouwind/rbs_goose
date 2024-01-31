@@ -40,7 +40,7 @@ RSpec.describe RbsGoose::Configuration do
         api_key: 'dummy_token',
         default_options: {
           completion_model_name: 'dummy_model',
-          chat_completion_model_name: 'gpt-3.5-turbo-0613'
+          chat_completion_model_name: 'gpt-3.5-turbo-1106'
         }
       )
     end

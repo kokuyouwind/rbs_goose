@@ -24,7 +24,7 @@ task :'spec:record' do
   Rake::Task['spec'].invoke
 end
 
-namespace :sig do # rubocop:disable Metrics/BlockLength
+namespace :sig do
   desc 'build RBS prototypes to sig directory'
   task :prototype do
     require 'orthoses'
@@ -49,12 +49,7 @@ namespace :sig do # rubocop:disable Metrics/BlockLength
     require_relative 'lib/rbs_goose'
 
     RbsGoose.configure do |c|
-      c.use_open_ai(
-        ENV.fetch('OPENAI_ACCESS_TOKEN'),
-        default_options: {
-          completion_model_name: 'gpt-3.5-turbo-1106'
-        }
-      )
+      c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
     end
     RbsGoose.run
   end
