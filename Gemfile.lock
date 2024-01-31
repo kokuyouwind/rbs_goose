@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     rbs_goose (0.1.0)
-      langchainrb (~> 0.8.2)
-      ruby-openai (~> 6.1.0)
+      langchainrb (>= 0.8.2, < 1.0.0)
+      ruby-openai (>= 6.1.0, < 7.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -36,15 +36,15 @@ GEM
     dotenv (2.8.1)
     drb (2.2.0)
       ruby2_keywords
-    event_stream_parser (0.3.0)
+    event_stream_parser (1.0.0)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
-    faraday (2.7.9)
-      faraday-net_http (>= 2.0, < 3.1)
-      ruby2_keywords (>= 0.0.4)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
     faraday-multipart (1.0.4)
       multipart-post (~> 2)
-    faraday-net_http (3.0.2)
+    faraday-net_http (3.1.0)
+      net-http
     ffi (1.16.3)
     fileutils (1.7.2)
     hashdiff (1.1.0)
@@ -71,6 +71,8 @@ GEM
     minitest (5.21.2)
     multipart-post (2.3.0)
     mutex_m (0.2.0)
+    net-http (0.4.1)
+      uri
     orthoses (1.13.0)
       rbs (~> 3.0)
     parallel (1.23.0)
@@ -127,8 +129,8 @@ GEM
       rubocop (~> 1.33)
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
-    ruby-openai (6.1.0)
-      event_stream_parser (>= 0.3.0, < 1.0.0)
+    ruby-openai (6.3.1)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
       faraday (>= 1)
       faraday-multipart (>= 1)
     ruby-progressbar (1.13.0)
@@ -159,6 +161,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode (0.4.4.4)
     unicode-display_width (2.4.2)
+    uri (0.13.0)
     vcr (6.2.0)
     webmock (3.19.1)
       addressable (>= 2.8.0)
@@ -182,7 +185,7 @@ DEPENDENCIES
   rubocop-factory_bot (~> 2.25.1)
   rubocop-rake (~> 0.6.0)
   rubocop-rspec (~> 2.22)
-  ruby-openai (~> 6.1.0)
+  ruby-openai (~> 6.3.0)
   steep (~> 1.6.0)
   vcr (~> 6.2.0)
   webmock (~> 3.19.0)
