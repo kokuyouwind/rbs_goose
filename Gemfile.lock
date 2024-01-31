@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     rbs_goose (0.1.0)
-      langchainrb (~> 0.8.2)
-      ruby-openai (~> 6.1.0)
+      langchainrb (>= 0.8.2, < 1.0.0)
+      ruby-openai (>= 6.1.0, < 7.0.0)
 
 GEM
   remote: https://rubygems.org/
