@@ -30,7 +30,7 @@ RSpec.describe RbsGoose::Templates::DefaultTemplate do
 
     let(:instruction) { 'This is example instruction.' }
 
-    it 'returns formatted prompt' do
+    it 'returns formatted prompt' do # rubocop:disable RSpec/ExampleLength
       expect(subject).to eq(<<~PROMPT)
         This is example instruction.
 
