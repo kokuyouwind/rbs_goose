@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-3.5-turbo-0613","temperature":0.0,"n":1,"messages":[{"role":"user","content":"Act
+      string: '{"model":"gpt-3.5-turbo-1106","temperature":0.0,"n":1,"messages":[{"role":"user","content":"Act
         as Ruby type inferrer.\nWhen ruby source codes and RBS type signatures are
         given, refine each RBS type signatures. Each file should be split in markdown
         code format.\nUse class names, variable names, etc., to infer type.\n\n\n========Input========\n```ruby:lib/email.rb\nclass
@@ -16,15 +16,16 @@ http_interactions:
         (address: untyped) -> void\n\n  def ==: (untyped other) -> untyped\n\n  def
         hash: () -> untyped\nend\n```\n\n```ruby:lib/person.rb\nclass Person\n  #
         @dynamic name, contacts\n  attr_reader :name\n  attr_reader :contacts\n\n  def
-        initialize(name:)\n    @name = name\n    @contacts = []\n  end\n\n  def guess_country()\n    contacts.map
-        do |contact|\n      case contact\n      when Phone\n        contact.country\n      end\n    end.compact.first\n  end\nend\n```\n\n```rbs:sig/person.rbs\nclass
+        initialize(name:)\n    @name = name\n    @contacts = []\n  end\n\n  def name=(name)\n    @name
+        = name\n  end\n\n  def guess_country()\n    contacts.map do |contact|\n      case
+        contact\n      when Phone\n        contact.country\n      end\n    end.compact.first\n  end\nend\n```\n\n```rbs:sig/person.rbs\nclass
         Person\n  @name: untyped\n\n  @contacts: untyped\n\n  attr_reader name: untyped\n\n  attr_reader
-        contacts: untyped\n\n  def initialize: (name: untyped) -> void\n\n  def guess_country:
-        () -> untyped\nend\n```\n\n```ruby:lib/phone.rb\nclass Phone\n  # @dynamic
-        country, number\n  attr_reader :country, :number\n\n  def initialize(country:,
-        number:)\n    @country = country\n    @number = number\n  end\n\n  def ==(other)\n    if
-        other.is_a?(Phone)\n      # @type var other: Phone\n      other.country ==
-        country && other.number == number\n    else\n      false\n    end\n  end\n\n  def
+        contacts: untyped\n\n  def initialize: (name: untyped) -> void\n\n  def name=:
+        (untyped name) -> void\n\n  def guess_country: () -> untyped\nend\n```\n\n```ruby:lib/phone.rb\nclass
+        Phone\n  # @dynamic country, number\n  attr_reader :country, :number\n\n  def
+        initialize(country:, number:)\n    @country = country\n    @number = number\n  end\n\n  def
+        ==(other)\n    if other.is_a?(Phone)\n      # @type var other: Phone\n      other.country
+        == country && other.number == number\n    else\n      false\n    end\n  end\n\n  def
         hash\n    self.class.hash ^ country.hash ^ number.hash\n  end\nend\n```\n\n```rbs:sig/phone.rbs\nclass
         Phone\n  @country: untyped\n\n  @number: untyped\n\n  attr_reader country:
         untyped\n\n  attr_reader number: untyped\n\n  def initialize: (country: untyped,
@@ -35,7 +36,7 @@ http_interactions:
         () -> Integer\nend\n```\n\n```rbs:sig/person.rbs\nclass Person\n  @name: String\n\n  @contacts:
         Array[Email | Phone]\n\n  attr_reader name: String\n\n  attr_reader contacts:
         Array[Email | Phone]\n\n  def initialize: (name: String) -> void\n\n  def
-        guess_country: () -> (String | nil)\nend\n```\n\n```rbs:sig/phone.rbs\nclass
+        name=: (String name) -> void\n\n  def guess_country: () -> (String | nil)\nend\n```\n\n```rbs:sig/phone.rbs\nclass
         Phone\n  @country: String\n\n  @number: String\n\n  attr_reader country: String\n\n  attr_reader
         number: String\n\n  def initialize: (country: String, number: String) -> void\n\n  def
         ==: (untyped other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Input========\n```ruby:lib/user.rb\nclass
@@ -44,7 +45,7 @@ http_interactions:
         name: untyped\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
         name(name)\n    @name = name\n    self\n  end\n\n  def build\n    User.new(name:
         @name)\n  end\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
-        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========\n"}],"max_tokens":3131}'
+        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========\n"}],"max_tokens":4096}'
     headers:
       Content-Type:
       - application/json
@@ -62,7 +63,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 27 Jan 2024 05:29:39 GMT
+      - Wed, 31 Jan 2024 09:28:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -74,11 +75,11 @@ http_interactions:
       Cache-Control:
       - no-cache, must-revalidate
       Openai-Model:
-      - gpt-3.5-turbo-0613
+      - gpt-3.5-turbo-1106
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '2675'
+      - '3783'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -90,35 +91,35 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '56041'
+      - '55904'
       X-Ratelimit-Reset-Requests:
       - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 3.959s
+      - 4.096s
       X-Request-Id:
-      - 18dc6721128168e258a67031af06fb24
+      - 64c3c2dbb284dab0d9113999eced4b2f
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=kgNG749xktZyPpSMrmU61r2Ru2GZxexPt4ri5wJ_GJw-1706333379-1-AcodZj+nnep/f/vOWG9F4jsJPK2K3dXxEuZG4tEaphmAHQJyVq2lxIVQ7AMOSKD0iDc3+Vyvhe7o6JUgYSKVFeE=;
-        path=/; expires=Sat, 27-Jan-24 05:59:39 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=3HKh52Zjz8bvW64xa4Bh9BkvMJOsugiR5gRxk8XwUXk-1706693303-1-AfkjT5OczuV2HEntO+3XOjchWcL3n5w1Qk0n3DSlviTIprpY6kLKUga3mUsQeoUtAIfSxMr17l8UzFnvwPrOENA=;
+        path=/; expires=Wed, 31-Jan-24 09:58:23 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=soYaGLrDG6gKSTmm2ldCAK5eHjAgH4yZN8DNYohk1bQ-1706333379045-0-604800000;
+      - _cfuvid=Sa6iNtDEHUglfuvJxa6aGg8lhtr9bICy6WpSzzslCO4-1706693303486-0-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 84be99506ba00aae-KIX
+      - 84e0ec81eb8a8341-KIX
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-8lVY0LStIdk7ZcmfSVW6wxkDiJBtt",
+          "id": "chatcmpl-8n1BDm7PWzS58JLTYp5DkDavvGANa",
           "object": "chat.completion",
-          "created": 1706333376,
-          "model": "gpt-3.5-turbo-0613",
+          "created": 1706693299,
+          "model": "gpt-3.5-turbo-1106",
           "choices": [
             {
               "index": 0,
@@ -131,11 +132,11 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 965,
+            "prompt_tokens": 1003,
             "completion_tokens": 83,
-            "total_tokens": 1048
+            "total_tokens": 1086
           },
-          "system_fingerprint": null
+          "system_fingerprint": "fp_b57c83dd65"
         }
-  recorded_at: Sat, 27 Jan 2024 05:29:39 GMT
+  recorded_at: Wed, 31 Jan 2024 09:28:23 GMT
 recorded_with: VCR 6.2.0

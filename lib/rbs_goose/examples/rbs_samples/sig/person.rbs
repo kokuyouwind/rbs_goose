@@ -9,5 +9,7 @@ class Person
 
   def initialize: (name: untyped) -> void
 
+  def name=: (untyped name) -> void
+
   def guess_country: () -> untyped
 end

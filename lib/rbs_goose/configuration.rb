@@ -18,8 +18,8 @@ module RbsGoose
       @llm = ::Langchain::LLM::OpenAI.new(
         api_key: open_ai_access_token,
         default_options: {
-          completion_model_name: 'gpt-3.5-turbo-0613',
-          chat_completion_model_name: 'gpt-3.5-turbo-0613'
+          completion_model_name: 'gpt-3.5-turbo-1106',
+          chat_completion_model_name: 'gpt-3.5-turbo-1106'
         }.merge(default_options)
       )
     end
