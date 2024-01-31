@@ -8,6 +8,10 @@ class Person
     @contacts = []
   end
 
+  def name=(name)
+    @name = name
+  end
+
   def guess_country()
     contacts.map do |contact|
       case contact
