@@ -1,9 +1,9 @@
 name: Translate README
 
 on:
-  pull_request:
+  push:
     paths:
-      - README.md
+      - README-ja.md
 
 jobs:
   translate:
@@ -13,9 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: DeepL Translate Github Action
-        uses: lyqht/deepl-translate-github-action@v2.1.1
+        uses: 3ru/gpt-translate@v1.1.9
         with:
-          target_languages: EN-US
-          input_file_path: README.md
-          output_file_name_pattern: README-{language}.md
-          deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
+          inputFiles: README-ja.md
+          outputFiles: README.md
+          languages: en-US
+          apikey: ${{ secrets.OPENAI_API_KEY_FOR_ACTIONS }}
