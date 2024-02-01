@@ -2,44 +2,44 @@
   <img src="https://raw.githubusercontent.com/kokuyouwind/rbs_goose/main/assets/logo.svg" alt="RuboCop Logo"/>
 </p>
 
-[![en-US README](https://img.shields.io/badge/Multilingual_README-en--US-blue.svg)](/README-EN-US.md)
-[![ja-JP README](https://img.shields.io/badge/Multilingual_README-ja--JP-orangered.svg)](/README.md)
+[![en-US README](https://img.shields.io/badge/Multilingual_README-en--US-blue.svg)](/README.md)
+[![ja-JP README](https://img.shields.io/badge/Multilingual_README-ja--JP-orangered.svg)](/README-ja.md)
 
 [![Ruby](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml/badge.svg)](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml)
 
-RBS Goose は ChatGPT などの大規模言語モデルを利用して、 Ruby コードの RBS シグニチャを推測するツールです。
+RBS Goose is a tool that uses ChatGPT and other large language models to infer the RBS signature of Ruby code.
 
 > [!CAUTION]
-> 現在は技術検証中のため、適切な型がほとんど、あるいは全く出力されない可能性があります。
-> また推測にあたっては ChatGPT API などを利用するため、コード規模によっては利用料が高額になる可能性があります。
+> Currently undergoing technical validation, so you may get little or no output of the appropriate types.
+> Also, the tool uses ChatGPT API and other tools to infer RBS signatures, so depending on the size of your code, the usage fee may be expensive.
 
 ## Installation
 
 ```bash
 $ gem install rbs_goose
-# 利用する LangChain LLM に応じて、対応する gem を合わせてインストールします
+## Depending on the LangChain LLM you are using, install the corresponding gem
 $ gem install ruby-openai
 ```
 
-`bundler` を利用する場合は、代わりに以下を `Gemfile` に追加してください。
+If you use `bundler`, add the following to your `Gemfile` instead.
 
 ```ruby
-gem 'rbs_goose'
-# 利用する LangChain LLM に応じて、対応する gem を合わせてインストールします
+gem 'rbs_goose'.
+# Depending on your LangChain LLM, install the corresponding gem
 gem 'ruby-openai'
 ```
 
 ## Usage
 
-現状ではコマンドラインツールが未整備なので、 `Rakefile` などから `RbsGoose.run` を直接呼び出してください。
+Currently, command line tools are not yet available, so please call `RbsGoose.run` directly from `Rakefile` or other sources.
 
-[OpenAI API](https://openai.com/blog/openai-api) を利用する場合は以下のようにします。
+If you use [OpenAI API](https://openai.com/blog/openai-api), do the following.
 
 ```ruby
 require 'rbs_goose'
 require 'openai'
 
-desc 'refine RBS files in sig directory'
+desc 'refine RBS files in sig directory' ```ruby require 'rbs_goose' require 'openai'
 task :refine do
   RbsGoose.configure do |c|
     c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
@@ -48,17 +48,17 @@ task :refine do
 end
 ```
 
-このタスクを実行すると、 `lib` 以下の Ruby コードと `sig` 以下の RBS シグニチャを参照し、推測したシグニチャを上書きします。
+Running this task will reference the Ruby code under `lib` and the RBS signature under `sig` and override the guessed signature.
 
-対象とするディレクトリを変更する場合、以下のように `RbsGoose.run` の引数を指定してください。
+To change the target directory, specify the following arguments to `RbsGoose.run`.
 
 ```ruby
 RbsGoose.run(code_dir: 'app', sig_dir: 'types', base_path: Rails.root)
 ```
 
-大規模言語モデルの呼び出しには [Langchain.rb](https://github.com/andreibondarev/langchainrb) を利用しています。
+[Langchain.rb](https://github.com/andreibondarev/langchainrb) is used to invoke the large language model.
 
-他の大規模言語モデルを利用する場合は、以下のように `llm` を直接設定してください。
+To use other large-scale language models, set `llm` directly as follows.
 
 ```ruby
 RbsGoose.configure do |c|
@@ -68,18 +68,18 @@ end
 
 ## Development
 
-リポジトリのチェックアウト後、bin/setup を実行して依存関係をインストールします。次に、`rake spec` を実行してテストを実行します。対話型プロンプトとして `bin/console` を実行して試してみることもできます。
+After checking out the repository, run bin/setup to install the dependencies. Next, run `rake spec` to run the tests. You can also try running `bin/console` as an interactive prompt.
 
-この gem をローカルマシンにインストールするには、`bundle exec rake install` を実行します。新しいバージョンをリリースするには、`version.rb` でバージョン番号を更新してから `bundle exec rake release` を実行します。これにより、バージョンに対する Git タグが作成され、Git のコミットと作成されたタグがプッシュされ、.gem ファイルが rubygems.org にプッシュされます。
+To install the gem on your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb` and run `bundle exec rake release`. This will create a Git tag for the version, push the Git commit and the created tag, and push the .gem file to rubygems.org.
 
 ## Contributing
 
-バグレポートやプルリクエストは GitHub の https://github.com/kokuyouwind/rbs_goose で受け付けています。このプロジェクトは、共同作業のための安全で歓迎すべきスペースを目指しており、貢献者は [行動規範](/CODE_OF_CONDUCT.md) に従うことが求められます。
+Bug reports and pull requests are accepted on GitHub at https://github.com/kokuyouwind/rbs_goose. The project aims to be a safe and welcoming space for collaborative work, and contributors are expected to follow the [CODE OF CONDUCT](/CODE_OF_CONDUCT.md).
 
-## ライセンス
+## License
 
-この gem は [MITライセンス](https://opensource.org/licenses/MIT) の条項に基づいてオープンソースとして利用できます。
+This gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
-## 行動規範
+## Code of Conduct
 
-RbsGoose プロジェクトのコードベース、課題トラッカー、チャットルーム、およびメーリングリストに関わる全員は、 [行動規範](/CODE_OF_CONDUCT.md) に従うことが求められます。
+Everyone involved with the RbsGoose project codebase, issue tracker, chat room, and mailing lists is expected to follow the [CODE OF CONDUCT](/CODE_OF_CONDUCT.md).
