@@ -7,39 +7,39 @@
 
 [![Ruby](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml/badge.svg)](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml)
 
-RBS Goose is a tool that uses ChatGPT and other large language models to infer the RBS signature of Ruby code.
+RBS Goose is a tool that uses large language models like ChatGPT to infer RBS signatures for Ruby code.
 
 > [!CAUTION]
-> Currently undergoing technical validation, so you may get little or no output of the appropriate types.
-> Also, the tool uses ChatGPT API and other tools to infer RBS signatures, so depending on the size of your code, the usage fee may be expensive.
+> Currently in the process of technical verification, there is a possibility that appropriate types may not be output at all or may not be output in most cases.
+> Also, when inferring, it may be expensive to use services such as the ChatGPT API, depending on the size of the code.
 
 ## Installation
 
 ```bash
 $ gem install rbs_goose
-## Depending on the LangChain LLM you are using, install the corresponding gem
+# Install the corresponding gem according to the LangChain LLM you want to use
 $ gem install ruby-openai
 ```
 
-If you use `bundler`, add the following to your `Gemfile` instead.
+If you are using `bundler`, add the following to your `Gemfile` instead.
 
 ```ruby
-gem 'rbs_goose'.
-# Depending on your LangChain LLM, install the corresponding gem
+gem 'rbs_goose'
+# Install the corresponding gem according to the LangChain LLM you want to use
 gem 'ruby-openai'
 ```
 
 ## Usage
 
-Currently, command line tools are not yet available, so please call `RbsGoose.run` directly from `Rakefile` or other sources.
+As the command-line tool is not fully developed at the moment, please call `RbsGoose.run` directly from a file like `Rakefile`.
 
-If you use [OpenAI API](https://openai.com/blog/openai-api), do the following.
+To use the [OpenAI API](https://openai.com/blog/openai-api), do the following:
 
 ```ruby
 require 'rbs_goose'
 require 'openai'
 
-desc 'refine RBS files in sig directory' ```ruby require 'rbs_goose' require 'openai'
+desc 'refine RBS files in sig directory'
 task :refine do
   RbsGoose.configure do |c|
     c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
@@ -48,17 +48,17 @@ task :refine do
 end
 ```
 
-Running this task will reference the Ruby code under `lib` and the RBS signature under `sig` and override the guessed signature.
+When you run this task, it will reference the Ruby code in the `lib` directory and the RBS signatures in the `sig` directory, and overwrite the inferred signatures.
 
-To change the target directory, specify the following arguments to `RbsGoose.run`.
+If you want to change the target directories, specify the arguments for `RbsGoose.run` as follows:
 
 ```ruby
 RbsGoose.run(code_dir: 'app', sig_dir: 'types', base_path: Rails.root)
 ```
 
-[Langchain.rb](https://github.com/andreibondarev/langchainrb) is used to invoke the large language model.
+The invocation of the large language model uses [Langchain.rb](https://github.com/andreibondarev/langchainrb).
 
-To use other large-scale language models, set `llm` directly as follows.
+If you want to use another large language model, set the `llm` directly as follows:
 
 ```ruby
 RbsGoose.configure do |c|
@@ -68,13 +68,13 @@ end
 
 ## Development
 
-After checking out the repository, run bin/setup to install the dependencies. Next, run `rake spec` to run the tests. You can also try running `bin/console` as an interactive prompt.
+After checking out the repository, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt.
 
-To install the gem on your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb` and run `bundle exec rake release`. This will create a Git tag for the version, push the Git commit and the created tag, and push the .gem file to rubygems.org.
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`. This will create a git tag for the version, push git commits and tags, and push the .gem file to rubygems.org.
 
 ## Contributing
 
-Bug reports and pull requests are accepted on GitHub at https://github.com/kokuyouwind/rbs_goose. The project aims to be a safe and welcoming space for collaborative work, and contributors are expected to follow the [CODE OF CONDUCT](/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/kokuyouwind/rbs_goose. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -82,4 +82,4 @@ This gem is available as open source under the terms of the [MIT License](https:
 
 ## Code of Conduct
 
-Everyone involved with the RbsGoose project codebase, issue tracker, chat room, and mailing lists is expected to follow the [CODE OF CONDUCT](/CODE_OF_CONDUCT.md).
+Everyone interacting in the RbsGoose project's codebases, issue trackers, chat rooms, and mailing lists is expected to follow the [code of conduct](/CODE_OF_CONDUCT.md).
