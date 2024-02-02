@@ -54,3 +54,35 @@ namespace :sig do
     RbsGoose.run
   end
 end
+
+namespace :readme do
+  desc 'translate japanese README to english README'
+  task :translate do
+    require 'langchain'
+    require 'openai'
+
+    readme_ja = File.read('README-ja.md')
+    puts '======== Japanese README ========'
+    puts readme_ja
+
+    llm = Langchain::LLM::OpenAI.new(
+      api_key: ENV.fetch('OPENAI_ACCESS_TOKEN'),
+      default_options: {
+        completion_model_name: 'gpt-3.5-turbo-1106',
+        chat_completion_model_name: 'gpt-3.5-turbo-1106'
+      }
+    )
+
+    readme_en = llm.complete(prompt: <<~PROMPT).completion
+      Translate the following markdown document into English, keeping the markdown formatting.
+
+      ======== INPUT ========
+      #{readme_ja}
+
+      ======== OUTPUT ========
+    PROMPT
+    puts '======== Translated English README ========'
+    puts readme_en
+    File.write('README.md', readme_en)
+  end
+end

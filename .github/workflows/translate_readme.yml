@@ -3,7 +3,7 @@ name: Translate README
 on:
   pull_request:
     paths:
-      - README.md
+      - README-ja.md
 
 jobs:
   translate:
@@ -12,10 +12,14 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: DeepL Translate Github Action
-        uses: lyqht/deepl-translate-github-action@v2.1.1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          target_languages: EN-US
-          input_file_path: README.md
-          output_file_name_pattern: README-{language}.md
-          deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Run the Translate task
+        run: bundle exec rake readme:translate
+        env:
+          OPENAI_ACCESS_TOKEN: ${{ secrets.OPENAI_API_KEY_FOR_ACTIONS }}
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
