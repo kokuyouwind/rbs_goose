@@ -28,8 +28,10 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
     - name: Run the default task
-      run: bundle exec rake
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4
+      uses: paambaati/codeclimate-action@v5.0.0
       env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+        coverageCommand: bundle exec rake
+        coverageLocations: |
+          ${{github.workspace}}/tmp/coverage/coverage.xml:cobertura
