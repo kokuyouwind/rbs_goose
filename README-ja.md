@@ -5,7 +5,10 @@
 [![en-US README](https://img.shields.io/badge/Multilingual_README-en--US-blue.svg)](/README.md)
 [![ja-JP README](https://img.shields.io/badge/Multilingual_README-ja--JP-orangered.svg)](/README-ja.md)
 
-[![Ruby](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml/badge.svg)](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml)
+[![CI](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml/badge.svg)](https://github.com/kokuyouwind/rbs_goose/actions/workflows/main.yml)
+[![Gem Version](https://badge.fury.io/rb/rbs_goose.svg)](https://badge.fury.io/rb/rbs_goose)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d05ed2e4fa5e565f87f5/test_coverage)](https://codeclimate.com/github/kokuyouwind/rbs_goose/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d05ed2e4fa5e565f87f5/maintainability)](https://codeclimate.com/github/kokuyouwind/rbs_goose/maintainability)
 
 RBS Goose は ChatGPT などの大規模言語モデルを利用して、 Ruby コードの RBS シグニチャを推測するツールです。
 
