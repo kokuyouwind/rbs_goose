@@ -1,7 +1,7 @@
 name: Translate README
 
 on:
-  push:
+  pull_request:
     paths:
       - README-ja.md
 
@@ -12,8 +12,6 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.PAT_FOR_AUTOCOMMIT }}
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
