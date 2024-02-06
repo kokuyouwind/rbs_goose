@@ -1,0 +1,14 @@
+feature:
+  - 'feature/*'
+  - 'feat/*'
+
+bugfix:
+  - 'fix/*'
+
+documentation:
+  - 'document/*'
+  - 'doc/*'
+
+maintenance:
+  - 'maintenance/*'
+  - 'chore/*'
