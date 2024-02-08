@@ -35,3 +35,22 @@ jobs:
         coverageCommand: bundle exec rake
         coverageLocations: |
           ${{github.workspace}}/tmp/coverage/coverage.xml:cobertura
+
+  steep:
+    runs-on: ubuntu-latest
+    name: Steep
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Cache RBS Collection
+        uses: actions/cache@v4
+        with:
+          path: .gem_rbs_collection
+          key: ${{ runner.os }}-rbs-collection
+      - name: Rbs Collection
+        run: bundle exec rbs collection install
+      - name: Steep
+        run: bundle exec steep check
