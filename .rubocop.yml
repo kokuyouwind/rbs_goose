@@ -7,7 +7,7 @@ AllCops:
   TargetRubyVersion: 3.0
   NewCops: enable
   Exclude:
-    - 'lib/rbs_goose/examples/**/*'
+    - 'examples/**/*'
     - 'spec/fixtures/**/*'
     - 'vendor/bundle/**/*'
 
