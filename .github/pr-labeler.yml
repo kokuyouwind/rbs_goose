@@ -12,3 +12,4 @@ documentation:
 maintenance:
   - 'maintenance/*'
   - 'chore/*'
+  - 'refact/*'
