@@ -10,6 +10,11 @@
     {
       "groupName": "rubocop",
       "matchPackagePatterns": [ "rubocop" ]
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
     }
   ]
 }
