@@ -44,6 +44,24 @@ RSpec.describe RbsGoose do
     end
   end
 
+  describe '.run', :configure do
+    subject { described_class.run(base_path: base_path) }
+
+    let(:base_path) { fixture_path('examples/user_factory') }
+    let(:expected_signatures) { RbsGoose::IO::ExampleGroup.load_from(base_path).to_refined_rbs_list }
+
+    it 'rewrites signatures' do
+      VCR.use_cassette('openai/infer_user_factory') do
+        allow(File).to receive(:write)
+
+        expect { subject }.to output(/Code Directory: lib, Signature Directory: sig/).to_stdout
+        expected_signatures.each do |expected|
+          expect(File).to have_received(:write).with(expected.path, expected.content)
+        end
+      end
+    end
+  end
+
   describe '.llm', :configure do
     subject { described_class.llm }
 
