@@ -7,8 +7,13 @@ SimpleCov.start do
   coverage_dir 'tmp/coverage'
   enable_coverage :branch
   add_filter %r{^/spec/}
+  formatter formatter SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::HTMLFormatter,
+      SimpleCov::Formatter::CoberturaFormatter
+    ]
+  )
 end
-SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
 
 require 'rbs_goose'
 

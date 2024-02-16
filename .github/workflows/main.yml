@@ -31,10 +31,17 @@ jobs:
       uses: paambaati/codeclimate-action@v5.0.0
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        SIMPLECOV_INLINE_ASSETS: 1
       with:
         coverageCommand: bundle exec rake
         coverageLocations: |
           ${{github.workspace}}/tmp/coverage/coverage.xml:cobertura
+    - name: Upload Coverage Report HTML
+      uses: actions/upload-artifact@v4.3.1
+      with:
+        name: coverage
+        path: tmp/coverage/index.html
+        compression-level: 0
 
   steep:
     runs-on: ubuntu-latest
