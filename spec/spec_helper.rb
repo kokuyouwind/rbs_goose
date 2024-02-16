@@ -1,11 +1,19 @@
 # frozen_string_literal: true
 
+require 'simplecov'
+require 'simplecov-cobertura'
+
+SimpleCov.start do
+  coverage_dir 'tmp/coverage'
+  enable_coverage :branch
+  add_filter %r{^/spec/}
+end
+SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
+
 require 'rbs_goose'
 
 require 'dotenv/load'
 require 'factory_bot'
-require 'simplecov'
-require 'simplecov-cobertura'
 require 'vcr'
 
 RSPEC_ROOT = File.dirname __FILE__
@@ -53,9 +61,3 @@ RSpec.configure do |config|
     RbsGoose.reset_configuration
   end
 end
-
-SimpleCov.start do
-  coverage_dir 'tmp/coverage'
-end
-
-SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
