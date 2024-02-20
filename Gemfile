@@ -18,6 +18,7 @@ group :development, :test do
   gem 'ruby-openai', '~> 6.3.0', require: false
   gem 'simplecov', require: false
   gem 'simplecov-cobertura', require: false
+  gem 'simplecov-html', github: 'kokuyouwind/simplecov-html', ref: '132805391cda353'
   gem 'steep', '~> 1.6.0', require: false
   gem 'vcr', '~> 6.2.0', require: false
   gem 'webmock', '~> 3.20.0', require: false
