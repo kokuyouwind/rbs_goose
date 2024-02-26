@@ -21,5 +21,5 @@ group :development, :test do
   gem 'simplecov-html', github: 'kokuyouwind/simplecov-html', ref: '132805391cda353'
   gem 'steep', '~> 1.6.0', require: false
   gem 'vcr', '~> 6.2.0', require: false
-  gem 'webmock', '~> 3.22.0', require: false
+  gem 'webmock', '~> 3.23.0', require: false
 end
