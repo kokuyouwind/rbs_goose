@@ -41,7 +41,7 @@ GEM
     csv (3.2.8)
     diff-lcs (1.5.1)
     docile (1.4.0)
-    dotenv (3.0.3)
+    dotenv (3.1.0)
     drb (2.2.0)
       ruby2_keywords
     event_stream_parser (1.0.0)
@@ -191,7 +191,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  dotenv (~> 3.0.0)
+  dotenv (~> 3.1.0)
   factory_bot (~> 6.4.5)
   orthoses (~> 1.13.0)
   rake (~> 13.0)
