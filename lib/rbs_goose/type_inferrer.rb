@@ -7,6 +7,7 @@ module RbsGoose
     def infer(target_group)
       template = RbsGoose.configuration.template
       result = RbsGoose.llm.complete(prompt: template.format(target_group)).completion
+      puts result
       template.parse_result(result)
     end
   end
