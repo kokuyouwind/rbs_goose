@@ -1,0 +1,26 @@
+LITERAL_TYPES: [Integer, String, Symbol, true | false]
+
+$GLOBAL_PROC: formatter
+
+type subject = String | Integer
+type formatter = ^(subject) [self: BasicObject] -> String
+type formattable_subject = subject & _Formattable
+
+type foo = {
+  s: String,
+  i: Integer?,
+  f: formatter
+}
+
+interface _Formattable
+  def format: (formatter formatter) -> String
+end
+
+module Formattable : _Formattable
+end
+
+class FormattableString < String
+  include Formattable
+
+  def format: (formatter formatter) -> String
+end

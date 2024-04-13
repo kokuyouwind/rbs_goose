@@ -1,0 +1,47 @@
+module M1
+  def m1: (Integer) -> String
+end
+
+module M2
+  def m2: (String) -> Integer
+end
+
+class Base
+  @a: String
+
+  @b: Integer?
+
+  attr_reader a: String
+
+  attr_reader b: Integer?
+
+  def initialize: (String a, ?Integer? b) -> void
+end
+
+class A < Base
+  @c: bool
+
+  @d: [String, Integer]
+
+  @f: formatter
+
+  include M1
+
+  extend M2
+
+  prepend Enumerable[Integer]
+
+  attr_accessor c: bool
+
+  attr_reader d: [String, Integer]
+
+  attr_reader f: formatter
+
+  def initialize: (String a, ?Integer? b, c: bool c, d: [String, Integer], f: formatter) -> void
+
+  def foo: (foo) -> formattable_subject
+
+  def self.bar: () -> (Integer | String)
+
+  def each: () { (Integer) -> void } -> void
+end
