@@ -1,13 +1,13 @@
 class RbsGoose::IO::ExampleGroup < ::Array[RbsGoose::IO::Example]
-  self.@default_examples: ::Hash[Symbol, RbsGoose::IO::ExampleGroup]
+  self.@default_examples: ::Hash[untyped, untyped]
 
-  def self.load_from: (String base_path, ?code_dir: String, ?sig_dir: String, ?refined_dir: String) -> RbsGoose::IO::ExampleGroup
+  def self.load_from: (untyped base_path, ?code_dir: ::String, ?sig_dir: ::String, ?refined_dir: ::String) -> untyped
 
-  def self.default_examples: () -> ::Hash[Symbol, RbsGoose::IO::ExampleGroup]
+  def self.default_examples: () -> untyped
 
-  private def self.to_rbs_path: (String path, String sig_dir) -> String
+  private def self.to_rbs_path: (String path, String sig_dir) -> untyped
 
   def to_target_group: () -> RbsGoose::IO::TargetGroup
 
-  def to_refined_rbs_list: () -> Array[RbsGoose::IO::File]
+  def to_refined_rbs_list: () -> untyped
 end

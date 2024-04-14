@@ -2,7 +2,7 @@ class RbsGoose::IO::TypedRuby
   @ruby: RbsGoose::IO::File
   @rbs: RbsGoose::IO::File
 
-  def self.from_path: (ruby_path: String, rbs_path: String, base_path: String) -> RbsGoose::IO::TypedRuby
+  def self.from_path: (ruby_path: String, rbs_path: String, base_path: String) -> untyped
 
   def initialize: (ruby: RbsGoose::IO::File, rbs: RbsGoose::IO::File) -> void
 

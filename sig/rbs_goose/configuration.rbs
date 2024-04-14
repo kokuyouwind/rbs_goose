@@ -13,9 +13,7 @@ class RbsGoose::Configuration
 
   def template: () -> untyped
 
-  private def default_template_class: () -> Templates::DefaultTemplate
-
+  private def default_template_class: () -> untyped
   private def default_instruction: () -> String
-
-  private def default_example_groups: () -> Array[untyped]
+  private def default_example_groups: () -> ::Array[untyped]
 end

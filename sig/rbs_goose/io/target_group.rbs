@@ -1,3 +1,3 @@
 class RbsGoose::IO::TargetGroup < ::Array[RbsGoose::IO::TypedRuby]
-  def self.load_from: (String base_path, ?code_dir: String, ?sig_dir: String) -> RbsGoose::IO::TargetGroup
+  def self.load_from: (untyped base_path, ?code_dir: ::String, ?sig_dir: ::String) -> untyped
 end
