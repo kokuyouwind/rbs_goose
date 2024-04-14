@@ -1,19 +1,29 @@
 class RbsGoose::IO::File
   @path: String
-  @base_path: untyped
+  @base_path: String
   @content: String
   @type: :ruby | :rbs
   MARKDOWN_REGEXP: ::Regexp
-  def self.from_markdown: (String) -> RbsGoose::IO::File
-  def initialize: (path: String, ?content: String, ?base_path: untyped) -> void
+
+  def self.from_markdown: (String markdown) -> RbsGoose::IO::File
+
+  def initialize: (path: String, ?content: String, ?base_path: String) -> void
+
   def load_content: () -> String
+
   def absolute_path: () -> String
-  def type: () -> (:ruby | :rbs)
+
+  def type: () -> :ruby | :rbs
+
   def to_s: () -> String
-  def content=: (String) -> String
+
+  def content=: (String content) -> String
+
   def write: () -> untyped
-  def ==: (untyped) -> untyped
+
+  def ==: (untyped other) -> untyped
+
   attr_reader path: String
   attr_reader content: String
-  attr_reader base_path: untyped
+  attr_reader base_path: String
 end
