@@ -1,0 +1,7 @@
+module List
+  type t = untyped
+
+  def self.cons: (untyped item, ?untyped? rest) -> ::Array[untyped]
+
+  def self.sum: (untyped list) -> (0 | untyped)
+end

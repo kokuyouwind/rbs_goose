@@ -1,0 +1,7 @@
+module List
+  type t[out T] = [T, t[T]] | nil
+
+  def self.cons: [T] (T, ?t[T]) -> t[T]
+
+  def self.sum: (t[Integer]) -> Integer
+end

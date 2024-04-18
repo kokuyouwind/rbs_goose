@@ -1,0 +1,47 @@
+module M1
+  def m1: (untyped n) -> ::String
+end
+
+module M2
+  def m2: (untyped s) -> untyped
+end
+
+class Base
+  @a: untyped
+
+  @b: untyped
+
+  attr_reader a: untyped
+
+  attr_reader b: untyped
+
+  def initialize: (untyped a, ?untyped? b) -> void
+end
+
+class A < Base
+  @c: untyped
+
+  @d: untyped
+
+  @f: untyped
+
+  include M1
+
+  extend M2
+
+  prepend Enumerable
+
+  attr_accessor c: untyped
+
+  attr_reader d: untyped
+
+  attr_reader f: untyped
+
+  def initialize: (untyped a, ?untyped? b, c: untyped, d: untyped, f: untyped) -> void
+
+  def foo: (untyped foo) -> untyped
+
+  def self.bar: () -> ("str" | 123)
+
+  def each: () { (untyped) -> untyped } -> untyped
+end
