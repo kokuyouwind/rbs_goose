@@ -9,7 +9,7 @@ module RbsGoose
         @template = Langchain::Prompt::FewShotPromptTemplate.new(
           prefix: instruction,
           suffix: "#{input_template_string}\n",
-          example_prompt: example_prompt,
+          example_prompt:,
           examples: example_groups.map { transform_example_group(_1) },
           input_variables: %w[typed_ruby_list]
         )

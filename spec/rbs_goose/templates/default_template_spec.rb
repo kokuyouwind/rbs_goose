@@ -25,7 +25,7 @@ RSpec.describe RbsGoose::Templates::DefaultTemplate do
 
   describe '#format' do
     subject do
-      described_class.new(instruction: instruction, example_groups: example_groups).format(input_typed_ruby_list)
+      described_class.new(instruction:, example_groups:).format(input_typed_ruby_list)
     end
 
     let(:instruction) { 'This is example instruction.' }

@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = 'RBS type inferrer with LLM'
   spec.homepage = 'https://github.com/kokuyouwind/rbs_goose'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 3.0.0'
+  spec.required_ruby_version = '>= 3.3.0'
 
   # spec.metadata["allowed_push_host"] = 'https://example.com'
 

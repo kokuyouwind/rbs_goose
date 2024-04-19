@@ -7,10 +7,10 @@ module RbsGoose
     #     config.use_open_ai('open_ai_access_token')
     #   end
     class Infer
-      def initialize(_loader, code_dir: 'lib', sig_dir: 'sig', &block)
+      def initialize(_loader, code_dir: 'lib', sig_dir: 'sig', &)
         @code_dir = code_dir
         @sig_dir = sig_dir
-        RbsGoose.configure(&block)
+        RbsGoose.configure(&)
       end
 
       def call

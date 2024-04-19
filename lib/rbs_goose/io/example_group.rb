@@ -31,7 +31,7 @@ module RbsGoose
             ruby_path: ::File.join(code_dir, path),
             rbs_path: to_rbs_path(path, sig_dir),
             refined_rbs_dir: refined_dir,
-            base_path: base_path
+            base_path:
           )
         end
 

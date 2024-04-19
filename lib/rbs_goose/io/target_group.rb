@@ -10,7 +10,7 @@ module RbsGoose
               group << TypedRuby.from_path(
                 ruby_path: ::File.join(code_dir, path),
                 rbs_path: ::File.join(sig_dir, "#{path}s"),
-                base_path: base_path
+                base_path:
               )
             end
           end

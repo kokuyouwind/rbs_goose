@@ -106,7 +106,7 @@ def few_shot_template # rubocop:disable Metrics/MethodLength
   Langchain::Prompt::FewShotPromptTemplate.new(
     prefix: 'Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.', # rubocop:disable Layout/LineLength
     suffix: input_template_string,
-    example_prompt: example_prompt,
+    example_prompt:,
     examples: [
       {
         ruby: company_repository_code,
@@ -122,7 +122,7 @@ def infer_user_factory
   prompt = few_shot_template.format(ruby: user_factory_code, rbs: user_factory_rbs)
   puts "========Prompt========\n#{prompt}\n\n"
 
-  complete = llm.complete(prompt: prompt).completion
+  complete = llm.complete(prompt:).completion
   puts "========Completion========\n#{complete}\n\n"
 end
 

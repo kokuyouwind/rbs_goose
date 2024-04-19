@@ -4,28 +4,28 @@ RSpec.describe RbsGoose::Configuration do
   describe '#initialize' do
     subject { described_class.new }
 
-    it 'sets default instruction' do
-      expect(subject.instruction).to start_with('Act as Ruby type inferrer')
+    it 'sets default infer instruction' do
+      expect(subject.infer_template.instruction).to start_with('Act as Ruby type inferrer')
     end
 
-    it 'sets default example groups' do
-      expect(subject.example_groups).to contain_exactly(be_a(RbsGoose::IO::ExampleGroup))
+    it 'sets default infer example groups' do
+      expect(subject.infer_template.example_groups).to contain_exactly(be_a(RbsGoose::IO::ExampleGroup))
     end
 
     context 'when block is given' do
       subject do
         described_class.new do |c|
-          c.instruction = 'dummy_instruction'
-          c.example_groups = []
+          c.infer_template.instruction = 'dummy_instruction'
+          c.infer_template.example_groups = []
         end
       end
 
-      it 'sets instruction' do
-        expect(subject.instruction).to eq('dummy_instruction')
+      it 'sets infer instruction' do
+        expect(subject.infer_template.instruction).to eq('dummy_instruction')
       end
 
-      it 'sets examples' do
-        expect(subject.example_groups).to eq([])
+      it 'sets infer examples' do
+        expect(subject.infer_template.example_groups).to eq([])
       end
     end
   end
