@@ -2,6 +2,7 @@
 
 require_relative 'rbs_goose/configuration'
 require_relative 'rbs_goose/io'
+require_relative 'rbs_goose/orthoses'
 require_relative 'rbs_goose/type_inferrer'
 require_relative 'rbs_goose/version'
 

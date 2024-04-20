@@ -25,12 +25,15 @@ task :'spec:record' do
 end
 
 namespace :sig do
-  desc 'build RBS prototypes to sig directory'
-  task :prototype do
+  desc 'refine RBS files in sig directory'
+  task :refine do
     require 'orthoses'
     require_relative 'lib/rbs_goose'
 
     Orthoses::Builder.new do
+      use RbsGoose::Orthoses::Infer do |config|
+        config.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
+      end
       use Orthoses::CreateFileByName,
           to: 'sig',
           rmtree: true
@@ -42,16 +45,6 @@ namespace :sig do
       use Orthoses::RBSPrototypeRB, paths: Dir.glob('lib/**/*.rb')
       run -> {}
     end.call
-  end
-
-  desc 'refine RBS files in sig directory'
-  task :refine do
-    require_relative 'lib/rbs_goose'
-
-    RbsGoose.configure do |c|
-      c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
-    end
-    RbsGoose.run
   end
 end
 
