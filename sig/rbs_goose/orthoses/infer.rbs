@@ -1,0 +1,3 @@
+class RbsGoose::Orthoses::Infer
+  def initialize: (untyped _loader, code_dir: string, sig_dir: string) ?{ (RbsGoose::Configuration)[self: RbsGoose::Configuration] -> void } -> void
+end
