@@ -17,10 +17,11 @@ module RbsGoose
 
     def initialize(&)
       self.infer_template = default_infer_template
+      self.fix_error_template = default_fix_error_template
       instance_eval(&) if block_given?
     end
 
-    attr_accessor :llm, :infer_template
+    attr_accessor :llm, :infer_template, :fix_error_template
 
     def use_open_ai(open_ai_access_token, default_options: {})
       @llm = ::Langchain::LLM::OpenAI.new(
@@ -45,6 +46,14 @@ module RbsGoose
       )
     end
 
+    def default_fix_error_template
+      TemplateConfig.new(
+        instruction: default_fix_error_instruction,
+        example_groups: default_fix_error_example_groups,
+        template_class: Templates::FixErrorTemplate
+      )
+    end
+
     def default_infer_instruction
       <<~INSTRUCTION
         Act as Ruby type inferrer.
@@ -55,6 +64,17 @@ module RbsGoose
 
     def default_infer_example_groups
       [RbsGoose::IO::ExampleGroup.default_examples[:rbs_samples]]
+    end
+
+    def default_fix_error_instruction
+      <<~INSTRUCTION
+        You are a highly skilled programmer.
+        Based on the following Ruby code, the RBS code that is a type definition, and the type checking error messages for them, modify the RBS code and output it.
+      INSTRUCTION
+    end
+
+    def default_fix_error_example_groups
+      [RbsGoose::IO::ExampleGroup.default_examples[:fix_errors]]
     end
   end
 end

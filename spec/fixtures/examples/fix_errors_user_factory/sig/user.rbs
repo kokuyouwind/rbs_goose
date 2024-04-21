@@ -1,0 +1,7 @@
+class User
+  @name: String
+
+  def initialize: (name: String) -> void
+
+  attr_reader name: String
+end

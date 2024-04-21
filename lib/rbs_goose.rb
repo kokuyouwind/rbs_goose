@@ -36,6 +36,10 @@ module RbsGoose
       configuration.infer_template.build_template
     end
 
+    def fix_error_template
+      configuration.fix_error_template.build_template
+    end
+
     attr_reader :configuration
 
     def_delegators :configuration, :llm, :infer_instruction, :infer_example_groups

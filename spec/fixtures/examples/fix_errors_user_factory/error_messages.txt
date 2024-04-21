@@ -1,0 +1,28 @@
+# Type checking files:
+
+...................................................................................F...
+
+lib/user_factory.rb:8:19: [error] Cannot pass a value of type `bool` as an argument of type `::String`
+│   bool <: ::String
+│     (true | false) <: ::String
+│       true <: ::String
+│         ::TrueClass <: ::String
+│           ::Object <: ::String
+│             ::BasicObject <: ::String
+│
+│ Diagnostic ID: Ruby::ArgumentTypeMismatch
+│
+└     User.new(name: @name)
+                     ~~~~~
+
+lib/user_factory.rb:7:6: [error] Cannot allow method body have type `::User` because declared as type `::Integer`
+│   ::User <: ::Integer
+│     ::Object <: ::Integer
+│       ::BasicObject <: ::Integer
+│
+│ Diagnostic ID: Ruby::MethodBodyTypeMismatch
+│
+└   def build
+        ~~~~~
+
+Detected 2 problems from 1 file

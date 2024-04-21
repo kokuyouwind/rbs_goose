@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'steep'
+require 'steep/cli'
+
 require_relative 'templates'
 
 module RbsGoose
@@ -8,6 +11,36 @@ module RbsGoose
       template = RbsGoose.infer_template
       result = RbsGoose.llm.complete(prompt: template.format(target_group)).completion
       template.parse_result(result)
+    end
+
+    def fix_error(target_group)
+      error_messages = steep_check
+      template = RbsGoose.fix_error_template
+      prompt = template.format(target_group, error_messages)
+      result = RbsGoose.llm.complete(prompt:).completion
+      template.parse_result(result)
+    end
+
+    private
+
+    def steep_check
+      stdin, stdout, stderr = io_stubs
+      disable_rainbow do
+        steep_cli = Steep::CLI.new(stdout:, stdin:, stderr:, argv: [])
+        steep_cli.process_check
+      end
+      stdout.string
+    end
+
+    def io_stubs
+      [StringIO.new(''), StringIO.new(+'', 'w+'), StringIO.new(+'', 'w+')]
+    end
+
+    def disable_rainbow
+      rainbow_enabled = Rainbow.enabled
+      Rainbow.enabled = false
+      yield
+      Rainbow.enabled = rainbow_enabled
     end
   end
 end

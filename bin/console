@@ -5,9 +5,34 @@ require 'bundler/setup'
 require 'dotenv/load'
 require 'langchain'
 require 'rbs_goose'
+require 'steep'
+require 'steep/cli'
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
+def stdin
+  @stdin ||= StringIO.new('')
+end
+
+def stdout
+  @stdout ||= StringIO.new(+'', 'w+')
+end
+
+def stderr
+  @stderr ||= StringIO.new(+'', 'w+')
+end
+
+def steep_cli
+  @steep_cli ||= Steep::CLI.new(stdout:, stdin:, stderr:, argv: [])
+end
+
+def steep_check
+  rainbow_enabled = Rainbow.enabled
+  Rainbow.enabled = false
+  steep_cli.process_check
+  Rainbow.enabled = rainbow_enabled
+end
+
 def llm
   @llm ||= Langchain::LLM::OpenAI.new(
     api_key: ENV.fetch('OPENAI_ACCESS_TOKEN', nil),

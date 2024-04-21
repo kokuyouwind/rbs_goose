@@ -1,0 +1,26 @@
+# Type checking files:
+
+.................F...............................................................F.....F.
+
+sig/phone.rbs:8:22: [error] Instance variable cannot have different type with parents: ::Integer <=> ::String
+│ Diagnostic ID: RBS::InstanceVariableTypeError
+│
+└   attr_reader number: Integer
+                        ~~~~~~~
+
+sig/person.rbs:8:24: [error] Instance variable cannot have different type with parents: ::Array[::String] <=> ::Array[(::Email | ::Phone)]
+│ Diagnostic ID: RBS::InstanceVariableTypeError
+│
+└   attr_reader contacts: Array[String]
+                          ~~~~~~~~~~~~~
+
+lib/person.rb:15:6: [error] Cannot allow method body have type `(::String | nil)` because declared as type `::String`
+│   (::String | nil) <: ::String
+│     nil <: ::String
+│
+│ Diagnostic ID: Ruby::MethodBodyTypeMismatch
+│
+└   def guess_country()
+        ~~~~~~~~~~~~~
+
+Detected 3 problems from 3 files

@@ -1,0 +1,15 @@
+class Phone
+  @country: String
+
+  @number: String
+
+  attr_reader country: String
+
+  attr_reader number: Integer
+
+  def initialize: (country: String, number: String) -> void
+
+  def ==: (untyped other) -> (bool | nil)
+
+  def hash: () -> Integer
+end

@@ -12,6 +12,7 @@ PATH
       langchainrb (>= 0.8.2, < 1.0.0)
       orthoses (>= 1.13.0, < 2.0.0)
       ruby-openai (>= 6.1.0, < 7.0.0)
+      steep (>= 1.6.0, < 2.0.0)
 
 GEM
   remote: https://rubygems.org/
