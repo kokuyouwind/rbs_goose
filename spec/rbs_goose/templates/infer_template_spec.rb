@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RbsGoose::Templates::DefaultTemplate do
+RSpec.describe RbsGoose::Templates::InferTemplate do
   let(:example_groups) do
     [
       RbsGoose::IO::ExampleGroup.load_from(fixture_path('examples/test')),

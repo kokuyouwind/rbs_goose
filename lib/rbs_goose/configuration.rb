@@ -41,7 +41,7 @@ module RbsGoose
       TemplateConfig.new(
         instruction: default_infer_instruction,
         example_groups: default_infer_example_groups,
-        template_class: Templates::DefaultTemplate
+        template_class: Templates::InferTemplate
       )
     end
 

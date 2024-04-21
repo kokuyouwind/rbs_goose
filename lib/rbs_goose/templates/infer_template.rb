@@ -4,7 +4,7 @@ require 'langchain'
 
 module RbsGoose
   module Templates
-    class DefaultTemplate
+    class InferTemplate
       def initialize(instruction:, example_groups:)
         @template = Langchain::Prompt::FewShotPromptTemplate.new(
           prefix: instruction,

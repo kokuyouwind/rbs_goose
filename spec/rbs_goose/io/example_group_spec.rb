@@ -51,7 +51,7 @@ RSpec.describe RbsGoose::IO::ExampleGroup do
     subject { described_class.default_examples }
 
     it 'returns example groups' do
-      expect(subject.keys).to eq(%i[fix_errors rbs_samples rbs_syntax])
+      expect(subject.keys).to eq(%i[rbs_samples rbs_syntax])
       expect(subject[:rbs_samples]).to contain_exactly(
         be_a(RbsGoose::IO::Example).and(have_attributes(refined_rbs: have_attributes(path: 'sig/email.rbs'))),
         be_a(RbsGoose::IO::Example).and(have_attributes(refined_rbs: have_attributes(path: 'sig/person.rbs'))),
