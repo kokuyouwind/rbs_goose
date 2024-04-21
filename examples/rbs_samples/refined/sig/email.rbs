@@ -5,7 +5,7 @@ class Email
 
   def initialize: (address: String) -> void
 
-  def ==: (untyped other) -> bool
+  def ==: (Object other) -> bool
 
   def hash: () -> Integer
 end

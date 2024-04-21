@@ -4,11 +4,11 @@ require 'orthoses/outputable'
 
 module RbsGoose
   module Orthoses
-    # Call RbsGoose::TypeInferrer to infer RBS type signatures.
-    #   use TbsGoose::Orthoses::Infer, code_dir: 'lib', sig_dir: 'sig' do |config|
+    # Call RbsGoose::TypeInferrer to fix steep type errors.
+    #   use TbsGoose::Orthoses::FixError, code_dir: 'lib', sig_dir: 'sig' do |config|
     #     config.use_open_ai('open_ai_access_token')
     #   end
-    class Infer
+    class FixError
       def initialize(loader, code_dir: 'lib', sig_dir: 'sig', &)
         @loader = loader
         @code_dir = code_dir
@@ -18,7 +18,7 @@ module RbsGoose
 
       def call
         @loader.call.tap do
-          RbsGoose.run(code_dir: @code_dir, sig_dir: @sig_dir)
+          RbsGoose.fix_error(code_dir: @code_dir, sig_dir: @sig_dir)
         end
       end
     end

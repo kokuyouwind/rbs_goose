@@ -9,7 +9,7 @@ module RbsGoose
   class TypeInferrer
     def infer(target_group)
       template = RbsGoose.infer_template
-      result = RbsGoose.llm.complete(prompt: template.format(target_group)).completion
+      result = complete(template.format(target_group))
       template.parse_result(result)
     end
 
@@ -17,11 +17,19 @@ module RbsGoose
       error_messages = steep_check
       template = RbsGoose.fix_error_template
       prompt = template.format(target_group, error_messages)
-      result = RbsGoose.llm.complete(prompt:).completion
+      result = complete(prompt)
       template.parse_result(result)
     end
 
     private
+
+    def complete(prompt)
+      is_debug = !ENV['DEBUG'].nil?
+      puts "Prompt: #{prompt}" if is_debug
+      result = RbsGoose.llm.complete(prompt: prompt).completion
+      puts "Result: #{result}" if is_debug
+      result
+    end
 
     def steep_check
       stdin, stdout, stderr = io_stubs

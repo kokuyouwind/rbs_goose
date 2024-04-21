@@ -9,7 +9,7 @@ class Phone
 
   def initialize: (country: String, number: String) -> void
 
-  def ==: (untyped other) -> (bool | nil)
+  def ==: (Object other) -> (bool | nil)
 
   def hash: () -> Integer
 end

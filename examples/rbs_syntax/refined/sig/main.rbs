@@ -1,8 +1,8 @@
-LITERAL_TYPES: [Integer, String, Symbol, true | false]
+LITERAL_TYPES: [Integer, String, Symbol, (true | false)]
 
 $GLOBAL_PROC: formatter
 
-type subject = String | Integer
+type subject = (String | Integer)
 type formatter = ^(subject) [self: BasicObject] -> String
 type formattable_subject = subject & _Formattable
 

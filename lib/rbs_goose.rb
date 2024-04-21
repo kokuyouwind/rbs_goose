@@ -32,6 +32,16 @@ module RbsGoose
       end
     end
 
+    def fix_error(code_dir: 'lib', sig_dir: 'sig', base_path: ::Dir.pwd)
+      puts "Run FixError.(Code Directory: #{code_dir}, Signature Directory: #{sig_dir})"
+      target_group = RbsGoose::IO::TargetGroup.load_from(base_path, code_dir:, sig_dir:)
+      RbsGoose::TypeInferrer.new.fix_error(target_group).each do |refined_rbs|
+        puts "write refined rbs to #{refined_rbs.path}\n"
+        refined_rbs.write
+        puts "done.\n\n"
+      end
+    end
+
     def infer_template
       configuration.infer_template.build_template
     end

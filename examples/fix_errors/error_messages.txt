@@ -1,6 +1,6 @@
 # Type checking files:
 
-.................F...............................................................F.....F.
+..........................F.............................................F...............F
 
 sig/phone.rbs:8:22: [error] Instance variable cannot have different type with parents: ::Integer <=> ::String
 │ Diagnostic ID: RBS::InstanceVariableTypeError

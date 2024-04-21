@@ -1,11 +1,11 @@
 class Person
   @name: String
 
-  @contacts: Array[Email | Phone]
+  @contacts: Array[(Email | Phone)]
 
   attr_reader name: String
 
-  attr_reader contacts: Array[Email | Phone]
+  attr_reader contacts: Array[(Email | Phone)]
 
   def initialize: (name: String) -> void
 
