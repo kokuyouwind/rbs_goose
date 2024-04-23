@@ -13,7 +13,7 @@ http_interactions:
         = address\n  end\n\n  def ==(other)\n    other.is_a?(self.class) && other.address
         == address\n  end\n\n  def hash\n    self.class.hash ^ address.hash\n  end\nend\n```\n\n```rbs:sig/email.rbs\nclass
         Email\n  @address: String\n\n  attr_reader address: String\n\n  def initialize:
-        (address: String) -> void\n\n  def ==: (untyped other) -> bool\n\n  def hash:
+        (address: String) -> void\n\n  def ==: (Object other) -> bool\n\n  def hash:
         () -> Integer\nend\n```\n\n```ruby:lib/person.rb\nclass Person\n  # @dynamic
         name, contacts\n  attr_reader :name\n  attr_reader :contacts\n\n  def initialize(name:)\n    @name
         = name\n    @contacts = []\n  end\n\n  def name=(name)\n    @name = name\n  end\n\n  def
@@ -30,8 +30,8 @@ http_interactions:
         hash\n    self.class.hash ^ country.hash ^ number.hash\n  end\nend\n```\n\n```rbs:sig/phone.rbs\nclass
         Phone\n  @country: String\n\n  @number: String\n\n  attr_reader country: String\n\n  attr_reader
         number: Integer\n\n  def initialize: (country: String, number: String) ->
-        void\n\n  def ==: (untyped other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Errors========\n#
-        Type checking files:\n\n.................F...............................................................F.....F.\n\nsig/phone.rbs:8:22:
+        void\n\n  def ==: (Object other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Errors========\n#
+        Type checking files:\n\n..........................F.............................................F...............F\n\nsig/phone.rbs:8:22:
         [error] Instance variable cannot have different type with parents: ::Integer
         <=> ::String\n│ Diagnostic ID: RBS::InstanceVariableTypeError\n│\n└   attr_reader
         number: Integer\n                        ~~~~~~~\n\nsig/person.rbs:8:24: [error]
@@ -43,14 +43,14 @@ http_interactions:
         Diagnostic ID: Ruby::MethodBodyTypeMismatch\n│\n└   def guess_country()\n        ~~~~~~~~~~~~~\n\nDetected
         3 problems from 3 files\n\n\n========Output========\n```rbs:sig/email.rbs\nclass
         Email\n  @address: String\n\n  attr_reader address: String\n\n  def initialize:
-        (address: String) -> void\n\n  def ==: (untyped other) -> bool\n\n  def hash:
+        (address: String) -> void\n\n  def ==: (Object other) -> bool\n\n  def hash:
         () -> Integer\nend\n```\n\n```rbs:sig/person.rbs\nclass Person\n  @name: String\n\n  @contacts:
-        Array[Email | Phone]\n\n  attr_reader name: String\n\n  attr_reader contacts:
-        Array[Email | Phone]\n\n  def initialize: (name: String) -> void\n\n  def
+        Array[(Email | Phone)]\n\n  attr_reader name: String\n\n  attr_reader contacts:
+        Array[(Email | Phone)]\n\n  def initialize: (name: String) -> void\n\n  def
         name=: (String name) -> void\n\n  def guess_country: () -> (String | nil)\nend\n```\n\n```rbs:sig/phone.rbs\nclass
         Phone\n  @country: String\n\n  @number: String\n\n  attr_reader country: String\n\n  attr_reader
         number: String\n\n  def initialize: (country: String, number: String) -> void\n\n  def
-        ==: (untyped other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Input========\n```ruby:lib/user.rb\nclass
+        ==: (Object other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Input========\n```ruby:lib/user.rb\nclass
         User\n  def initialize(name:)\n    @name = name\n  end\n\n  attr_reader :name\nend\n```\n\n```rbs:sig/user.rbs\nclass
         User\n  @name: String\n\n  def initialize: (name: String) -> void\n\n  attr_reader
         name: String\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Apr 2024 08:54:46 GMT
+      - Tue, 23 Apr 2024 13:07:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -100,7 +100,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '991'
+      - '1369'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -110,36 +110,36 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '60000'
       X-Ratelimit-Remaining-Requests:
-      - '9999'
+      - '9998'
       X-Ratelimit-Remaining-Tokens:
       - '55904'
       X-Ratelimit-Reset-Requests:
-      - 8.64s
+      - 14.787s
       X-Ratelimit-Reset-Tokens:
       - 4.096s
       X-Request-Id:
-      - req_9c899f210dad3fa1b86cd8c0b34e7e4b
+      - req_d400d89f194b4c76c8e35d5b8298d96c
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=i2yUpj8024h.FEOgHJvn48nIbnXaGKy6RjIy0.5OC98-1713689686-1.0.1.1-L2BQOkhPOQ90GOBa3paFcIrJ5MKiwLfqoGJnHY39oZGQtMe5u2ngu76dO.vrMtq6eXd8RrXjlXV5O6tiPJDxQQ;
-        path=/; expires=Sun, 21-Apr-24 09:24:46 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=Pw7oObjEateAyiFKnOlF_P943ceWoqHrupx7L1ReaLQ-1713877622-1.0.1.1-M5XTi.1AuDZTvahT4YwDxGXgBysAONk._9W6.INguFigOwDU4S7DE.pvb_UNEimhXq9NLby_lG0D5wZg2GxQKA;
+        path=/; expires=Tue, 23-Apr-24 13:37:02 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=KgBH0HtC3DzBKsnzLTVrsGCqgBGgLlxjwDJJgGwhcN4-1713689686229-0.0.1.1-604800000;
+      - _cfuvid=oxjXVKh2w2sW8PRBb.LoON8eyotP18JGEOm9f5N600w-1713877622912-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 877c26b23a218d01-KIX
+      - 878e12fd1c508d16-KIX
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-9GNG9d8FNtNeCjOvEADk82sKTvb4W",
+          "id": "chatcmpl-9HA9NxmQrfNwj7ua0kSN0FT9WzJ1m",
           "object": "chat.completion",
-          "created": 1713689685,
+          "created": 1713877621,
           "model": "gpt-3.5-turbo-1106",
           "choices": [
             {
@@ -153,11 +153,11 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 1411,
+            "prompt_tokens": 1408,
             "completion_tokens": 83,
-            "total_tokens": 1494
+            "total_tokens": 1491
           },
           "system_fingerprint": "fp_77a673219d"
         }
-  recorded_at: Sun, 21 Apr 2024 08:54:46 GMT
+  recorded_at: Tue, 23 Apr 2024 13:07:02 GMT
 recorded_with: VCR 6.2.0

@@ -2,7 +2,7 @@
 
 RSpec.describe RbsGoose::Orthoses::Infer do
   describe '#initialize' do
-    subject { described_class.new(nil) }
+    subject { described_class.new(-> {}) }
 
     it 'sets default code_dir' do
       expect(subject.instance_variable_get(:@code_dir)).to eq('lib')
@@ -14,7 +14,7 @@ RSpec.describe RbsGoose::Orthoses::Infer do
 
     context 'when block is given' do
       subject do
-        described_class.new(nil) do |config|
+        described_class.new(-> {}) do |config|
           config.use_open_ai('open_ai_access_token')
         end
       end
@@ -27,7 +27,7 @@ RSpec.describe RbsGoose::Orthoses::Infer do
   end
 
   describe '#call' do
-    subject { described_class.new(nil) }
+    subject { described_class.new(-> {}) }
 
     it 'calls RbsGoose.run' do
       allow(RbsGoose).to receive(:run)
