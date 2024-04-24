@@ -11,6 +11,10 @@ AllCops:
     - 'spec/fixtures/**/*'
     - 'vendor/bundle/**/*'
 
+Metrics/BlockLength:
+  Exclude:
+    - Rakefile
+
 Style/StringLiterals:
   Enabled: true
 

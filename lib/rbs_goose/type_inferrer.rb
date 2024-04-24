@@ -26,7 +26,7 @@ module RbsGoose
     def complete(prompt)
       is_debug = !ENV['DEBUG'].nil?
       puts "Prompt: #{prompt}" if is_debug
-      result = RbsGoose.llm.complete(prompt: prompt).completion
+      result = RbsGoose.llm.complete(prompt:).completion
       puts "Result: #{result}" if is_debug
       result
     end
