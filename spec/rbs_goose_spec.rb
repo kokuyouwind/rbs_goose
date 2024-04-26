@@ -51,7 +51,7 @@ RSpec.describe RbsGoose do
     let(:expected_signatures) { RbsGoose::IO::ExampleGroup.load_from(base_path).to_refined_rbs_list }
 
     it 'rewrites signatures' do
-      VCR.use_cassette('openai/infer_user_factory') do
+      VCR.use_cassette('openai_chat/infer_user_factory') do
         allow(File).to receive(:write)
 
         expect { subject }.to output(/Code Directory: lib, Signature Directory: sig/).to_stdout

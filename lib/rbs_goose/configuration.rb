@@ -25,7 +25,7 @@ module RbsGoose
 
     attr_accessor :llm, :infer_template, :fix_error_template
 
-    def use_open_ai(open_ai_access_token, model_name: 'gpt-3.5-turbo-1106', mode: :complete, default_options: {})
+    def use_open_ai(open_ai_access_token, model_name: 'gpt-3.5-turbo-1106', mode: :chat, default_options: {})
       @llm = LLMConfig.new(
         client: ::Langchain::LLM::OpenAI.new(
           api_key: open_ai_access_token,
