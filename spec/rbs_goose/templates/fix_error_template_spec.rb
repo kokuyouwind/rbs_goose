@@ -24,7 +24,10 @@ RSpec.describe RbsGoose::Templates::FixErrorTemplate do
   describe '#format' do
     subject do
       described_class.new(instruction:, example_groups:)
-                     .format(input_typed_ruby_list, input_error_messages)
+                     .format(
+                       typed_ruby_list: input_typed_ruby_list,
+                       error_messages: input_error_messages
+                     )
     end
 
     let(:instruction) { 'This is example instruction.' }

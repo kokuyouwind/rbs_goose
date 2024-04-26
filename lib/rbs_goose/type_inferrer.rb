@@ -9,14 +9,14 @@ module RbsGoose
   class TypeInferrer
     def infer(target_group)
       template = RbsGoose.infer_template
-      result = complete(template.format(target_group))
+      result = complete(template.format(typed_ruby_list: target_group))
       template.parse_result(result)
     end
 
     def fix_error(target_group)
       error_messages = steep_check
       template = RbsGoose.fix_error_template
-      prompt = template.format(target_group, error_messages)
+      prompt = template.format(typed_ruby_list: target_group, error_messages:)
       result = complete(prompt)
       template.parse_result(result)
     end
@@ -32,9 +32,9 @@ module RbsGoose
     def llm_debug(prompt)
       return yield if ENV['DEBUG'].nil?
 
-      puts "!!!!!!!! Prompt !!!!!!!!\n\n#{prompt}\n\n"
+      puts "!!!!!!!! Prompt !!!!!!!!\n\n" + prompt + "\n\n"
       result = yield
-      puts "!!!!!!!! Result !!!!!!!!\n\n#{result}\n\n"
+      puts "!!!!!!!! Result !!!!!!!!\n\n" + result + "\n\n"
       result
     end
 
