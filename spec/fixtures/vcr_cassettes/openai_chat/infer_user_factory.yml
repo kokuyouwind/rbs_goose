@@ -5,10 +5,10 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-3.5-turbo-1106","temperature":0.0,"n":1,"messages":[{"role":"user","content":"Act
+      string: '{"model":"gpt-3.5-turbo-1106","temperature":0.0,"n":1,"messages":[{"role":"system","content":"Act
         as Ruby type inferrer.\nWhen ruby source codes and RBS type signatures are
         given, refine each RBS type signatures. Each file should be split in markdown
-        code format.\nUse class names, variable names, etc., to infer type.\n\n\n========Input========\n```ruby:lib/email.rb\nclass
+        code format.\nUse class names, variable names, etc., to infer type."},{"role":"user","content":"========Input========\n```ruby:lib/email.rb\nclass
         Email\n  # @dynamic address\n  attr_reader :address\n\n  def initialize(address:)\n    @address
         = address\n  end\n\n  def ==(other)\n    other.is_a?(self.class) && other.address
         == address\n  end\n\n  def hash\n    self.class.hash ^ address.hash\n  end\nend\n```\n\n```rbs:sig/email.rbs\nclass
@@ -63,7 +63,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 26 Apr 2024 07:13:00 GMT
+      - Fri, 26 Apr 2024 07:08:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -79,7 +79,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '1400'
+      - '1375'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -89,36 +89,36 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '60000'
       X-Ratelimit-Remaining-Requests:
-      - '9996'
+      - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '55656'
+      - '55904'
       X-Ratelimit-Reset-Requests:
-      - 30.01s
+      - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 4.343s
+      - 4.096s
       X-Request-Id:
-      - req_854c2ccc7424b07976ac99e519c38047
+      - req_585f3a09b7803cb507dd7638f43b3bd7
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=2Q6LhTETz732YrntreTyCIzEIbsZB9PLOViDDy9gTEk-1714115580-1.0.1.1-ZBoUioC55AfhcLOBELGUrXUMibLgyCGo5BgdpVirfrWHKdXrn2toUBMQ2PXkyK6fsl8npjGPcDfXKBmZ_JCDrQ;
-        path=/; expires=Fri, 26-Apr-24 07:43:00 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=RyJqG2mnMSTmjioA6Bex3ZOsV64YUbEulWRKKFIsxEk-1714115304-1.0.1.1-icAW.8W90LFellllUAhYKckjnwFz3pxBMSP3nmLnPIgo9oe169sxBPgx1dnZMkwbrYPidTGs2NZCOOUxHHDuCA;
+        path=/; expires=Fri, 26-Apr-24 07:38:24 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=.FIyhz8WKyY1i6YwFZTjMvRst0pZnWZlB3nmEkjBX0o-1714115580873-0.0.1.1-604800000;
+      - _cfuvid=EGqZzvFuk3uNcKeapEXUe.kzAhcZG0PasOBqOLOScOw-1714115304382-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 87a4c4811f40e053-NRT
+      - 87a4bdc14bb88a87-NRT
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-9IA3P8reMXRR4IahpXJcn7BfxlRUY",
+          "id": "chatcmpl-9I9yxv3OjLL16EzUYQZN5rbia9ZtP",
           "object": "chat.completion",
-          "created": 1714115579,
+          "created": 1714115303,
           "model": "gpt-3.5-turbo-1106",
           "choices": [
             {
@@ -132,11 +132,11 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 1001,
+            "prompt_tokens": 1005,
             "completion_tokens": 83,
-            "total_tokens": 1084
+            "total_tokens": 1088
           },
           "system_fingerprint": "fp_b953e4de39"
         }
-  recorded_at: Fri, 26 Apr 2024 07:13:00 GMT
+  recorded_at: Fri, 26 Apr 2024 07:08:24 GMT
 recorded_with: VCR 6.2.0

@@ -77,6 +77,7 @@ module RbsGoose
       <<~INSTRUCTION
         You are a highly skilled programmer.
         Based on the following Ruby code, the RBS code that is a type definition, and the type checking error messages for them, modify the RBS code and output it.
+        All RBS files should be output, regardless of whether they have been modified or not.
       INSTRUCTION
     end
 

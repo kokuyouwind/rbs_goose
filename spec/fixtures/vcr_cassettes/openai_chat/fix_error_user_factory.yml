@@ -1,0 +1,164 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-3.5-turbo-1106","temperature":0.0,"n":1,"messages":[{"role":"system","content":"You
+        are a highly skilled programmer.\nBased on the following Ruby code, the RBS
+        code that is a type definition, and the type checking error messages for them,
+        modify the RBS code and output it.\nAll RBS files should be output, regardless
+        of whether they have been modified or not."},{"role":"user","content":"========Input========\n```ruby:lib/email.rb\nclass
+        Email\n  # @dynamic address\n  attr_reader :address\n\n  def initialize(address:)\n    @address
+        = address\n  end\n\n  def ==(other)\n    other.is_a?(self.class) && other.address
+        == address\n  end\n\n  def hash\n    self.class.hash ^ address.hash\n  end\nend\n```\n\n```rbs:sig/email.rbs\nclass
+        Email\n  @address: String\n\n  attr_reader address: String\n\n  def initialize:
+        (address: String) -> void\n\n  def ==: (Object other) -> bool\n\n  def hash:
+        () -> Integer\nend\n```\n\n```ruby:lib/person.rb\nclass Person\n  # @dynamic
+        name, contacts\n  attr_reader :name\n  attr_reader :contacts\n\n  def initialize(name:)\n    @name
+        = name\n    @contacts = []\n  end\n\n  def name=(name)\n    @name = name\n  end\n\n  def
+        guess_country()\n    contacts.map do |contact|\n      case contact\n      when
+        Phone\n        contact.country\n      end\n    end.compact.first\n  end\nend\n```\n\n```rbs:sig/person.rbs\nclass
+        Person\n  @name: String\n\n  @contacts: Array[Email | Phone]\n\n  attr_reader
+        name: String\n\n  attr_reader contacts: Array[String]\n\n  def initialize:
+        (name: Integer) -> void\n\n  def name=: (String name) -> void\n\n  def guess_country:
+        () -> String\nend\n```\n\n```ruby:lib/phone.rb\nclass Phone\n  # @dynamic
+        country, number\n  attr_reader :country, :number\n\n  def initialize(country:,
+        number:)\n    @country = country\n    @number = number\n  end\n\n  def ==(other)\n    if
+        other.is_a?(Phone)\n      # @type var other: Phone\n      other.country ==
+        country && other.number == number\n    else\n      false\n    end\n  end\n\n  def
+        hash\n    self.class.hash ^ country.hash ^ number.hash\n  end\nend\n```\n\n```rbs:sig/phone.rbs\nclass
+        Phone\n  @country: String\n\n  @number: String\n\n  attr_reader country: String\n\n  attr_reader
+        number: Integer\n\n  def initialize: (country: String, number: String) ->
+        void\n\n  def ==: (Object other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Errors========\n#
+        Type checking files:\n\n..........................F.............................................F...............F\n\nsig/phone.rbs:8:22:
+        [error] Instance variable cannot have different type with parents: ::Integer
+        <=> ::String\n│ Diagnostic ID: RBS::InstanceVariableTypeError\n│\n└   attr_reader
+        number: Integer\n                        ~~~~~~~\n\nsig/person.rbs:8:24: [error]
+        Instance variable cannot have different type with parents: ::Array[::String]
+        <=> ::Array[(::Email | ::Phone)]\n│ Diagnostic ID: RBS::InstanceVariableTypeError\n│\n└   attr_reader
+        contacts: Array[String]\n                          ~~~~~~~~~~~~~\n\nlib/person.rb:15:6:
+        [error] Cannot allow method body have type `(::String | nil)` because declared
+        as type `::String`\n│   (::String | nil) <: ::String\n│     nil <: ::String\n│\n│
+        Diagnostic ID: Ruby::MethodBodyTypeMismatch\n│\n└   def guess_country()\n        ~~~~~~~~~~~~~\n\nDetected
+        3 problems from 3 files\n\n\n========Output========\n```rbs:sig/email.rbs\nclass
+        Email\n  @address: String\n\n  attr_reader address: String\n\n  def initialize:
+        (address: String) -> void\n\n  def ==: (Object other) -> bool\n\n  def hash:
+        () -> Integer\nend\n```\n\n```rbs:sig/person.rbs\nclass Person\n  @name: String\n\n  @contacts:
+        Array[(Email | Phone)]\n\n  attr_reader name: String\n\n  attr_reader contacts:
+        Array[(Email | Phone)]\n\n  def initialize: (name: String) -> void\n\n  def
+        name=: (String name) -> void\n\n  def guess_country: () -> (String | nil)\nend\n```\n\n```rbs:sig/phone.rbs\nclass
+        Phone\n  @country: String\n\n  @number: String\n\n  attr_reader country: String\n\n  attr_reader
+        number: String\n\n  def initialize: (country: String, number: String) -> void\n\n  def
+        ==: (Object other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Input========\n```ruby:lib/user.rb\nclass
+        User\n  def initialize(name:)\n    @name = name\n  end\n\n  attr_reader :name\nend\n```\n\n```rbs:sig/user.rbs\nclass
+        User\n  @name: String\n\n  def initialize: (name: String) -> void\n\n  attr_reader
+        name: String\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
+        name(name)\n    @name = name\n    self\n  end\n\n  def build\n    User.new(name:
+        @name)\n  end\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
+        bool\n\n  def name: (String name) -> self\n\n  def build: () -> Integer\nend\n```\n\n\n========Errors========\n#
+        Type checking files:\n\n...................................................................................F...\n\nlib/user_factory.rb:8:19:
+        [error] Cannot pass a value of type `bool` as an argument of type `::String`\n│   bool
+        <: ::String\n│     (true | false) <: ::String\n│       true <: ::String\n│         ::TrueClass
+        <: ::String\n│           ::Object <: ::String\n│             ::BasicObject
+        <: ::String\n│\n│ Diagnostic ID: Ruby::ArgumentTypeMismatch\n│\n└     User.new(name:
+        @name)\n                     ~~~~~\n\nlib/user_factory.rb:7:6: [error] Cannot
+        allow method body have type `::User` because declared as type `::Integer`\n│   ::User
+        <: ::Integer\n│     ::Object <: ::Integer\n│       ::BasicObject <: ::Integer\n│\n│
+        Diagnostic ID: Ruby::MethodBodyTypeMismatch\n│\n└   def build\n        ~~~~~\n\nDetected
+        2 problems from 1 file\n\n\n========Output========"}],"max_tokens":4096}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <openai_access_token>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 26 Apr 2024 07:16:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-cache, must-revalidate
+      Openai-Model:
+      - gpt-3.5-turbo-1106
+      Openai-Organization:
+      - user-fcumb6z4e8siumcgotnefqex
+      Openai-Processing-Ms:
+      - '958'
+      Openai-Version:
+      - '2020-10-01'
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '60000'
+      X-Ratelimit-Remaining-Requests:
+      - '9999'
+      X-Ratelimit-Remaining-Tokens:
+      - '55904'
+      X-Ratelimit-Reset-Requests:
+      - 8.64s
+      X-Ratelimit-Reset-Tokens:
+      - 4.096s
+      X-Request-Id:
+      - req_68eda132423586b385bc1129dab31d07
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=LYlKeEwtK3dLWfiMhrsibSpeaJocZ40M7cvHjS.L4Cg-1714115811-1.0.1.1-DdhaMiGMtY5NImuM9fl0Mry7Yevci1fCJf013c9yXsANeuuWKVadK2STbZW2auLT.KOueOGJFR38EVa6mqdQ8A;
+        path=/; expires=Fri, 26-Apr-24 07:46:51 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=2rbD_sB0kl1KdT2IoQDrjyIiXRdvbv35mpPYb9rMVN4-1714115811170-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 87a4ca233fbae04f-NRT
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-9IA78BsgaClErFDNbHNU0kTTZpnNM",
+          "object": "chat.completion",
+          "created": 1714115810,
+          "model": "gpt-3.5-turbo-1106",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "```rbs:sig/user.rbs\nclass User\n  @name: String\n\n  def initialize: (name: String) -> void\n\n  attr_reader name: String\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name: String\n\n  def name: (String name) -> self\n\n  def build: () -> User\nend\n```"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1430,
+            "completion_tokens": 83,
+            "total_tokens": 1513
+          },
+          "system_fingerprint": "fp_b953e4de39"
+        }
+  recorded_at: Fri, 26 Apr 2024 07:16:51 GMT
+recorded_with: VCR 6.2.0

@@ -17,7 +17,21 @@ module RbsGoose
           example_prompt:,
           examples: example_groups.map { transform_example_group(_1) },
           input_variables:
-        ).format(**format_args(args))
+        ).format(**format_args(args)).strip
+      end
+
+      def format_system_prompt
+        prefix.strip
+      end
+
+      def format_user_prompt(**args)
+        Langchain::Prompt::FewShotPromptTemplate.new(
+          prefix: '',
+          suffix:,
+          example_prompt:,
+          examples: example_groups.map { transform_example_group(_1) },
+          input_variables:
+        ).format(**format_args(args)).strip
       end
 
       def parse_result(result)
@@ -58,7 +72,6 @@ module RbsGoose
       end
 
       attr_reader :instruction, :example_groups
-
     end
   end
 end
