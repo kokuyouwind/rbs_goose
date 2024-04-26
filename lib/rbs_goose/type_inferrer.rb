@@ -24,10 +24,17 @@ module RbsGoose
     private
 
     def complete(prompt)
-      is_debug = !ENV['DEBUG'].nil?
-      puts "Prompt: #{prompt}" if is_debug
-      result = RbsGoose.llm.complete(prompt:).completion
-      puts "Result: #{result}" if is_debug
+      llm_debug(prompt) do
+        RbsGoose.llm.complete(prompt:).completion
+      end
+    end
+
+    def llm_debug(prompt)
+      return yield if ENV['DEBUG'].nil?
+
+      puts "!!!!!!!! Prompt !!!!!!!!\n\n" + prompt + "\n\n"
+      result = yield
+      puts "!!!!!!!! Result !!!!!!!!\n\n" + result + "\n\n"
       result
     end
 
