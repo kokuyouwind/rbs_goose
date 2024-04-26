@@ -39,6 +39,7 @@ module RbsGoose
     end
 
     def_delegator :llm, :client, :llm_client
+    def_delegator :llm, :mode, :llm_mode
     def_delegator :infer_template, :instruction, :infer_instruction
     def_delegator :infer_template, :example_groups, :infer_example_groups
 
