@@ -21,7 +21,7 @@ RSpec.describe RbsGoose::Orthoses::Infer do
 
       it 'sets OpenAI llm' do
         subject
-        expect(RbsGoose.configuration.llm).to be_a(Langchain::LLM::OpenAI)
+        expect(RbsGoose.configuration.llm.client).to be_a(Langchain::LLM::OpenAI)
       end
     end
   end

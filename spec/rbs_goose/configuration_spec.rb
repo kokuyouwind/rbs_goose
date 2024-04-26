@@ -34,13 +34,14 @@ RSpec.describe RbsGoose::Configuration do
     it 'sets OpenAI llm' do
       allow(Langchain::LLM::OpenAI).to receive(:new).and_call_original
       described_class.new do |c|
-        c.use_open_ai('dummy_token', default_options: { completion_model_name: 'dummy_model' })
+        c.use_open_ai('dummy_token', model_name: 'dummy_model', default_options: { temperature: 0.8 })
       end
       expect(Langchain::LLM::OpenAI).to have_received(:new).with(
         api_key: 'dummy_token',
         default_options: {
           completion_model_name: 'dummy_model',
-          chat_completion_model_name: 'gpt-3.5-turbo-1106'
+          chat_completion_model_name: 'dummy_model',
+          temperature: 0.8
         }
       )
     end

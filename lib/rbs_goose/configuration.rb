@@ -9,6 +9,8 @@ module RbsGoose
   class Configuration
     extend Forwardable
 
+    LLMConfig = Struct.new(:client, :mode, keyword_init: true)
+
     TemplateConfig = Struct.new(:instruction, :example_groups, :template_class, keyword_init: true) do
       def build_template
         template_class.new(instruction:, example_groups:)
@@ -23,16 +25,20 @@ module RbsGoose
 
     attr_accessor :llm, :infer_template, :fix_error_template
 
-    def use_open_ai(open_ai_access_token, default_options: {})
-      @llm = ::Langchain::LLM::OpenAI.new(
-        api_key: open_ai_access_token,
-        default_options: {
-          completion_model_name: 'gpt-3.5-turbo-1106',
-          chat_completion_model_name: 'gpt-3.5-turbo-1106'
-        }.merge(default_options)
+    def use_open_ai(open_ai_access_token, model_name: 'gpt-3.5-turbo-1106', mode: :complete, default_options: {})
+      @llm = LLMConfig.new(
+        client: ::Langchain::LLM::OpenAI.new(
+          api_key: open_ai_access_token,
+          default_options: {
+            completion_model_name: model_name,
+            chat_completion_model_name: model_name
+          }.merge(default_options)
+        ),
+        mode:
       )
     end
 
+    def_delegator :llm, :client, :llm_client
     def_delegator :infer_template, :instruction, :infer_instruction
     def_delegator :infer_template, :example_groups, :infer_example_groups
 

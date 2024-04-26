@@ -52,6 +52,7 @@ module RbsGoose
 
     attr_reader :configuration
 
-    def_delegators :configuration, :llm, :infer_instruction, :infer_example_groups
+    def_delegators :configuration, :infer_instruction, :infer_example_groups
+    def_delegator :configuration, :llm_client, :llm
   end
 end
