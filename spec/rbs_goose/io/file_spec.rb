@@ -57,11 +57,11 @@ RSpec.describe RbsGoose::IO::File do
     let(:path) { fixture_path('example.rb') }
 
     context 'with content' do
-      subject { described_class.new(path: path, content: 'example_line') }
+      subject { described_class.new(path:, content: 'example_line') }
 
       it 'sets content from arguments' do
         expect(subject).to have_attributes(
-          path: path,
+          path:,
           type: :ruby,
           content: 'example_line'
         )
@@ -69,11 +69,11 @@ RSpec.describe RbsGoose::IO::File do
     end
 
     context 'without content' do
-      subject { described_class.new(path: path) }
+      subject { described_class.new(path:) }
 
       it 'sets content from file' do
         expect(subject).to have_attributes(
-          path: path,
+          path:,
           type: :ruby,
           content: "# frozen_string_literal: true\n# example_file_line"
         )

@@ -5,9 +5,34 @@ require 'bundler/setup'
 require 'dotenv/load'
 require 'langchain'
 require 'rbs_goose'
+require 'steep'
+require 'steep/cli'
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
+def stdin
+  @stdin ||= StringIO.new('')
+end
+
+def stdout
+  @stdout ||= StringIO.new(+'', 'w+')
+end
+
+def stderr
+  @stderr ||= StringIO.new(+'', 'w+')
+end
+
+def steep_cli
+  @steep_cli ||= Steep::CLI.new(stdout:, stdin:, stderr:, argv: [])
+end
+
+def steep_check
+  rainbow_enabled = Rainbow.enabled
+  Rainbow.enabled = false
+  steep_cli.process_check
+  Rainbow.enabled = rainbow_enabled
+end
+
 def llm
   @llm ||= Langchain::LLM::OpenAI.new(
     api_key: ENV.fetch('OPENAI_ACCESS_TOKEN', nil),
@@ -106,7 +131,7 @@ def few_shot_template # rubocop:disable Metrics/MethodLength
   Langchain::Prompt::FewShotPromptTemplate.new(
     prefix: 'Act as Ruby type inferrer. When ruby source codes and RBS type signatures are given, refine RBS type signatures. Use class names, variable names, etc., to infer type.', # rubocop:disable Layout/LineLength
     suffix: input_template_string,
-    example_prompt: example_prompt,
+    example_prompt:,
     examples: [
       {
         ruby: company_repository_code,
@@ -122,7 +147,7 @@ def infer_user_factory
   prompt = few_shot_template.format(ruby: user_factory_code, rbs: user_factory_rbs)
   puts "========Prompt========\n#{prompt}\n\n"
 
-  complete = llm.complete(prompt: prompt).completion
+  complete = llm.complete(prompt:).completion
   puts "========Completion========\n#{complete}\n\n"
 end
 

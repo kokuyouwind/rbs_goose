@@ -1,0 +1,15 @@
+class Person
+  @name: String
+
+  @contacts: Array[Email | Phone]
+
+  attr_reader name: String
+
+  attr_reader contacts: Array[String]
+
+  def initialize: (name: Integer) -> void
+
+  def name=: (String name) -> void
+
+  def guess_country: () -> String
+end

@@ -4,12 +4,16 @@ require:
   - rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.3
   NewCops: enable
   Exclude:
     - 'examples/**/*'
     - 'spec/fixtures/**/*'
     - 'vendor/bundle/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - Rakefile
 
 Style/StringLiterals:
   Enabled: true

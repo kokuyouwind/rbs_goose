@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe RbsGoose::Templates::DefaultTemplate do
+RSpec.describe RbsGoose::Templates::FixErrorTemplate do
   let(:example_groups) do
-    [
-      RbsGoose::IO::ExampleGroup.load_from(fixture_path('examples/test')),
-      RbsGoose::IO::ExampleGroup.load_from(fixture_path('examples/multi_file_test'))
-    ]
+    [RbsGoose::IO::ExampleGroup.load_from(fixture_path('examples/with_errors'))]
   end
 
   let(:input_typed_ruby_list) do
@@ -22,10 +19,12 @@ RSpec.describe RbsGoose::Templates::DefaultTemplate do
       )
     ]
   end
+  let(:input_error_messages) { 'error_message_input' }
 
   describe '#format' do
     subject do
-      described_class.new(instruction: instruction, example_groups: example_groups).format(input_typed_ruby_list)
+      described_class.new(instruction:, example_groups:)
+                     .format(input_typed_ruby_list, input_error_messages)
     end
 
     let(:instruction) { 'This is example instruction.' }
@@ -44,37 +43,13 @@ RSpec.describe RbsGoose::Templates::DefaultTemplate do
         ```
 
 
+        ========Errors========
+        error_message
+
+
         ========Output========
         ```rbs:sig/test.rbs
         def test: string
-        ```
-
-
-        ========Input========
-        ```ruby:lib/test1.rb
-        ruby test1
-        ```
-
-        ```rbs:sig/test1.rbs
-        rbs test1
-        ```
-
-        ```ruby:lib/test2.rb
-        ruby test2
-        ```
-
-        ```rbs:sig/test2.rbs
-        rbs test2
-        ```
-
-
-        ========Output========
-        ```rbs:sig/test1.rbs
-        refined rbs test1
-        ```
-
-        ```rbs:sig/test2.rbs
-        refined rbs test2
         ```
 
 
@@ -94,6 +69,10 @@ RSpec.describe RbsGoose::Templates::DefaultTemplate do
         ```rbs:input_rbs_2.rbs
         rbs_2_input
         ```
+
+
+        ========Errors========
+        error_message_input
 
 
         ========Output========

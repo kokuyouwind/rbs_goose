@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'orthoses/outputable'
+
 module RbsGoose
   module Orthoses
     # Call RbsGoose::TypeInferrer to infer RBS type signatures.
@@ -7,14 +9,17 @@ module RbsGoose
     #     config.use_open_ai('open_ai_access_token')
     #   end
     class Infer
-      def initialize(_loader, code_dir: 'lib', sig_dir: 'sig', &block)
+      def initialize(loader, code_dir: 'lib', sig_dir: 'sig', &)
+        @loader = loader
         @code_dir = code_dir
         @sig_dir = sig_dir
-        RbsGoose.configure(&block)
+        RbsGoose.configure(&) if block_given?
       end
 
       def call
-        RbsGoose.run(code_dir: @code_dir, sig_dir: @sig_dir)
+        @loader.call.tap do
+          RbsGoose.run(code_dir: @code_dir, sig_dir: @sig_dir)
+        end
       end
     end
   end

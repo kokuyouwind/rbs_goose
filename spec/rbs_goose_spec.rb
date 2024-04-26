@@ -17,8 +17,8 @@ RSpec.describe RbsGoose do
     context 'when block is given' do
       subject do
         described_class.configure do |c|
-          c.instruction = 'dummy_instruction'
-          c.example_groups = 'dummy_examples'
+          c.infer_template.instruction = 'dummy_instruction'
+          c.infer_template.example_groups = 'dummy_examples'
           c.use_open_ai('dummy_token')
         end
         described_class.configuration
@@ -26,8 +26,8 @@ RSpec.describe RbsGoose do
 
       it 'sets configuration attributes' do
         expect(subject).to have_attributes(
-          instruction: 'dummy_instruction',
-          example_groups: 'dummy_examples',
+          infer_instruction: 'dummy_instruction',
+          infer_example_groups: 'dummy_examples',
           llm: be_a(Langchain::LLM::OpenAI)
         )
       end
@@ -45,7 +45,7 @@ RSpec.describe RbsGoose do
   end
 
   describe '.run', :configure do
-    subject { described_class.run(base_path: base_path) }
+    subject { described_class.run(base_path:) }
 
     let(:base_path) { fixture_path('examples/user_factory') }
     let(:expected_signatures) { RbsGoose::IO::ExampleGroup.load_from(base_path).to_refined_rbs_list }
@@ -70,16 +70,16 @@ RSpec.describe RbsGoose do
     end
   end
 
-  describe '.instruction', :configure do
-    subject { described_class.instruction }
+  describe '.infer_instruction', :configure do
+    subject { described_class.infer_instruction }
 
     it 'returns instruction' do
       expect(subject).to be_a(String)
     end
   end
 
-  describe '.example_groups', :configure do
-    subject { described_class.example_groups }
+  describe '.infer_example_groups', :configure do
+    subject { described_class.infer_example_groups }
 
     it 'returns example groups' do
       expect(subject).to contain_exactly(be_a(RbsGoose::IO::ExampleGroup))

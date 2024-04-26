@@ -31,8 +31,21 @@ namespace :sig do
     require_relative 'lib/rbs_goose'
 
     Orthoses::Builder.new do
+      use RbsGoose::Orthoses::FixError
       use RbsGoose::Orthoses::Infer do |config|
         config.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
+        config.infer_template.example_groups = [
+          RbsGoose::IO::ExampleGroup.default_examples[:rbs_samples],
+          RbsGoose::IO::ExampleGroup.default_examples[:rbs_syntax]
+        ]
+        config.infer_template.instruction = <<~INSTRUCTION
+          You are a highly skilled programmer.
+          Based on the following Ruby code and the RBS code that is a type definition, rewrite the RBS that you think is better and output it.
+          Use how it is called in Ruby code, class names, method names, etc., to guess.
+          You may add type definitions or introduce new types as needed.
+          Do not leave untyped in the RBS.
+          Each file should be split in markdown code format.
+        INSTRUCTION
       end
       use Orthoses::CreateFileByName,
           to: 'sig',

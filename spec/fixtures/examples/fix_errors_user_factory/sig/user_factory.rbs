@@ -1,0 +1,7 @@
+class UserFactory
+  @name: bool
+
+  def name: (String name) -> self
+
+  def build: () -> Integer
+end

@@ -20,6 +20,30 @@ RSpec.describe RbsGoose::IO::ExampleGroup do
         path: 'sig/test.rbs',
         content: 'def test: string'
       )
+      expect(subject.error_messages).to be_nil
+    end
+
+    context 'when errors.txt exists' do
+      subject { described_class.load_from(fixture_path('examples/with_errors')) }
+
+      it 'load example groups with errors' do
+        expect(subject).to be_a(described_class).and contain_exactly(
+          be_a(RbsGoose::IO::Example)
+        )
+        expect(subject[0].typed_ruby.ruby).to have_attributes(
+          path: 'lib/test.rb',
+          content: 'def test; end'
+        )
+        expect(subject[0].typed_ruby.rbs).to have_attributes(
+          path: 'sig/test.rbs',
+          content: 'def test: untyped'
+        )
+        expect(subject[0].refined_rbs).to have_attributes(
+          path: 'sig/test.rbs',
+          content: 'def test: string'
+        )
+        expect(subject.error_messages).to eq('error_message')
+      end
     end
   end
 
@@ -27,7 +51,7 @@ RSpec.describe RbsGoose::IO::ExampleGroup do
     subject { described_class.default_examples }
 
     it 'returns example groups' do
-      expect(subject.keys).to eq(%i[rbs_samples rbs_syntax])
+      expect(subject.keys).to eq(%i[fix_errors rbs_samples rbs_syntax])
       expect(subject[:rbs_samples]).to contain_exactly(
         be_a(RbsGoose::IO::Example).and(have_attributes(refined_rbs: have_attributes(path: 'sig/email.rbs'))),
         be_a(RbsGoose::IO::Example).and(have_attributes(refined_rbs: have_attributes(path: 'sig/person.rbs'))),

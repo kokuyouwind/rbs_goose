@@ -6,7 +6,7 @@ module RbsGoose
       class << self
         def from_path(ruby_path:, rbs_path:, refined_rbs_dir:, base_path:)
           Example.new(
-            typed_ruby: TypedRuby.from_path(ruby_path: ruby_path, rbs_path: rbs_path, base_path: base_path),
+            typed_ruby: TypedRuby.from_path(ruby_path:, rbs_path:, base_path:),
             refined_rbs: File.new(path: rbs_path, base_path: ::File.join(base_path, refined_rbs_dir))
           )
         end
@@ -18,7 +18,7 @@ module RbsGoose
       end
 
       def to_h
-        { typed_ruby: typed_ruby, refined_rbs: refined_rbs }
+        { typed_ruby:, refined_rbs: }
       end
 
       attr_reader :typed_ruby, :refined_rbs

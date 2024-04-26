@@ -5,13 +5,13 @@ module RbsGoose
     class TypedRuby
       class << self
         def from_path(ruby_path:, rbs_path:, base_path:)
-          ruby = File.new(path: ruby_path, base_path: base_path)
+          ruby = File.new(path: ruby_path, base_path:)
           rbs = begin
-            File.new(path: rbs_path, base_path: base_path)
+            File.new(path: rbs_path, base_path:)
           rescue StandardError
             nil
           end
-          new(ruby: ruby, rbs: rbs)
+          new(ruby:, rbs:)
         end
       end
 

@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = 'RBS type inferrer with LLM'
   spec.homepage = 'https://github.com/kokuyouwind/rbs_goose'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 3.0.0'
+  spec.required_ruby_version = '>= 3.3.0'
 
   # spec.metadata["allowed_push_host"] = 'https://example.com'
 
@@ -30,6 +30,8 @@ Gem::Specification.new do |spec|
   spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+
+  spec.add_dependency 'steep', '>= 1.6.0', '< 2.0.0'
 
   spec.add_runtime_dependency 'langchainrb', '>= 0.8.2', '< 1.0.0'
   spec.add_runtime_dependency 'orthoses', '>= 1.13.0', '< 2.0.0'

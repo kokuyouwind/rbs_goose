@@ -32,14 +32,14 @@ http_interactions:
         number: untyped) -> void\n\n  def ==: (untyped other) -> (untyped | nil)\n\n  def
         hash: () -> untyped\nend\n```\n\n\n========Output========\n```rbs:sig/email.rbs\nclass
         Email\n  @address: String\n\n  attr_reader address: String\n\n  def initialize:
-        (address: String) -> void\n\n  def ==: (untyped other) -> bool\n\n  def hash:
+        (address: String) -> void\n\n  def ==: (Object other) -> bool\n\n  def hash:
         () -> Integer\nend\n```\n\n```rbs:sig/person.rbs\nclass Person\n  @name: String\n\n  @contacts:
-        Array[Email | Phone]\n\n  attr_reader name: String\n\n  attr_reader contacts:
-        Array[Email | Phone]\n\n  def initialize: (name: String) -> void\n\n  def
+        Array[(Email | Phone)]\n\n  attr_reader name: String\n\n  attr_reader contacts:
+        Array[(Email | Phone)]\n\n  def initialize: (name: String) -> void\n\n  def
         name=: (String name) -> void\n\n  def guess_country: () -> (String | nil)\nend\n```\n\n```rbs:sig/phone.rbs\nclass
         Phone\n  @country: String\n\n  @number: String\n\n  attr_reader country: String\n\n  attr_reader
         number: String\n\n  def initialize: (country: String, number: String) -> void\n\n  def
-        ==: (untyped other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Input========\n```ruby:lib/user.rb\nclass
+        ==: (Object other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Input========\n```ruby:lib/user.rb\nclass
         User\n  def initialize(name:)\n    @name = name\n  end\n\n  attr_reader :name\nend\n```\n\n```rbs:sig/user.rbs\nclass
         User\n  @name: untyped\n\n  def initialize: (name: untyped) -> void\n\n  attr_reader
         name: untyped\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
@@ -63,7 +63,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 31 Jan 2024 09:28:23 GMT
+      - Tue, 23 Apr 2024 13:07:01 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -79,7 +79,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '3783'
+      - '2088'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -97,28 +97,28 @@ http_interactions:
       X-Ratelimit-Reset-Tokens:
       - 4.096s
       X-Request-Id:
-      - 64c3c2dbb284dab0d9113999eced4b2f
+      - req_89b3041b075f4caae14d62faf3b5cb96
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=3HKh52Zjz8bvW64xa4Bh9BkvMJOsugiR5gRxk8XwUXk-1706693303-1-AfkjT5OczuV2HEntO+3XOjchWcL3n5w1Qk0n3DSlviTIprpY6kLKUga3mUsQeoUtAIfSxMr17l8UzFnvwPrOENA=;
-        path=/; expires=Wed, 31-Jan-24 09:58:23 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=.nks663tB6DnJ_MLRpS0JNgMiVtFKVRC..sGrTdR82I-1713877621-1.0.1.1-HnDl5RDVBz0jLtU6FjOUd3Uh2uqaJr9wTaWFsBMqL5fl_5qJeYEcpNXXZtXp_hfUEKtsKZWWMlcz_MLmaQVTFQ;
+        path=/; expires=Tue, 23-Apr-24 13:37:01 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=Sa6iNtDEHUglfuvJxa6aGg8lhtr9bICy6WpSzzslCO4-1706693303486-0-604800000;
+      - _cfuvid=OgFgWJ8cV96Zq8iTAr0NvM.RZIP.rQPV11J.7_pjikg-1713877621141-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 84e0ec81eb8a8341-KIX
+      - 878e12ed1d918388-KIX
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-8n1BDm7PWzS58JLTYp5DkDavvGANa",
+          "id": "chatcmpl-9HA9LXxCk2tZOGsfhjvAGTDP1PzwO",
           "object": "chat.completion",
-          "created": 1706693299,
+          "created": 1713877619,
           "model": "gpt-3.5-turbo-1106",
           "choices": [
             {
@@ -132,11 +132,11 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 1003,
+            "prompt_tokens": 1001,
             "completion_tokens": 83,
-            "total_tokens": 1086
+            "total_tokens": 1084
           },
-          "system_fingerprint": "fp_b57c83dd65"
+          "system_fingerprint": "fp_77a673219d"
         }
-  recorded_at: Wed, 31 Jan 2024 09:28:23 GMT
+  recorded_at: Tue, 23 Apr 2024 13:07:01 GMT
 recorded_with: VCR 6.2.0

@@ -14,8 +14,8 @@ module RbsGoose
   class << self
     extend Forwardable
 
-    def configure(&block)
-      @configuration = Configuration.new(&block)
+    def configure(&)
+      @configuration = Configuration.new(&)
     end
 
     def reset_configuration
@@ -24,7 +24,7 @@ module RbsGoose
 
     def run(code_dir: 'lib', sig_dir: 'sig', base_path: ::Dir.pwd)
       puts "Run RbsGoose.(Code Directory: #{code_dir}, Signature Directory: #{sig_dir})"
-      target_group = RbsGoose::IO::TargetGroup.load_from(base_path, code_dir: code_dir, sig_dir: sig_dir)
+      target_group = RbsGoose::IO::TargetGroup.load_from(base_path, code_dir:, sig_dir:)
       RbsGoose::TypeInferrer.new.infer(target_group).each do |refined_rbs|
         puts "write refined rbs to #{refined_rbs.path}\n"
         refined_rbs.write
@@ -32,8 +32,26 @@ module RbsGoose
       end
     end
 
+    def fix_error(code_dir: 'lib', sig_dir: 'sig', base_path: ::Dir.pwd)
+      puts "Run FixError.(Code Directory: #{code_dir}, Signature Directory: #{sig_dir})"
+      target_group = RbsGoose::IO::TargetGroup.load_from(base_path, code_dir:, sig_dir:)
+      RbsGoose::TypeInferrer.new.fix_error(target_group).each do |refined_rbs|
+        puts "write refined rbs to #{refined_rbs.path}\n"
+        refined_rbs.write
+        puts "done.\n\n"
+      end
+    end
+
+    def infer_template
+      configuration.infer_template.build_template
+    end
+
+    def fix_error_template
+      configuration.fix_error_template.build_template
+    end
+
     attr_reader :configuration
 
-    def_delegators :configuration, :llm, :instruction, :example_groups
+    def_delegators :configuration, :llm, :infer_instruction, :infer_example_groups
   end
 end
