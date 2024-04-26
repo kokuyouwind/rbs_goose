@@ -25,10 +25,14 @@ module RbsGoose
 
     attr_accessor :llm, :infer_template, :fix_error_template
 
-    def use_open_ai(open_ai_access_token, model_name: 'gpt-3.5-turbo-1106', mode: :chat, default_options: {})
+    def use_open_ai( # rubocop:disable Metrics/MethodLength
+      open_ai_access_token, model_name: 'gpt-3.5-turbo-1106', mode: :chat,
+      llm_options: {}, default_options: {}
+    )
       @llm = LLMConfig.new(
         client: ::Langchain::LLM::OpenAI.new(
           api_key: open_ai_access_token,
+          llm_options: { request_timeout: 600 }.merge(llm_options),
           default_options: {
             completion_model_name: model_name,
             chat_completion_model_name: model_name
