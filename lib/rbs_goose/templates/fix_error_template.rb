@@ -4,37 +4,11 @@ require 'langchain'
 
 module RbsGoose
   module Templates
-    class FixErrorTemplate
-      def initialize(instruction:, example_groups:)
-        @template = Langchain::Prompt::FewShotPromptTemplate.new(
-          prefix: instruction,
-          suffix: "#{input_template_string}\n",
-          example_prompt:,
-          examples: example_groups.map { transform_example_group(_1) },
-          input_variables: %w[typed_ruby_list error_messages]
-        )
-      end
-
-      def format(typed_ruby_list, error_messages)
-        template.format(
-          typed_ruby_list: typed_ruby_list.join("\n"),
-          error_messages:
-        )
-      end
-
-      def parse_result(result)
-        result.scan(/```.+?```/m).map { IO::File.from_markdown(_1) }
-      end
-
+    class FixErrorTemplate < Base
       private
 
-      attr_reader :template
-
-      def example_prompt
-        Langchain::Prompt::PromptTemplate.new(
-          template: "#{input_template_string}\n{refined_rbs_list}",
-          input_variables: %w[typed_ruby_list error_messages refined_rbs_list]
-        )
+      def input_variables
+        %w[typed_ruby_list error_messages]
       end
 
       def input_template_string
@@ -48,6 +22,13 @@ module RbsGoose
 
           ========Output========
         TEMPLATE
+      end
+
+      def format_args(args)
+        {
+          typed_ruby_list: args[:typed_ruby_list].join("\n"),
+          error_messages: args[:error_messages]
+        }
       end
 
       def transform_example_group(example_group)

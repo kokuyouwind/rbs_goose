@@ -28,7 +28,7 @@ RSpec.describe RbsGoose do
         expect(subject).to have_attributes(
           infer_instruction: 'dummy_instruction',
           infer_example_groups: 'dummy_examples',
-          llm: be_a(Langchain::LLM::OpenAI)
+          llm_client: be_a(Langchain::LLM::OpenAI)
         )
       end
     end

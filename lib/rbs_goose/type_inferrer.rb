@@ -8,26 +8,52 @@ require_relative 'templates'
 module RbsGoose
   class TypeInferrer
     def infer(target_group)
-      template = RbsGoose.infer_template
-      result = complete(template.format(target_group))
-      template.parse_result(result)
+      call_llm(RbsGoose.infer_template, { typed_ruby_list: target_group })
     end
 
     def fix_error(target_group)
       error_messages = steep_check
-      template = RbsGoose.fix_error_template
-      prompt = template.format(target_group, error_messages)
-      result = complete(prompt)
-      template.parse_result(result)
+      call_llm(RbsGoose.fix_error_template, { typed_ruby_list: target_group, error_messages: })
     end
 
     private
 
-    def complete(prompt)
-      is_debug = !ENV['DEBUG'].nil?
-      puts "Prompt: #{prompt}" if is_debug
-      result = RbsGoose.llm.complete(prompt:).completion
-      puts "Result: #{result}" if is_debug
+    def call_llm(template, format_args)
+      result =
+        case RbsGoose.llm_mode.to_sym
+        when :complete
+          call_llm_complete(format_args, template)
+        when :chat
+          call_llm_chat(format_args, template)
+        else
+          raise "Invalid LLM mode: #{RbsGoose.llm_mode}"
+        end
+      template.parse_result(result)
+    end
+
+    def call_llm_complete(format_args, template)
+      prompt = template.format(**format_args)
+      llm_debug(prompt) do
+        RbsGoose.llm.complete(prompt:).completion
+      end
+    end
+
+    def call_llm_chat(format_args, template)
+      messages = [
+        { role: 'system', content: template.format_system_prompt },
+        { role: 'user', content: template.format_user_prompt(**format_args) }
+      ]
+      llm_debug(messages) do
+        RbsGoose.llm.chat(messages:).completion
+      end
+    end
+
+    def llm_debug(prompt)
+      return yield if ENV['DEBUG'].nil?
+
+      puts "!!!!!!!! Prompt !!!!!!!!\n\n#{prompt}\n\n"
+      result = yield
+      puts "!!!!!!!! Result !!!!!!!!\n\n#{result}\n\n"
       result
     end
 

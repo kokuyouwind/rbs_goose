@@ -12,9 +12,27 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
       RbsGoose::IO::ExampleGroup.load_from(fixture_path('examples/user_factory'))
     end
 
-    it 'returns refined rbs' do
-      VCR.use_cassette('openai/infer_user_factory') do
-        expect(subject).to eq(refined_rbs_list)
+    context 'with mode=complete' do
+      before do
+        RbsGoose.configuration.llm.mode = :complete
+      end
+
+      it 'returns refined rbs' do
+        VCR.use_cassette('openai_complete/infer_user_factory') do
+          expect(subject).to eq(refined_rbs_list)
+        end
+      end
+    end
+
+    context 'with mode=chat' do
+      before do
+        RbsGoose.configuration.llm.mode = :chat
+      end
+
+      it 'returns refined rbs' do
+        VCR.use_cassette('openai_chat/infer_user_factory') do
+          expect(subject).to eq(refined_rbs_list)
+        end
       end
     end
   end
@@ -26,10 +44,29 @@ RSpec.describe RbsGoose::TypeInferrer, :configure do
       RbsGoose::IO::ExampleGroup.load_from(fixture_path('examples/fix_errors_user_factory'))
     end
 
-    it 'returns refined rbs' do
-      VCR.use_cassette('openai/fix_error_user_factory') do
-        allow(type_inferrer).to receive(:steep_check).and_return(example_group.error_messages)
-        expect(subject).to eq(refined_rbs_list)
+    context 'with mode=complete' do
+      before do
+        RbsGoose.configuration.llm.mode = :complete
+      end
+
+      it 'returns refined rbs' do
+        VCR.use_cassette('openai_complete/fix_error_user_factory') do
+          allow(type_inferrer).to receive(:steep_check).and_return(example_group.error_messages)
+          expect(subject).to eq(refined_rbs_list)
+        end
+      end
+    end
+
+    context 'with mode=chat' do
+      before do
+        RbsGoose.configuration.llm.mode = :chat
+      end
+
+      it 'returns refined rbs' do
+        VCR.use_cassette('openai_chat/fix_error_user_factory') do
+          allow(type_inferrer).to receive(:steep_check).and_return(example_group.error_messages)
+          expect(subject).to eq(refined_rbs_list)
+        end
       end
     end
   end

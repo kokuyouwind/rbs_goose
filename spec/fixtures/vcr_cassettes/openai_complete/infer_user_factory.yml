@@ -63,7 +63,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 26 Apr 2024 07:13:00 GMT
+      - Fri, 26 Apr 2024 07:12:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -79,7 +79,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '1400'
+      - '1393'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -89,36 +89,36 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '60000'
       X-Ratelimit-Remaining-Requests:
-      - '9996'
+      - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '55656'
+      - '55904'
       X-Ratelimit-Reset-Requests:
-      - 30.01s
+      - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 4.343s
+      - 4.096s
       X-Request-Id:
-      - req_854c2ccc7424b07976ac99e519c38047
+      - req_b3e15bd2f7d6720ce60476207c4a0880
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=2Q6LhTETz732YrntreTyCIzEIbsZB9PLOViDDy9gTEk-1714115580-1.0.1.1-ZBoUioC55AfhcLOBELGUrXUMibLgyCGo5BgdpVirfrWHKdXrn2toUBMQ2PXkyK6fsl8npjGPcDfXKBmZ_JCDrQ;
-        path=/; expires=Fri, 26-Apr-24 07:43:00 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=H8df4o2RX3BbGK7sfsPqWB.YvZCC_ehkDzgbzrxgvRI-1714115576-1.0.1.1-0G4NmbvcI1lOlArKXDaQbfDH4Jt89rg_lXlNs0bb2pWe19WsFnL1bfzsQTaf7uCPVjtXzBC9TK7y_jAxLjjGEg;
+        path=/; expires=Fri, 26-Apr-24 07:42:56 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=.FIyhz8WKyY1i6YwFZTjMvRst0pZnWZlB3nmEkjBX0o-1714115580873-0.0.1.1-604800000;
+      - _cfuvid=IhHP0DjtzV4Zj2fK556pwEaT8O.cL66cC1k0ZSpRIbY-1714115576328-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 87a4c4811f40e053-NRT
+      - 87a4c4649a5cdff9-NRT
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-9IA3P8reMXRR4IahpXJcn7BfxlRUY",
+          "id": "chatcmpl-9IA3L9i42nCV0R0i2ZiOiMOz6fkmy",
           "object": "chat.completion",
-          "created": 1714115579,
+          "created": 1714115575,
           "model": "gpt-3.5-turbo-1106",
           "choices": [
             {
@@ -138,5 +138,5 @@ http_interactions:
           },
           "system_fingerprint": "fp_b953e4de39"
         }
-  recorded_at: Fri, 26 Apr 2024 07:13:00 GMT
+  recorded_at: Fri, 26 Apr 2024 07:12:56 GMT
 recorded_with: VCR 6.2.0
