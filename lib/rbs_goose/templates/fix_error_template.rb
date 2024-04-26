@@ -6,17 +6,18 @@ module RbsGoose
   module Templates
     class FixErrorTemplate
       def initialize(instruction:, example_groups:)
-        @template = Langchain::Prompt::FewShotPromptTemplate.new(
+        @instruction = instruction
+        @example_groups = example_groups
+      end
+
+      def format(typed_ruby_list, error_messages)
+        Langchain::Prompt::FewShotPromptTemplate.new(
           prefix: instruction,
           suffix: "#{input_template_string}\n",
           example_prompt:,
           examples: example_groups.map { transform_example_group(_1) },
           input_variables: %w[typed_ruby_list error_messages]
-        )
-      end
-
-      def format(typed_ruby_list, error_messages)
-        template.format(
+        ).format(
           typed_ruby_list: typed_ruby_list.join("\n"),
           error_messages:
         )
@@ -28,7 +29,7 @@ module RbsGoose
 
       private
 
-      attr_reader :template
+      attr_reader :instruction, :example_groups
 
       def example_prompt
         Langchain::Prompt::PromptTemplate.new(

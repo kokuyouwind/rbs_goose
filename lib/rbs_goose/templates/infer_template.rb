@@ -6,17 +6,18 @@ module RbsGoose
   module Templates
     class InferTemplate
       def initialize(instruction:, example_groups:)
-        @template = Langchain::Prompt::FewShotPromptTemplate.new(
+        @instruction = instruction
+        @example_groups = example_groups
+      end
+
+      def format(typed_ruby_list)
+        Langchain::Prompt::FewShotPromptTemplate.new(
           prefix: instruction,
           suffix: "#{input_template_string}\n",
           example_prompt:,
           examples: example_groups.map { transform_example_group(_1) },
           input_variables: %w[typed_ruby_list]
-        )
-      end
-
-      def format(typed_ruby_list)
-        template.format(typed_ruby_list: typed_ruby_list.join("\n"))
+        ).format(typed_ruby_list: typed_ruby_list.join("\n"))
       end
 
       def parse_result(result)
@@ -25,7 +26,7 @@ module RbsGoose
 
       private
 
-      attr_reader :template
+      attr_reader :instruction, :example_groups
 
       def example_prompt
         Langchain::Prompt::PromptTemplate.new(

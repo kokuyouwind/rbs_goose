@@ -32,9 +32,9 @@ module RbsGoose
     def llm_debug(prompt)
       return yield if ENV['DEBUG'].nil?
 
-      puts "!!!!!!!! Prompt !!!!!!!!\n\n" + prompt + "\n\n"
+      puts "!!!!!!!! Prompt !!!!!!!!\n\n#{prompt}\n\n"
       result = yield
-      puts "!!!!!!!! Result !!!!!!!!\n\n" + result + "\n\n"
+      puts "!!!!!!!! Result !!!!!!!!\n\n#{result}\n\n"
       result
     end
 
