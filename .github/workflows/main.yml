@@ -9,6 +9,7 @@ on:
 
 env:
   OPENAI_ACCESS_TOKEN: DUMMY_TOKEN
+  ANTHROPIC_API_KEY: DUMMY_KEY
   RECORD: none
 
 jobs:
