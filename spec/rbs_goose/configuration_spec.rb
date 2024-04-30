@@ -42,7 +42,8 @@ RSpec.describe RbsGoose::Configuration do
           completion_model_name: 'dummy_model',
           chat_completion_model_name: 'dummy_model',
           temperature: 0.8
-        }
+        },
+        llm_options: { request_timeout: 600 }
       )
     end
   end
