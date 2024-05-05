@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":"Act as Ruby type inferrer.\nWhen
@@ -45,12 +45,14 @@ http_interactions:
         name: untyped\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
         name(name)\n    @name = name\n    self\n  end\n\n  def build\n    User.new(name:
         @name)\n  end\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
-        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========"}],"model":"gpt-3.5-turbo-1106","n":1,"temperature":0.0}'
+        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========"}],"model":"claude-3-haiku-20240307","max_tokens":4096,"temperature":0.0}'
     headers:
       Content-Type:
       - application/json
-      Authorization:
-      - Bearer <openai_access_token>
+      X-Api-Key:
+      - "<anthropic_api_key>"
+      Anthropic-Version:
+      - '2023-06-01'
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -63,80 +65,63 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 05 May 2024 02:54:10 GMT
+      - Sun, 05 May 2024 02:54:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
-      Cache-Control:
-      - no-cache, must-revalidate
-      Openai-Model:
-      - gpt-3.5-turbo-1106
-      Openai-Organization:
-      - user-fcumb6z4e8siumcgotnefqex
-      Openai-Processing-Ms:
-      - '986'
-      Openai-Version:
-      - '2020-10-01'
-      Strict-Transport-Security:
-      - max-age=15724800; includeSubDomains
-      X-Ratelimit-Limit-Requests:
-      - '10000'
-      X-Ratelimit-Limit-Tokens:
-      - '60000'
-      X-Ratelimit-Remaining-Requests:
-      - '9998'
-      X-Ratelimit-Remaining-Tokens:
-      - '59127'
-      X-Ratelimit-Reset-Requests:
-      - 15.855s
-      X-Ratelimit-Reset-Tokens:
-      - 873ms
-      X-Request-Id:
-      - req_7feafc3018fc00155972b51778aaa590
+      Anthropic-Ratelimit-Requests-Limit:
+      - '5'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '4'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2024-05-05T02:55:54Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '25000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '23000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2024-05-05T02:55:54Z'
+      Request-Id:
+      - req_01CiMh6tydx9CUSoZqRAKm2Z
+      X-Cloud-Trace-Context:
+      - 859e255c72f688716580ad83fc6b3156
+      Via:
+      - 1.1 google
       Cf-Cache-Status:
       - DYNAMIC
-      Set-Cookie:
-      - __cf_bm=ai4bJ1.eZPFiT7J02lXSUbhReaTo6U0_WbZWy0CSzak-1714877650-1.0.1.1-b6poH4599POzkanf6XnWVrsWJEVeY.afP6I7jdTDjODdAR1mjNskL_DGbN.AkYXqUjpCkWHjff.mdpf3KrbuXA;
-        path=/; expires=Sun, 05-May-24 03:24:10 GMT; domain=.api.openai.com; HttpOnly;
-        Secure; SameSite=None
-      - _cfuvid=gvcWStSPmCpc_MrCsZcDZtEQ4H2N43CaNS0hsku6o_U-1714877650313-0.0.1.1-604800000;
-        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 87ed71b9cb9a965a-KIX
-      Alt-Svc:
-      - h3=":443"; ma=86400
+      - 87ed71c2dad896a6-KIX
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-9LMIrl0fxdvPg9leNyHlgVpHngLvb",
-          "object": "chat.completion",
-          "created": 1714877649,
-          "model": "gpt-3.5-turbo-1106",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "```rbs:sig/user.rbs\nclass User\n  @name: String\n\n  def initialize: (name: String) -> void\n\n  attr_reader name: String\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name: String\n\n  def name: (String name) -> self\n\n  def build: () -> User\nend\n```"
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 1001,
-            "completion_tokens": 83,
-            "total_tokens": 1084
-          },
-          "system_fingerprint": "fp_482d920018"
-        }
-  recorded_at: Sun, 05 May 2024 02:54:10 GMT
+      string: '{"id":"msg_01VVsW1gTzCnYRyKUqS7Mbpu","type":"message","role":"assistant","model":"claude-3-haiku-20240307","stop_sequence":null,"usage":{"input_tokens":1133,"output_tokens":547},"content":[{"type":"text","text":"```rbs:sig/user.rbs\nclass
+        User\n  @name: String\n\n  def initialize: (name: String) -> void\n\n  attr_reader
+        name: String\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
+        String\n\n  def name: (String name) -> self\n\n  def build: () -> User\nend\n```\n\nIn
+        the first set of input files, the `Email`, `Person`, and `Phone` classes were
+        provided with their corresponding RBS type signatures. By analyzing the Ruby
+        source code, we can refine the RBS type signatures as follows:\n\n1. `email.rb`
+        and `sig/email.rbs`:\n   - The `Email` class has an `address` attribute of
+        type `String`.\n   - The `==` method compares the `other` object with the
+        current `Email` object, returning a `bool` value.\n   - The `hash` method
+        returns an `Integer` value.\n\n2. `person.rb` and `sig/person.rbs`:\n   -
+        The `Person` class has a `name` attribute of type `String` and a `contacts`
+        attribute of type `Array[(Email | Phone)]`.\n   - The `guess_country` method
+        returns a `String` or `nil`.\n\n3. `phone.rb` and `sig/phone.rbs`:\n   - The
+        `Phone` class has a `country` attribute of type `String` and a `number` attribute
+        of type `String`.\n   - The `==` method compares the `other` object with the
+        current `Phone` object, returning a `bool` or `nil` value.\n   - The `hash`
+        method returns an `Integer` value.\n\nIn the second set of input files, the
+        `User` and `UserFactory` classes were provided with their corresponding RBS
+        type signatures. By analyzing the Ruby source code, we can refine the RBS
+        type signatures as follows:\n\n1. `user.rb` and `sig/user.rbs`:\n   - The
+        `User` class has a `name` attribute of type `String`.\n\n2. `user_factory.rb`
+        and `sig/user_factory.rbs`:\n   - The `UserFactory` class has a `name` attribute
+        of type `String`.\n   - The `name` method returns the `UserFactory` instance
+        itself.\n   - The `build` method returns a `User` instance."}],"stop_reason":"end_turn"}'
+  recorded_at: Sun, 05 May 2024 02:54:14 GMT
 recorded_with: VCR 6.2.0

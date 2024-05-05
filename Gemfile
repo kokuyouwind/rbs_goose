@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
+  gem 'anthropic', '~> 0.2.0', require: false
   gem 'dotenv', '~> 3.1.0', require: false
   gem 'factory_bot', '~> 6.4.5', require: false
   gem 'orthoses', '~> 1.13.0', require: false

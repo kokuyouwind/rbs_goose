@@ -5,12 +5,12 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-3.5-turbo-1106","temperature":0.0,"n":1,"messages":[{"role":"user","content":"You
-        are a highly skilled programmer.\nBased on the following Ruby code, the RBS
-        code that is a type definition, and the type checking error messages for them,
-        modify the RBS code and output it.\nAll RBS files should be output, regardless
-        of whether they have been modified or not.\n\n\n========Input========\n```ruby:lib/email.rb\nclass
-        Email\n  # @dynamic address\n  attr_reader :address\n\n  def initialize(address:)\n    @address
+      string: '{"messages":[{"role":"user","content":"You are a highly skilled programmer.\nBased
+        on the following Ruby code, the RBS code that is a type definition, and the
+        type checking error messages for them, modify the RBS code and output it.\nAll
+        RBS files should be output, regardless of whether they have been modified
+        or not.\n\n\n========Input========\n```ruby:lib/email.rb\nclass Email\n  #
+        @dynamic address\n  attr_reader :address\n\n  def initialize(address:)\n    @address
         = address\n  end\n\n  def ==(other)\n    other.is_a?(self.class) && other.address
         == address\n  end\n\n  def hash\n    self.class.hash ^ address.hash\n  end\nend\n```\n\n```rbs:sig/email.rbs\nclass
         Email\n  @address: String\n\n  attr_reader address: String\n\n  def initialize:
@@ -67,7 +67,7 @@ http_interactions:
         allow method body have type `::User` because declared as type `::Integer`\n│   ::User
         <: ::Integer\n│     ::Object <: ::Integer\n│       ::BasicObject <: ::Integer\n│\n│
         Diagnostic ID: Ruby::MethodBodyTypeMismatch\n│\n└   def build\n        ~~~~~\n\nDetected
-        2 problems from 1 file\n\n\n========Output========"}],"max_tokens":4096}'
+        2 problems from 1 file\n\n\n========Output========"}],"model":"gpt-3.5-turbo-1106","n":1,"temperature":0.0}'
     headers:
       Content-Type:
       - application/json
@@ -85,7 +85,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 26 Apr 2024 07:17:16 GMT
+      - Sun, 05 May 2024 02:54:15 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -101,7 +101,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '1494'
+      - '954'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -111,36 +111,36 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '60000'
       X-Ratelimit-Remaining-Requests:
-      - '9999'
+      - '9997'
       X-Ratelimit-Remaining-Tokens:
-      - '55904'
+      - '58655'
       X-Ratelimit-Reset-Requests:
-      - 8.64s
+      - 19.165s
       X-Ratelimit-Reset-Tokens:
-      - 4.096s
+      - 1.345s
       X-Request-Id:
-      - req_d79c9771c9f00a8079678c0f971360e8
+      - req_f531f1244ee6106a3ee653c012db542e
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=qogwwbzIJexdyXvPV5yeZa0YH5QGTczq5mpNmkb7nuM-1714115836-1.0.1.1-BppKZC9G2ib4AUiI.SMDSbJ47jFG3Hn_CYlSirqTa9S9h10fk8IQBUMnBF7tS6juu3oFwmNzZvIcp7G3bTOHiA;
-        path=/; expires=Fri, 26-Apr-24 07:47:16 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=kg846u7K.lL2XzZmQWvGrKtiwYAPlgNoDB2qfOzSztE-1714877655-1.0.1.1-KZfUPqbMZ009_0aBUj4_lGfpfCvZcK58B5kZlPxSkpKT3ZSY7jVLzFjia1gZaN96v8MfWtzCGyGM_BO9yazkZw;
+        path=/; expires=Sun, 05-May-24 03:24:15 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=FAeB32JBXVH8talTgS5EUOnQwce30eyHswnQrZ09VqY-1714115836424-0.0.1.1-604800000;
+      - _cfuvid=vPnZmptbftphAjwRfIjw8ys15IWqw5Ud0yb.hO3LjCU-1714877655627-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 87a4cabdc8821d5f-NRT
+      - 87ed71db28f019d1-KIX
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-9IA7XsM8cZxYjqgBcwbOY3WR2VXlN",
+          "id": "chatcmpl-9LMIwBRelQukkOSTafXr0dTPi8G3m",
           "object": "chat.completion",
-          "created": 1714115835,
+          "created": 1714877654,
           "model": "gpt-3.5-turbo-1106",
           "choices": [
             {
@@ -158,7 +158,7 @@ http_interactions:
             "completion_tokens": 83,
             "total_tokens": 1509
           },
-          "system_fingerprint": "fp_b953e4de39"
+          "system_fingerprint": "fp_482d920018"
         }
-  recorded_at: Fri, 26 Apr 2024 07:17:16 GMT
+  recorded_at: Sun, 05 May 2024 02:54:15 GMT
 recorded_with: VCR 6.2.0

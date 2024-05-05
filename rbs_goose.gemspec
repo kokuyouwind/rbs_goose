@@ -31,9 +31,10 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'langchainrb', '>= 0.12.0', '< 1.0.0'
   spec.add_dependency 'steep', '>= 1.6.0', '< 2.0.0'
 
-  spec.add_runtime_dependency 'langchainrb', '>= 0.8.2', '< 1.0.0'
+  spec.add_runtime_dependency 'anthropic', '>= 0.2.0', '< 1.0.0'
   spec.add_runtime_dependency 'orthoses', '>= 1.13.0', '< 2.0.0'
   spec.add_runtime_dependency 'ruby-openai', '>= 6.1.0', '< 8.0.0'
 

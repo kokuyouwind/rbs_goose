@@ -43,6 +43,16 @@ def llm
   )
 end
 
+def anthropic
+  @anthropic ||= Langchain::LLM::Anthropic.new(
+    api_key: ENV.fetch('ANTHROPIC_API_KEY', nil),
+    default_options: {
+      chat_completion_model_name: 'claude-3-sonnet-20240229',
+      max_tokens_to_sample: 4096
+    }
+  )
+end
+
 def input_template_string
   "========Input========\n{ruby}\n{rbs}\n\n========Output========"
 end

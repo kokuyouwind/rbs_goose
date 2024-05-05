@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'openai'
 require 'langchain'
 
 require 'forwardable'
@@ -36,6 +35,20 @@ module RbsGoose
           default_options: {
             completion_model_name: model_name,
             chat_completion_model_name: model_name
+          }.merge(default_options)
+        ),
+        mode:
+      )
+    end
+
+    def use_anthropic(access_token, model_name: 'claude-3-haiku-20240307', mode: :chat, default_options: {}) # rubocop:disable Metrics/MethodLength
+      @llm = LLMConfig.new(
+        client: ::Langchain::LLM::Anthropic.new(
+          api_key: access_token,
+          default_options: {
+            completion_model_name: model_name,
+            chat_completion_model_name: model_name,
+            max_tokens_to_sample: 4096
           }.merge(default_options)
         ),
         mode:

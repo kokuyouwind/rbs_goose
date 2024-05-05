@@ -5,10 +5,10 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-3.5-turbo-1106","temperature":0.0,"n":1,"messages":[{"role":"user","content":"Act
-        as Ruby type inferrer.\nWhen ruby source codes and RBS type signatures are
-        given, refine each RBS type signatures. Each file should be split in markdown
-        code format.\nUse class names, variable names, etc., to infer type.\n\n\n========Input========\n```ruby:lib/email.rb\nclass
+      string: '{"messages":[{"role":"user","content":"Act as Ruby type inferrer.\nWhen
+        ruby source codes and RBS type signatures are given, refine each RBS type
+        signatures. Each file should be split in markdown code format.\nUse class
+        names, variable names, etc., to infer type.\n\n\n========Input========\n```ruby:lib/email.rb\nclass
         Email\n  # @dynamic address\n  attr_reader :address\n\n  def initialize(address:)\n    @address
         = address\n  end\n\n  def ==(other)\n    other.is_a?(self.class) && other.address
         == address\n  end\n\n  def hash\n    self.class.hash ^ address.hash\n  end\nend\n```\n\n```rbs:sig/email.rbs\nclass
@@ -45,7 +45,7 @@ http_interactions:
         name: untyped\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
         name(name)\n    @name = name\n    self\n  end\n\n  def build\n    User.new(name:
         @name)\n  end\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
-        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========"}],"max_tokens":4096}'
+        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========"}],"model":"gpt-3.5-turbo-1106","n":1,"temperature":0.0}'
     headers:
       Content-Type:
       - application/json
@@ -63,7 +63,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 26 Apr 2024 07:12:56 GMT
+      - Sun, 05 May 2024 02:54:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -79,7 +79,7 @@ http_interactions:
       Openai-Organization:
       - user-fcumb6z4e8siumcgotnefqex
       Openai-Processing-Ms:
-      - '1393'
+      - '962'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
@@ -91,34 +91,34 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '55904'
+      - '59127'
       X-Ratelimit-Reset-Requests:
       - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 4.096s
+      - 873ms
       X-Request-Id:
-      - req_b3e15bd2f7d6720ce60476207c4a0880
+      - req_58f0c40d2e708c42d29c3a82317f6d81
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=H8df4o2RX3BbGK7sfsPqWB.YvZCC_ehkDzgbzrxgvRI-1714115576-1.0.1.1-0G4NmbvcI1lOlArKXDaQbfDH4Jt89rg_lXlNs0bb2pWe19WsFnL1bfzsQTaf7uCPVjtXzBC9TK7y_jAxLjjGEg;
-        path=/; expires=Fri, 26-Apr-24 07:42:56 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=Z0wACVnK_cTmLuVf5g17ezBkxdZ4pAEDb1ZNBxhZCHU-1714877648-1.0.1.1-pvxunMK_XQXb.Ns0IYW0HiznbC7o1l.OS9UBEAZ51NhmVnNhqEt54yjmjXFDeP3RtcAHeYw39oVjI_x6cXQLiQ;
+        path=/; expires=Sun, 05-May-24 03:24:08 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=IhHP0DjtzV4Zj2fK556pwEaT8O.cL66cC1k0ZSpRIbY-1714115576328-0.0.1.1-604800000;
+      - _cfuvid=wwiMUr1U8ML3vCrPvprAK47UZQ9Ro7X7pXZeiqABusE-1714877648869-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
       Cf-Ray:
-      - 87a4c4649a5cdff9-NRT
+      - 87ed71b0ec86830a-KIX
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-9IA3L9i42nCV0R0i2ZiOiMOz6fkmy",
+          "id": "chatcmpl-9LMIqBmXA1jYQMhA1U7tvIjsFLrTl",
           "object": "chat.completion",
-          "created": 1714115575,
+          "created": 1714877648,
           "model": "gpt-3.5-turbo-1106",
           "choices": [
             {
@@ -136,7 +136,7 @@ http_interactions:
             "completion_tokens": 83,
             "total_tokens": 1084
           },
-          "system_fingerprint": "fp_b953e4de39"
+          "system_fingerprint": "fp_482d920018"
         }
-  recorded_at: Fri, 26 Apr 2024 07:12:56 GMT
+  recorded_at: Sun, 05 May 2024 02:54:08 GMT
 recorded_with: VCR 6.2.0
