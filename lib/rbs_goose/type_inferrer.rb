@@ -40,11 +40,10 @@ module RbsGoose
 
     def call_llm_chat(format_args, template)
       messages = [
-        { role: 'system', content: template.format_system_prompt },
-        { role: 'user', content: template.format_user_prompt(**format_args) }
+        { role: 'user', content: template.format(**format_args) }
       ]
       llm_debug(messages) do
-        RbsGoose.llm.chat(messages:).completion
+        RbsGoose.llm.chat(messages:).chat_completion
       end
     end
 

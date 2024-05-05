@@ -36,18 +36,18 @@ RSpec.describe RbsGoose::TypeInferrer do
           end
         end
       end
+    end
 
-      context 'with anthropic' do
-        before do
-          RbsGoose.configure do |c|
-            c.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY'))
-          end
+    context 'with anthropic' do
+      before do
+        RbsGoose.configure do |c|
+          c.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY'))
         end
+      end
 
-        it 'returns refined rbs' do
-          VCR.use_cassette('anthropic_chat/infer_user_factory') do
-            expect(subject).to eq(refined_rbs_list)
-          end
+      it 'returns refined rbs' do
+        VCR.use_cassette('anthropic_chat/infer_user_factory') do
+          expect(subject).to eq(refined_rbs_list)
         end
       end
     end

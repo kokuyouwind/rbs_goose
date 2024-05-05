@@ -5,10 +5,10 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"system","content":"Act as Ruby type inferrer.\nWhen
+      string: '{"messages":[{"role":"user","content":"Act as Ruby type inferrer.\nWhen
         ruby source codes and RBS type signatures are given, refine each RBS type
         signatures. Each file should be split in markdown code format.\nUse class
-        names, variable names, etc., to infer type."},{"role":"user","content":"========Input========\n```ruby:lib/email.rb\nclass
+        names, variable names, etc., to infer type.\n\n\n========Input========\n```ruby:lib/email.rb\nclass
         Email\n  # @dynamic address\n  attr_reader :address\n\n  def initialize(address:)\n    @address
         = address\n  end\n\n  def ==(other)\n    other.is_a?(self.class) && other.address
         == address\n  end\n\n  def hash\n    self.class.hash ^ address.hash\n  end\nend\n```\n\n```rbs:sig/email.rbs\nclass
@@ -45,7 +45,7 @@ http_interactions:
         name: untyped\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
         name(name)\n    @name = name\n    self\n  end\n\n  def build\n    User.new(name:
         @name)\n  end\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
-        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========"}],"model":"claude-3-sonnet-20240229","max_tokens":4096,"temperature":0.0}'
+        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========"}],"model":"claude-3-haiku-20240307","max_tokens":4096,"temperature":0.0}'
     headers:
       Content-Type:
       - application/json
@@ -61,23 +61,33 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 400
-      message: Bad Request
+      code: 200
+      message: OK
     headers:
       Date:
-      - Fri, 03 May 2024 01:19:10 GMT
+      - Sun, 05 May 2024 02:54:14 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '205'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
-      X-Should-Retry:
-      - 'false'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '5'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '4'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2024-05-05T02:55:54Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '25000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '23000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2024-05-05T02:55:54Z'
       Request-Id:
-      - req_015FgBJYpP6ste1yFVvvzcwq
+      - req_01CiMh6tydx9CUSoZqRAKm2Z
       X-Cloud-Trace-Context:
-      - 243dd3270110eed6bbdca71801e9bb8d
+      - 859e255c72f688716580ad83fc6b3156
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -85,11 +95,33 @@ http_interactions:
       Server:
       - cloudflare
       Cf-Ray:
-      - 87dc6bdb7f288d07-KIX
+      - 87ed71c2dad896a6-KIX
     body:
-      encoding: UTF-8
-      string: '{"type":"error","error":{"type":"invalid_request_error","message":"messages:
-        Unexpected role \"system\". The Messages API accepts a top-level `system`
-        parameter, not \"system\" as an input message role."}}'
-  recorded_at: Fri, 03 May 2024 01:19:10 GMT
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01VVsW1gTzCnYRyKUqS7Mbpu","type":"message","role":"assistant","model":"claude-3-haiku-20240307","stop_sequence":null,"usage":{"input_tokens":1133,"output_tokens":547},"content":[{"type":"text","text":"```rbs:sig/user.rbs\nclass
+        User\n  @name: String\n\n  def initialize: (name: String) -> void\n\n  attr_reader
+        name: String\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
+        String\n\n  def name: (String name) -> self\n\n  def build: () -> User\nend\n```\n\nIn
+        the first set of input files, the `Email`, `Person`, and `Phone` classes were
+        provided with their corresponding RBS type signatures. By analyzing the Ruby
+        source code, we can refine the RBS type signatures as follows:\n\n1. `email.rb`
+        and `sig/email.rbs`:\n   - The `Email` class has an `address` attribute of
+        type `String`.\n   - The `==` method compares the `other` object with the
+        current `Email` object, returning a `bool` value.\n   - The `hash` method
+        returns an `Integer` value.\n\n2. `person.rb` and `sig/person.rbs`:\n   -
+        The `Person` class has a `name` attribute of type `String` and a `contacts`
+        attribute of type `Array[(Email | Phone)]`.\n   - The `guess_country` method
+        returns a `String` or `nil`.\n\n3. `phone.rb` and `sig/phone.rbs`:\n   - The
+        `Phone` class has a `country` attribute of type `String` and a `number` attribute
+        of type `String`.\n   - The `==` method compares the `other` object with the
+        current `Phone` object, returning a `bool` or `nil` value.\n   - The `hash`
+        method returns an `Integer` value.\n\nIn the second set of input files, the
+        `User` and `UserFactory` classes were provided with their corresponding RBS
+        type signatures. By analyzing the Ruby source code, we can refine the RBS
+        type signatures as follows:\n\n1. `user.rb` and `sig/user.rbs`:\n   - The
+        `User` class has a `name` attribute of type `String`.\n\n2. `user_factory.rb`
+        and `sig/user_factory.rbs`:\n   - The `UserFactory` class has a `name` attribute
+        of type `String`.\n   - The `name` method returns the `UserFactory` instance
+        itself.\n   - The `build` method returns a `User` instance."}],"stop_reason":"end_turn"}'
+  recorded_at: Sun, 05 May 2024 02:54:14 GMT
 recorded_with: VCR 6.2.0
