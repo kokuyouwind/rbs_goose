@@ -51,6 +51,36 @@ RSpec.describe RbsGoose::TypeInferrer do
         end
       end
     end
+
+    context 'with ollama(codegemma)' do
+      context 'with mode=complete' do
+        before do
+          RbsGoose.configure do |c|
+            c.use_ollama(model_name: 'codegemma', mode: :complete)
+          end
+        end
+
+        it 'returns refined rbs' do
+          VCR.use_cassette('ollama_codegemma_complete/infer_user_factory') do
+            expect(subject).to eq(refined_rbs_list)
+          end
+        end
+      end
+    end
+
+    context 'with mode=chat' do
+      before do
+        RbsGoose.configure do |c|
+          c.use_ollama(model_name: 'codegemma', mode: :chat)
+        end
+      end
+
+      it 'returns refined rbs' do
+        VCR.use_cassette('ollama_codegemma_chat/infer_user_factory') do
+          expect(subject).to eq(refined_rbs_list)
+        end
+      end
+    end
   end
 
   describe '#fix_error' do

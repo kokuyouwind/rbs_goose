@@ -1,0 +1,163 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/generate
+    body:
+      encoding: UTF-8
+      string: '{"prompt":"Act as Ruby type inferrer.\nWhen ruby source codes and RBS
+        type signatures are given, refine each RBS type signatures. Each file should
+        be split in markdown code format.\nUse class names, variable names, etc.,
+        to infer type.\n\n\n========Input========\n```ruby:lib/email.rb\nclass Email\n  #
+        @dynamic address\n  attr_reader :address\n\n  def initialize(address:)\n    @address
+        = address\n  end\n\n  def ==(other)\n    other.is_a?(self.class) && other.address
+        == address\n  end\n\n  def hash\n    self.class.hash ^ address.hash\n  end\nend\n```\n\n```rbs:sig/email.rbs\nclass
+        Email\n  @address: untyped\n\n  attr_reader address: untyped\n\n  def initialize:
+        (address: untyped) -> void\n\n  def ==: (untyped other) -> untyped\n\n  def
+        hash: () -> untyped\nend\n```\n\n```ruby:lib/person.rb\nclass Person\n  #
+        @dynamic name, contacts\n  attr_reader :name\n  attr_reader :contacts\n\n  def
+        initialize(name:)\n    @name = name\n    @contacts = []\n  end\n\n  def name=(name)\n    @name
+        = name\n  end\n\n  def guess_country()\n    contacts.map do |contact|\n      case
+        contact\n      when Phone\n        contact.country\n      end\n    end.compact.first\n  end\nend\n```\n\n```rbs:sig/person.rbs\nclass
+        Person\n  @name: untyped\n\n  @contacts: untyped\n\n  attr_reader name: untyped\n\n  attr_reader
+        contacts: untyped\n\n  def initialize: (name: untyped) -> void\n\n  def name=:
+        (untyped name) -> void\n\n  def guess_country: () -> untyped\nend\n```\n\n```ruby:lib/phone.rb\nclass
+        Phone\n  # @dynamic country, number\n  attr_reader :country, :number\n\n  def
+        initialize(country:, number:)\n    @country = country\n    @number = number\n  end\n\n  def
+        ==(other)\n    if other.is_a?(Phone)\n      # @type var other: Phone\n      other.country
+        == country && other.number == number\n    else\n      false\n    end\n  end\n\n  def
+        hash\n    self.class.hash ^ country.hash ^ number.hash\n  end\nend\n```\n\n```rbs:sig/phone.rbs\nclass
+        Phone\n  @country: untyped\n\n  @number: untyped\n\n  attr_reader country:
+        untyped\n\n  attr_reader number: untyped\n\n  def initialize: (country: untyped,
+        number: untyped) -> void\n\n  def ==: (untyped other) -> (untyped | nil)\n\n  def
+        hash: () -> untyped\nend\n```\n\n\n========Output========\n```rbs:sig/email.rbs\nclass
+        Email\n  @address: String\n\n  attr_reader address: String\n\n  def initialize:
+        (address: String) -> void\n\n  def ==: (Object other) -> bool\n\n  def hash:
+        () -> Integer\nend\n```\n\n```rbs:sig/person.rbs\nclass Person\n  @name: String\n\n  @contacts:
+        Array[(Email | Phone)]\n\n  attr_reader name: String\n\n  attr_reader contacts:
+        Array[(Email | Phone)]\n\n  def initialize: (name: String) -> void\n\n  def
+        name=: (String name) -> void\n\n  def guess_country: () -> (String | nil)\nend\n```\n\n```rbs:sig/phone.rbs\nclass
+        Phone\n  @country: String\n\n  @number: String\n\n  attr_reader country: String\n\n  attr_reader
+        number: String\n\n  def initialize: (country: String, number: String) -> void\n\n  def
+        ==: (Object other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Input========\n```ruby:lib/user.rb\nclass
+        User\n  def initialize(name:)\n    @name = name\n  end\n\n  attr_reader :name\nend\n```\n\n```rbs:sig/user.rbs\nclass
+        User\n  @name: untyped\n\n  def initialize: (name: untyped) -> void\n\n  attr_reader
+        name: untyped\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
+        name(name)\n    @name = name\n    self\n  end\n\n  def build\n    User.new(name:
+        @name)\n  end\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
+        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========","model":"codegemma","options":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Sun, 05 May 2024 03:33:10 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.054648Z","response":"```","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.091342Z","response":"r","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.128171Z","response":"bs","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.164214Z","response":":","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.200302Z","response":"sig","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.236204Z","response":"/","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.272371Z","response":"user","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.308617Z","response":".","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.344926Z","response":"r","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.382667Z","response":"bs","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.418953Z","response":"\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.455095Z","response":"class","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.491464Z","response":" User","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.527449Z","response":"\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.562883Z","response":"  ","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.59892Z","response":"@","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.634775Z","response":"name","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.670358Z","response":":","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.710699Z","response":" String","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.750002Z","response":"\n\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.78743Z","response":"  ","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.826495Z","response":"def","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.865809Z","response":" initialize","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.900858Z","response":":","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.936778Z","response":" (","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:10.973423Z","response":"name","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.014182Z","response":":","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.050476Z","response":" String","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.0872Z","response":")","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.125059Z","response":" -\u003e","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.160773Z","response":" void","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.196728Z","response":"\n\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.23197Z","response":"  ","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.267524Z","response":"attr","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.303478Z","response":"_","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.339367Z","response":"reader","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.374426Z","response":" name","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.40948Z","response":":","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.44459Z","response":" String","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.479537Z","response":"\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.514725Z","response":"end","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.54987Z","response":"\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.585333Z","response":"```","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.620454Z","response":"\n\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.655629Z","response":"```","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.690696Z","response":"r","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.725588Z","response":"bs","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.760737Z","response":":","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.79599Z","response":"sig","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.831588Z","response":"/","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.868818Z","response":"user","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.904555Z","response":"_","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.939849Z","response":"factory","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:11.974939Z","response":".","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.009986Z","response":"r","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.045276Z","response":"bs","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.08065Z","response":"\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.116095Z","response":"class","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.151551Z","response":" User","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.186959Z","response":"Factory","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.222511Z","response":"\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.258144Z","response":"  ","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.293723Z","response":"@","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.329242Z","response":"name","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.364894Z","response":":","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.400413Z","response":" String","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.435992Z","response":"\n\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.471115Z","response":"  ","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.506452Z","response":"def","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.541277Z","response":" name","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.576629Z","response":":","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.611799Z","response":" (","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.647196Z","response":"String","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.682541Z","response":" name","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.718001Z","response":")","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.753546Z","response":" -\u003e","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.789018Z","response":" self","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.824626Z","response":"\n\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.86043Z","response":"  ","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.895444Z","response":"def","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.93053Z","response":" build","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:12.965643Z","response":":","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:13.000707Z","response":" ()","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:13.035809Z","response":" -\u003e","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:13.070948Z","response":" User","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:13.106077Z","response":"\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:13.141584Z","response":"end","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:13.177274Z","response":"\n","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:13.212567Z","response":"```","done":false}
+        {"model":"codegemma","created_at":"2024-05-05T03:33:13.248037Z","response":"","done":true,"context":[106,1645,108,11496,685,39671,1916,12653,8729,235265,108,4115,55865,4303,17994,578,625,5577,1916,48907,708,2764,235269,80745,1853,625,5577,1916,48907,235265,9573,2482,1412,614,10544,575,143830,3409,5920,235265,108,7056,1062,4752,235269,8792,4752,235269,3687,1173,577,12653,1916,235265,110,4390,3678,4390,108,1917,47747,235292,4613,235283,4614,235265,12162,108,1638,13570,108,139,235345,1118,23067,3986,108,139,5731,235298,16120,865,5944,109,139,1293,23414,235278,5944,11262,108,141,235348,5944,589,3986,108,139,615,109,139,1293,1159,235278,2143,235275,108,141,2143,235265,502,235298,235250,38318,1053,235265,1638,235275,2732,1156,235265,5944,1159,3986,108,139,615,109,139,1293,10974,108,141,1053,235265,1638,235265,8400,7160,3986,235265,8400,108,139,615,108,615,108,1917,109,1917,235255,2473,235292,4344,235283,4614,235265,235255,2473,108,1638,13570,108,139,235348,5944,235292,3664,169057,109,139,5731,235298,16120,3986,235292,3664,169057,109,139,1293,23414,235292,591,5944,235292,3664,169057,235275,3978,1466,109,139,1293,1159,235292,591,2850,169057,1156,235275,3978,3664,169057,109,139,1293,10974,235292,3022,3978,3664,169057,108,615,108,1917,109,1917,47747,235292,4613,235283,6717,235265,12162,108,1638,6839,108,139,235345,1118,23067,1503,235269,22290,108,139,5731,235298,16120,865,1067,108,139,5731,235298,16120,865,48941,109,139,1293,23414,235278,1067,11262,108,141,235348,1067,589,1503,108,141,235348,48941,589,2422,108,139,615,109,139,1293,1503,10663,1067,235275,108,141,235348,1067,589,1503,108,139,615,109,139,1293,7464,235298,11857,645,108,141,48941,235265,2700,749,1420,13547,235371,108,143,1533,3764,108,143,8999,17518,108,145,13547,235265,11857,108,143,615,108,141,615,235265,56627,235265,4878,108,139,615,108,615,108,1917,109,1917,235255,2473,235292,4344,235283,6717,235265,235255,2473,108,1638,6839,108,139,235348,1067,235292,3664,169057,109,139,235348,48941,235292,3664,169057,109,139,5731,235298,16120,1503,235292,3664,169057,109,139,5731,235298,16120,22290,235292,3664,169057,109,139,1293,23414,235292,591,1067,235292,3664,169057,235275,3978,1466,109,139,1293,1503,101308,591,2850,169057,1503,235275,3978,1466,109,139,1293,7464,235298,11857,235292,3022,3978,3664,169057,108,615,108,1917,109,1917,47747,235292,4613,235283,3953,235265,12162,108,1638,17518,108,139,235345,1118,23067,3170,235269,1758,108,139,5731,235298,16120,865,11857,235269,865,4308,109,139,1293,23414,235278,11857,21822,1758,11262,108,141,235348,11857,589,3170,108,141,235348,4308,589,1758,108,139,615,109,139,1293,1159,235278,2143,235275,108,141,648,1156,235265,502,235298,235250,38318,6401,235275,108,143,235345,1118,1425,2706,1156,235292,17518,108,143,2143,235265,11857,1159,3170,2732,1156,235265,4308,1159,1758,108,141,1075,108,143,3813,108,141,615,108,139,615,109,139,1293,10974,108,141,1053,235265,1638,235265,8400,7160,3170,235265,8400,7160,1758,235265,8400,108,139,615,108,615,108,1917,109,1917,235255,2473,235292,4344,235283,3953,235265,235255,2473,108,1638,17518,108,139,235348,11857,235292,3664,169057,109,139,235348,4308,235292,3664,169057,109,139,5731,235298,16120,3170,235292,3664,169057,109,139,5731,235298,16120,1758,235292,3664,169057,109,139,1293,23414,235292,591,11857,235292,3664,169057,235269,1758,235292,3664,169057,235275,3978,1466,109,139,1293,1159,235292,591,2850,169057,1156,235275,3978,591,2850,169057,1420,3227,235275,109,139,1293,10974,235292,3022,3978,3664,169057,108,615,108,1917,110,4390,6140,4390,108,1917,235255,2473,235292,4344,235283,4614,235265,235255,2473,108,1638,13570,108,139,235348,5944,235292,1727,109,139,5731,235298,16120,3986,235292,1727,109,139,1293,23414,235292,591,5944,235292,1727,235275,3978,1466,109,139,1293,1159,235292,591,2531,1156,235275,3978,6535,109,139,1293,10974,235292,3022,3978,9217,108,615,108,1917,109,1917,235255,2473,235292,4344,235283,6717,235265,235255,2473,108,1638,6839,108,139,235348,1067,235292,1727,109,139,235348,48941,235292,6810,24088,6258,1420,17518,6278,109,139,5731,235298,16120,1503,235292,1727,109,139,5731,235298,16120,22290,235292,6810,24088,6258,1420,17518,6278,109,139,1293,23414,235292,591,1067,235292,1727,235275,3978,1466,109,139,1293,1503,101308,591,1239,1503,235275,3978,1466,109,139,1293,7464,235298,11857,235292,3022,3978,591,1239,1420,3227,235275,108,615,108,1917,109,1917,235255,2473,235292,4344,235283,3953,235265,235255,2473,108,1638,17518,108,139,235348,11857,235292,1727,109,139,235348,4308,235292,1727,109,139,5731,235298,16120,3170,235292,1727,109,139,5731,235298,16120,1758,235292,1727,109,139,1293,23414,235292,591,11857,235292,1727,235269,1758,235292,1727,235275,3978,1466,109,139,1293,1159,235292,591,2531,1156,235275,3978,591,5107,1420,3227,235275,109,139,1293,10974,235292,3022,3978,9217,108,615,108,1917,110,4390,3678,4390,108,1917,47747,235292,4613,235283,1645,235265,12162,108,1638,4926,108,139,1293,23414,235278,1067,11262,108,141,235348,1067,589,1503,108,139,615,109,139,5731,235298,16120,865,1067,108,615,108,1917,109,1917,235255,2473,235292,4344,235283,1645,235265,235255,2473,108,1638,4926,108,139,235348,1067,235292,3664,169057,109,139,1293,23414,235292,591,1067,235292,3664,169057,235275,3978,1466,109,139,5731,235298,16120,1503,235292,3664,169057,108,615,108,1917,109,1917,47747,235292,4613,235283,1645,235298,13725,235265,12162,108,1638,4926,6782,108,139,1293,1503,235278,1067,235275,108,141,235348,1067,589,1503,108,141,1053,108,139,615,109,139,1293,2500,108,141,2224,235265,1404,235278,1067,235292,1118,1067,235275,108,139,615,108,615,108,1917,109,1917,235255,2473,235292,4344,235283,1645,235298,13725,235265,235255,2473,108,1638,4926,6782,108,139,235348,1067,235292,3664,169057,109,139,1293,1503,235292,591,2850,169057,1503,235275,3978,2011,109,139,1293,2500,235292,3022,3978,3664,169057,108,615,108,1917,110,4390,6140,4390,107,108,106,2516,108,1917,235255,2473,235292,4344,235283,1645,235265,235255,2473,108,1638,4926,108,139,235348,1067,235292,1727,109,139,1293,23414,235292,591,1067,235292,1727,235275,3978,1466,109,139,5731,235298,16120,1503,235292,1727,108,615,108,1917,109,1917,235255,2473,235292,4344,235283,1645,235298,13725,235265,235255,2473,108,1638,4926,6782,108,139,235348,1067,235292,1727,109,139,1293,1503,235292,591,1239,1503,235275,3978,2011,109,139,1293,2500,235292,3022,3978,4926,108,615,108,1917,107,108],"total_duration":8627517459,"load_duration":1263904500,"prompt_eval_count":1098,"prompt_eval_duration":4169832000,"eval_count":90,"eval_duration":3193214000}
+  recorded_at: Sun, 05 May 2024 03:33:13 GMT
+recorded_with: VCR 6.2.0

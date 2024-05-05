@@ -55,6 +55,20 @@ module RbsGoose
       )
     end
 
+    def use_ollama(url: 'http://localhost:11434', model_name: 'codegemma', mode: :complete, default_options: {}) # rubocop:disable Metrics/MethodLength
+      @llm = LLMConfig.new(
+        client: ::Langchain::LLM::Ollama.new(
+          url:,
+          default_options: {
+            temperature: 0.0,
+            completion_model_name: model_name,
+            chat_completion_model_name: model_name
+          }.merge(default_options)
+        ),
+        mode:
+      )
+    end
+
     def_delegator :llm, :client, :llm_client
     def_delegator :llm, :mode, :llm_mode
     def_delegator :infer_template, :instruction, :infer_instruction
