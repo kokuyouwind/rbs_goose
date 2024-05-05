@@ -50,7 +50,7 @@ RSpec.describe RbsGoose::Configuration do
 
   describe '#use_anthropic' do
     it 'sets Anthropic llm' do
-      allow(::Langchain::LLM::Anthropic).to receive(:new).and_call_original
+      allow(Langchain::LLM::Anthropic).to receive(:new).and_call_original
       described_class.new do |c|
         c.use_anthropic('dummy_token', model_name: 'dummy_model', default_options: { temperature: 0.8 })
       end

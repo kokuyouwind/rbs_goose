@@ -51,10 +51,6 @@ RSpec.describe RbsGoose::TypeInferrer do
         end
       end
     end
-
-    context 'with anthropic llm' do
-
-    end
   end
 
   describe '#fix_error' do

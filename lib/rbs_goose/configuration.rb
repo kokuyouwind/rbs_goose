@@ -41,8 +41,8 @@ module RbsGoose
       )
     end
 
-    def use_anthropic(access_token, model_name: 'claude-3-sonnet-20240229', mode: :chat, default_options: {})
-      @llm ||= LLMConfig.new(
+    def use_anthropic(access_token, model_name: 'claude-3-sonnet-20240229', mode: :chat, default_options: {}) # rubocop:disable Metrics/MethodLength
+      @use_anthropic ||= LLMConfig.new(
         client: ::Langchain::LLM::Anthropic.new(
           api_key: access_token,
           default_options: {
