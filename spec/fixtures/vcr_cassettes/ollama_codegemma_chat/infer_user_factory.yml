@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"codegemma","messages":[{"role":"user","content":"Act as Ruby
+        type inferrer.\nWhen ruby source codes and RBS type signatures are given,
+        refine each RBS type signatures. Each file should be split in markdown code
+        format.\nUse class names, variable names, etc., to infer type.\n\n\n========Input========\n```ruby:lib/email.rb\nclass
+        Email\n  # @dynamic address\n  attr_reader :address\n\n  def initialize(address:)\n    @address
+        = address\n  end\n\n  def ==(other)\n    other.is_a?(self.class) && other.address
+        == address\n  end\n\n  def hash\n    self.class.hash ^ address.hash\n  end\nend\n```\n\n```rbs:sig/email.rbs\nclass
+        Email\n  @address: untyped\n\n  attr_reader address: untyped\n\n  def initialize:
+        (address: untyped) -> void\n\n  def ==: (untyped other) -> untyped\n\n  def
+        hash: () -> untyped\nend\n```\n\n```ruby:lib/person.rb\nclass Person\n  #
+        @dynamic name, contacts\n  attr_reader :name\n  attr_reader :contacts\n\n  def
+        initialize(name:)\n    @name = name\n    @contacts = []\n  end\n\n  def name=(name)\n    @name
+        = name\n  end\n\n  def guess_country()\n    contacts.map do |contact|\n      case
+        contact\n      when Phone\n        contact.country\n      end\n    end.compact.first\n  end\nend\n```\n\n```rbs:sig/person.rbs\nclass
+        Person\n  @name: untyped\n\n  @contacts: untyped\n\n  attr_reader name: untyped\n\n  attr_reader
+        contacts: untyped\n\n  def initialize: (name: untyped) -> void\n\n  def name=:
+        (untyped name) -> void\n\n  def guess_country: () -> untyped\nend\n```\n\n```ruby:lib/phone.rb\nclass
+        Phone\n  # @dynamic country, number\n  attr_reader :country, :number\n\n  def
+        initialize(country:, number:)\n    @country = country\n    @number = number\n  end\n\n  def
+        ==(other)\n    if other.is_a?(Phone)\n      # @type var other: Phone\n      other.country
+        == country && other.number == number\n    else\n      false\n    end\n  end\n\n  def
+        hash\n    self.class.hash ^ country.hash ^ number.hash\n  end\nend\n```\n\n```rbs:sig/phone.rbs\nclass
+        Phone\n  @country: untyped\n\n  @number: untyped\n\n  attr_reader country:
+        untyped\n\n  attr_reader number: untyped\n\n  def initialize: (country: untyped,
+        number: untyped) -> void\n\n  def ==: (untyped other) -> (untyped | nil)\n\n  def
+        hash: () -> untyped\nend\n```\n\n\n========Output========\n```rbs:sig/email.rbs\nclass
+        Email\n  @address: String\n\n  attr_reader address: String\n\n  def initialize:
+        (address: String) -> void\n\n  def ==: (Object other) -> bool\n\n  def hash:
+        () -> Integer\nend\n```\n\n```rbs:sig/person.rbs\nclass Person\n  @name: String\n\n  @contacts:
+        Array[(Email | Phone)]\n\n  attr_reader name: String\n\n  attr_reader contacts:
+        Array[(Email | Phone)]\n\n  def initialize: (name: String) -> void\n\n  def
+        name=: (String name) -> void\n\n  def guess_country: () -> (String | nil)\nend\n```\n\n```rbs:sig/phone.rbs\nclass
+        Phone\n  @country: String\n\n  @number: String\n\n  attr_reader country: String\n\n  attr_reader
+        number: String\n\n  def initialize: (country: String, number: String) -> void\n\n  def
+        ==: (Object other) -> (bool | nil)\n\n  def hash: () -> Integer\nend\n```\n\n\n========Input========\n```ruby:lib/user.rb\nclass
+        User\n  def initialize(name:)\n    @name = name\n  end\n\n  attr_reader :name\nend\n```\n\n```rbs:sig/user.rbs\nclass
+        User\n  @name: untyped\n\n  def initialize: (name: untyped) -> void\n\n  attr_reader
+        name: untyped\nend\n```\n\n```ruby:lib/user_factory.rb\nclass UserFactory\n  def
+        name(name)\n    @name = name\n    self\n  end\n\n  def build\n    User.new(name:
+        @name)\n  end\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
+        untyped\n\n  def name: (untyped name) -> self\n\n  def build: () -> untyped\nend\n```\n\n\n========Output========"}],"temperature":0.0,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.9.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sun, 05 May 2024 03:34:11 GMT
+      Content-Length:
+      - '536'
+    body:
+      encoding: UTF-8
+      string: '{"model":"codegemma","created_at":"2024-05-05T03:34:11.631739Z","message":{"role":"assistant","content":"```rbs:sig/user.rbs\nclass
+        User\n  @name: String\n\n  def initialize: (name: String) -\u003e void\n\n  attr_reader
+        name: String\nend\n```\n\n```rbs:sig/user_factory.rbs\nclass UserFactory\n  @name:
+        String\n\n  def name: (String name) -\u003e self\n\n  def build: () -\u003e
+        User\nend\n```"},"done":true,"total_duration":3326130875,"load_duration":1202167,"prompt_eval_duration":180241000,"eval_count":90,"eval_duration":3136878000}'
+  recorded_at: Sun, 05 May 2024 03:34:11 GMT
+recorded_with: VCR 6.2.0

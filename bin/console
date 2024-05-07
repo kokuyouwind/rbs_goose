@@ -53,6 +53,17 @@ def anthropic
   )
 end
 
+def ollama
+  @ollama ||= Langchain::LLM::Ollama.new(
+    url: ENV.fetch('OLLAMA_URL', 'http://localhost:11434'),
+    default_options: {
+      temperature: 0.0,
+      completion_model_name: 'codegemma',
+      chat_completion_model_name: 'codegemma'
+    }
+  )
+end
+
 def input_template_string
   "========Input========\n{ruby}\n{rbs}\n\n========Output========"
 end
