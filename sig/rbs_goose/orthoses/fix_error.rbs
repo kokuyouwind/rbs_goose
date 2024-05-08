@@ -1,7 +1,11 @@
+# Call RbsGoose::TypeInferrer to fix steep type errors.
+#   use TbsGoose::Orthoses::FixError, code_dir: 'lib', sig_dir: 'sig' do |config|
+#     config.use_open_ai('open_ai_access_token')
+#   end
 class RbsGoose::Orthoses::FixError
-  @loader: untyped
+  @loader: () -> untyped
   @code_dir: String
   @sig_dir: String
-  def initialize: (untyped loader, ?code_dir: String, ?sig_dir: String) ?{ () -> void } -> void
-  def call: () -> void
+  def initialize: (() -> untyped loader, ?code_dir: String, ?sig_dir: String) ?{ () -> void } -> void
+  def call: () -> untyped
 end

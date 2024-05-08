@@ -1,21 +1,21 @@
 module RbsGoose
-  VERSION: "0.1.1"
+  VERSION: String
 
-  self.@configuration: RbsGoose::Configuration
+  self.@configuration: Configuration?
 
   extend Forwardable
 
-  def self.configure: () { () -> void } -> void
+  def self.configure: () { () -> void } -> Configuration
 
-  def self.reset_configuration: () -> void
+  def self.reset_configuration: () -> nil
 
   def self.run: (?code_dir: String, ?sig_dir: String, ?base_path: String) -> void
 
   def self.fix_error: (?code_dir: String, ?sig_dir: String, ?base_path: String) -> void
 
-  def self.infer_template: () -> RbsGoose::Templates::Base
+  def self.infer_template: () -> RbsGoose::Templates::InferTemplate
 
-  def self.fix_error_template: () -> RbsGoose::Templates::Base
+  def self.fix_error_template: () -> RbsGoose::Templates::FixErrorTemplate
 
-  attr_reader self.configuration: RbsGoose::Configuration
+  attr_reader self.configuration: Configuration?
 end

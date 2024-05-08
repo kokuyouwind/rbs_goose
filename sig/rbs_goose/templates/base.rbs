@@ -8,8 +8,8 @@ class RbsGoose::Templates::Base
   def parse_result: (String result) -> Array[RbsGoose::IO::File]
   private def input_template_string: () -> String
   private def input_variables: () -> Array[String]
-  private def transform_example_group: (RbsGoose::IO::ExampleGroup example_group) -> Hash[Symbol, untyped]
-  private def format_args: (Hash[Symbol, untyped] args) -> Hash[Symbol, untyped]
+  private def transform_example_group: (RbsGoose::IO::ExampleGroup example_group) -> Hash[String, String]
+  private def format_args: (untyped args) -> Hash[String, String]
   private def prefix: () -> String
   private def suffix: () -> String
   private def example_prompt: () -> Langchain::Prompt::PromptTemplate

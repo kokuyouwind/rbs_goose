@@ -1,10 +1,10 @@
-class RbsGoose::IO::ExampleGroup < ::Array[RbsGoose::IO::Example]
-  self.@default_examples: Hash[Symbol, RbsGoose::IO::ExampleGroup]
-  attr_accessor error_messages: String
-  def self.load_from: (String base_path, ?code_dir: String, ?sig_dir: String, ?refined_dir: String) -> RbsGoose::IO::ExampleGroup
-  def self.default_examples: () -> Hash[Symbol, RbsGoose::IO::ExampleGroup]
-  private def self.load_example: (String base_path, String code_dir, String path, String refined_dir, String sig_dir) -> RbsGoose::IO::Example
+class RbsGoose::IO::ExampleGroup < ::Array[Example]
+  self.@default_examples: Hash[Symbol, ExampleGroup]
+  attr_accessor error_messages: String?
+  def self.load_from: (String base_path, ?code_dir: String, ?sig_dir: String, ?refined_dir: String) -> ExampleGroup
+  def self.default_examples: () -> Hash[Symbol, ExampleGroup]
+  private def self.load_example: (String base_path, String code_dir, String path, String refined_dir, String sig_dir) -> Example
   private def self.to_rbs_path: (String path, String sig_dir) -> String
-  def to_target_group: () -> RbsGoose::IO::TargetGroup
-  def to_refined_rbs_list: () -> Array[RbsGoose::IO::File]
+  def to_target_group: () -> TargetGroup
+  def to_refined_rbs_list: () -> Array[File]
 end

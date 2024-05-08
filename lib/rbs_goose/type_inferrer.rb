@@ -52,6 +52,7 @@ module RbsGoose
       return yield if ENV['DEBUG'].nil?
 
       puts "!!!!!!!! Prompt !!!!!!!!\n\n#{prompt}\n\n"
+      result = nil
       sec = Benchmark.realtime do
         result = yield
       end
