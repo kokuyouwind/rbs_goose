@@ -56,7 +56,7 @@ module RbsGoose
       sec = Benchmark.realtime do
         result = yield
       end
-      puts "!!!!!!!! Stats !!!!!!!!\n\n  spend: #{sec}[s]\n  prompt_tokens: #{result.prompt_tokens}\n  completion_tokens: #{result.completion_tokens}\n"
+      puts "!!!!!!!! Stats !!!!!!!!\n\n  spend: #{sec}[s]\n  prompt_tokens: #{result.prompt_tokens}\n  completion_tokens: #{result.completion_tokens}\n" # rubocop:disable Layout/LineLength
       puts "!!!!!!!! Result !!!!!!!!\n\n#{result.chat_completion}\n\n"
       result
     end

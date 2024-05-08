@@ -60,7 +60,8 @@ namespace :sig do
 
     Orthoses::Builder.new do
       use RbsGoose::Orthoses::FixError do |config|
-        config.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'), model_name: 'gpt-4-turbo-2024-04-09')
+        config.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name: 'claude-3-opus-20240229')
+        # config.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'), model_name: 'gpt-4-turbo-2024-04-09')
       end
       run -> {}
     end.call

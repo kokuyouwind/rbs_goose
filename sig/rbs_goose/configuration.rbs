@@ -1,8 +1,11 @@
 class RbsGoose::Configuration
   @llm: LLMConfig
   extend Forwardable
-  LLMConfig: Struct.new(:client, :mode, keyword_init: true)
-  TemplateConfig: Struct.new(:instruction, :example_groups, :template_class, keyword_init: true)
+  class LLMConfig
+  end
+  class TemplateConfig
+    def build_template: () -> Templates::Base
+  end
   def initialize: () ?{ () -> void } -> void
   attr_accessor llm: LLMConfig
   attr_accessor infer_template: TemplateConfig
