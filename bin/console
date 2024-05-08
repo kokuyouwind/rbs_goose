@@ -174,7 +174,7 @@ def infer_user_factory
 end
 
 def fixture_path(path)
-  ::File.join((File.dirname __FILE__), '../spec/fixtures', path)
+  File.join((File.dirname __FILE__), '../spec/fixtures', path)
 end
 
 def example_group
@@ -193,23 +193,23 @@ def refined_rbs_list
   example_group.to_refined_rbs_list
 end
 
-def record_benchmark(model_name)
+def record_benchmark(model_name) # rubocop:disable Metrics/MethodLength
   res = nil
   sec = Benchmark.realtime do
     res = type_inferrer.infer(target_group)
-  rescue
+  rescue StandardError
     puts "error with #{model_name}"
     res = []
   end
   puts <<~RESULT
     ==== #{model_name} ====
       process time: #{sec}[sec]
-      Expected Result?: #{res == refined_rbs_list} 
+      Expected Result?: #{res == refined_rbs_list}#{' '}
 
   RESULT
 end
 
-def benchmark
+def benchmark # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
   # Ollama
   # %w[codellama qwen llama3 phi3 wizardlm2 mistral gemma codegemma].shuffle.each do |model_name|
   %w[codegemma].shuffle.each do |model_name|
