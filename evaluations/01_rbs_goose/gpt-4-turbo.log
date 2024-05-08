@@ -1,0 +1,1304 @@
+I, [2024-05-08T16:24:42.109799 #67754]  INFO -- : [RbsGoose::Orthoses::Infer]#call start
+I, [2024-05-08T16:24:42.109839 #67754]  INFO -- : [Orthoses::CreateFileByName]#call start
+I, [2024-05-08T16:24:42.111041 #67754]  INFO -- : [Orthoses::Filter]#call start
+I, [2024-05-08T16:24:42.111051 #67754]  INFO -- : [Orthoses::Mixin]#call start
+I, [2024-05-08T16:24:42.111061 #67754]  INFO -- : [Orthoses::RBSPrototypeRB]#call start
+I, [2024-05-08T16:24:42.111065 #67754]  INFO -- : [Orthoses::Store]#call start
+I, [2024-05-08T16:24:42.111068 #67754]  INFO -- : [loader].call start
+I, [2024-05-08T16:24:42.111072 #67754]  INFO -- : [loader].call end
+I, [2024-05-08T16:24:42.111078 #67754]  INFO -- : [Orthoses::Store]#call end
+I, [2024-05-08T16:24:42.683748 #67754]  INFO -- : [Orthoses::RBSPrototypeRB]#call end
+I, [2024-05-08T16:24:43.226994 #67754]  INFO -- : [Orthoses::Mixin]#call end
+I, [2024-05-08T16:24:43.227039 #67754]  INFO -- : [Orthoses::Filter]#call end
+I, [2024-05-08T16:24:43.228694 #67754]  INFO -- : Generate file to sig/rbs_goose.rbs
+I, [2024-05-08T16:24:43.229157 #67754]  INFO -- : Generate file to sig/rbs_goose/configuration.rbs
+I, [2024-05-08T16:24:43.229289 #67754]  INFO -- : Generate file to sig/rbs_goose/io.rbs
+I, [2024-05-08T16:24:43.229488 #67754]  INFO -- : Generate file to sig/rbs_goose/io/example.rbs
+I, [2024-05-08T16:24:43.235905 #67754]  INFO -- : Generate file to sig/rbs_goose/io/example_group.rbs
+I, [2024-05-08T16:24:43.236205 #67754]  INFO -- : Generate file to sig/rbs_goose/io/file.rbs
+I, [2024-05-08T16:24:43.236353 #67754]  INFO -- : Generate file to sig/rbs_goose/io/target_group.rbs
+I, [2024-05-08T16:24:43.236520 #67754]  INFO -- : Generate file to sig/rbs_goose/io/typed_ruby.rbs
+I, [2024-05-08T16:24:43.236619 #67754]  INFO -- : Generate file to sig/rbs_goose/orthoses.rbs
+I, [2024-05-08T16:24:43.236803 #67754]  INFO -- : Generate file to sig/rbs_goose/orthoses/fix_error.rbs
+I, [2024-05-08T16:24:43.236936 #67754]  INFO -- : Generate file to sig/rbs_goose/orthoses/infer.rbs
+I, [2024-05-08T16:24:43.237042 #67754]  INFO -- : Generate file to sig/rbs_goose/templates.rbs
+I, [2024-05-08T16:24:43.237295 #67754]  INFO -- : Generate file to sig/rbs_goose/templates/base.rbs
+I, [2024-05-08T16:24:43.237730 #67754]  INFO -- : Generate file to sig/rbs_goose/templates/fix_error_template.rbs
+I, [2024-05-08T16:24:43.237918 #67754]  INFO -- : Generate file to sig/rbs_goose/templates/infer_template.rbs
+I, [2024-05-08T16:24:43.238097 #67754]  INFO -- : Generate file to sig/rbs_goose/type_inferrer.rbs
+I, [2024-05-08T16:24:43.238189 #67754]  INFO -- : Generate file to sig/rbs_goose/error.rbs
+I, [2024-05-08T16:24:43.238216 #67754]  INFO -- : [Orthoses::CreateFileByName]#call end
+Run RbsGoose.(Code Directory: lib, Signature Directory: sig)
+!!!!!!!! Prompt !!!!!!!!
+
+role: user
+content:
+Act as Ruby type inferrer.
+When ruby source codes and RBS type signatures are given, refine each RBS type signatures. Each file should be split in markdown code format.
+Use class names, variable names, etc., to infer type.
+
+
+========Input========
+```ruby:lib/email.rb
+class Email
+  # @dynamic address
+  attr_reader :address
+
+  def initialize(address:)
+    @address = address
+  end
+
+  def ==(other)
+    other.is_a?(self.class) && other.address == address
+  end
+
+  def hash
+    self.class.hash ^ address.hash
+  end
+end
+```
+
+```rbs:sig/email.rbs
+class Email
+  @address: untyped
+
+  attr_reader address: untyped
+
+  def initialize: (address: untyped) -> void
+
+  def ==: (untyped other) -> untyped
+
+  def hash: () -> untyped
+end
+```
+
+```ruby:lib/person.rb
+class Person
+  # @dynamic name, contacts
+  attr_reader :name
+  attr_reader :contacts
+
+  def initialize(name:)
+    @name = name
+    @contacts = []
+  end
+
+  def name=(name)
+    @name = name
+  end
+
+  def guess_country()
+    contacts.map do |contact|
+      case contact
+      when Phone
+        contact.country
+      end
+    end.compact.first
+  end
+end
+```
+
+```rbs:sig/person.rbs
+class Person
+  @name: untyped
+
+  @contacts: untyped
+
+  attr_reader name: untyped
+
+  attr_reader contacts: untyped
+
+  def initialize: (name: untyped) -> void
+
+  def name=: (untyped name) -> void
+
+  def guess_country: () -> untyped
+end
+```
+
+```ruby:lib/phone.rb
+class Phone
+  # @dynamic country, number
+  attr_reader :country, :number
+
+  def initialize(country:, number:)
+    @country = country
+    @number = number
+  end
+
+  def ==(other)
+    if other.is_a?(Phone)
+      # @type var other: Phone
+      other.country == country && other.number == number
+    else
+      false
+    end
+  end
+
+  def hash
+    self.class.hash ^ country.hash ^ number.hash
+  end
+end
+```
+
+```rbs:sig/phone.rbs
+class Phone
+  @country: untyped
+
+  @number: untyped
+
+  attr_reader country: untyped
+
+  attr_reader number: untyped
+
+  def initialize: (country: untyped, number: untyped) -> void
+
+  def ==: (untyped other) -> (untyped | nil)
+
+  def hash: () -> untyped
+end
+```
+
+
+========Output========
+```rbs:sig/email.rbs
+class Email
+  @address: String
+
+  attr_reader address: String
+
+  def initialize: (address: String) -> void
+
+  def ==: (Object other) -> bool
+
+  def hash: () -> Integer
+end
+```
+
+```rbs:sig/person.rbs
+class Person
+  @name: String
+
+  @contacts: Array[(Email | Phone)]
+
+  attr_reader name: String
+
+  attr_reader contacts: Array[(Email | Phone)]
+
+  def initialize: (name: String) -> void
+
+  def name=: (String name) -> void
+
+  def guess_country: () -> (String | nil)
+end
+```
+
+```rbs:sig/phone.rbs
+class Phone
+  @country: String
+
+  @number: String
+
+  attr_reader country: String
+
+  attr_reader number: String
+
+  def initialize: (country: String, number: String) -> void
+
+  def ==: (Object other) -> (bool | nil)
+
+  def hash: () -> Integer
+end
+```
+
+
+========Input========
+```ruby:lib/rbs_goose/configuration.rb
+# frozen_string_literal: true
+
+require 'langchain'
+
+require 'forwardable'
+
+module RbsGoose
+  class Configuration
+    extend Forwardable
+
+    LLMConfig = Struct.new(:client, :mode, keyword_init: true)
+
+    TemplateConfig = Struct.new(:instruction, :example_groups, :template_class, keyword_init: true) do
+      def build_template
+        template_class.new(instruction:, example_groups:)
+      end
+    end
+
+    def initialize(&)
+      self.infer_template = default_infer_template
+      self.fix_error_template = default_fix_error_template
+      instance_eval(&) if block_given?
+    end
+
+    attr_accessor :llm, :infer_template, :fix_error_template
+
+    def use_open_ai( # rubocop:disable Metrics/MethodLength
+      open_ai_access_token, model_name: 'gpt-3.5-turbo-1106', mode: :chat,
+      llm_options: {}, default_options: {}
+    )
+      @llm = LLMConfig.new(
+        client: ::Langchain::LLM::OpenAI.new(
+          api_key: open_ai_access_token,
+          llm_options: { request_timeout: 600 }.merge(llm_options),
+          default_options: {
+            completion_model_name: model_name,
+            chat_completion_model_name: model_name
+          }.merge(default_options)
+        ),
+        mode:
+      )
+    end
+
+    def use_anthropic(access_token, model_name: 'claude-3-haiku-20240307', mode: :chat, default_options: {}) # rubocop:disable Metrics/MethodLength
+      @llm = LLMConfig.new(
+        client: ::Langchain::LLM::Anthropic.new(
+          api_key: access_token,
+          default_options: {
+            completion_model_name: model_name,
+            chat_completion_model_name: model_name,
+            max_tokens_to_sample: 4096
+          }.merge(default_options)
+        ),
+        mode:
+      )
+    end
+
+    def use_ollama(url: 'http://localhost:11434', model_name: 'codegemma', mode: :complete, default_options: {}) # rubocop:disable Metrics/MethodLength
+      @llm = LLMConfig.new(
+        client: ::Langchain::LLM::Ollama.new(
+          url:,
+          default_options: {
+            temperature: 0.0,
+            completion_model_name: model_name,
+            chat_completion_model_name: model_name
+          }.merge(default_options)
+        ),
+        mode:
+      )
+    end
+
+    def_delegator :llm, :client, :llm_client
+    def_delegator :llm, :mode, :llm_mode
+    def_delegator :infer_template, :instruction, :infer_instruction
+    def_delegator :infer_template, :example_groups, :infer_example_groups
+
+    private
+
+    def default_infer_template
+      TemplateConfig.new(
+        instruction: default_infer_instruction,
+        example_groups: default_infer_example_groups,
+        template_class: Templates::InferTemplate
+      )
+    end
+
+    def default_fix_error_template
+      TemplateConfig.new(
+        instruction: default_fix_error_instruction,
+        example_groups: default_fix_error_example_groups,
+        template_class: Templates::FixErrorTemplate
+      )
+    end
+
+    def default_infer_instruction
+      <<~INSTRUCTION
+        Act as Ruby type inferrer.
+        When ruby source codes and RBS type signatures are given, refine each RBS type signatures. Each file should be split in markdown code format.
+        Use class names, variable names, etc., to infer type.
+      INSTRUCTION
+    end
+
+    def default_infer_example_groups
+      [RbsGoose::IO::ExampleGroup.default_examples[:rbs_samples]]
+    end
+
+    def default_fix_error_instruction
+      <<~INSTRUCTION
+        You are a highly skilled programmer.
+        Based on the following Ruby code, the RBS code that is a type definition, and the type checking error messages for them, modify the RBS code and output it.
+        All RBS files should be output, regardless of whether they have been modified or not.
+      INSTRUCTION
+    end
+
+    def default_fix_error_example_groups
+      [RbsGoose::IO::ExampleGroup.default_examples[:fix_errors]]
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/configuration.rbs
+class RbsGoose::Configuration
+  @llm: untyped
+  extend Forwardable
+  LLMConfig: untyped
+  TemplateConfig: untyped
+  def initialize: () ?{ () -> untyped } -> void
+  attr_accessor llm: untyped
+  attr_accessor infer_template: untyped
+  attr_accessor fix_error_template: untyped
+  def use_open_ai: (untyped open_ai_access_token, ?model_name: ::String, ?mode: ::Symbol, ?llm_options: ::Hash[untyped, untyped], ?default_options: ::Hash[untyped, untyped]) -> untyped
+  def use_anthropic: (untyped access_token, ?model_name: ::String, ?mode: ::Symbol, ?default_options: ::Hash[untyped, untyped]) -> untyped
+  def use_ollama: (?url: ::String, ?model_name: ::String, ?mode: ::Symbol, ?default_options: ::Hash[untyped, untyped]) -> untyped
+  private def default_infer_template: () -> untyped
+  private def default_fix_error_template: () -> untyped
+  private def default_infer_instruction: () -> "Act as Ruby type inferrer.\nWhen ruby source codes and RBS type signatures are given, refine each RBS type signatures. Each file should be split in markdown code format.\nUse class names, variable names, etc., to infer type.\n"
+  private def default_infer_example_groups: () -> ::Array[untyped]
+  private def default_fix_error_instruction: () -> "You are a highly skilled programmer.\nBased on the following Ruby code, the RBS code that is a type definition, and the type checking error messages for them, modify the RBS code and output it.\nAll RBS files should be output, regardless of whether they have been modified or not.\n"
+  private def default_fix_error_example_groups: () -> ::Array[untyped]
+end
+```
+
+```ruby:lib/rbs_goose/io/example.rb
+# frozen_string_literal: true
+
+module RbsGoose
+  module IO
+    class Example
+      class << self
+        def from_path(ruby_path:, rbs_path:, refined_rbs_dir:, base_path:)
+          Example.new(
+            typed_ruby: TypedRuby.from_path(ruby_path:, rbs_path:, base_path:),
+            refined_rbs: File.new(path: rbs_path, base_path: ::File.join(base_path, refined_rbs_dir))
+          )
+        end
+      end
+
+      def initialize(typed_ruby:, refined_rbs:)
+        @typed_ruby = typed_ruby
+        @refined_rbs = refined_rbs
+      end
+
+      def to_h
+        { typed_ruby:, refined_rbs: }
+      end
+
+      attr_reader :typed_ruby, :refined_rbs
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/io/example.rbs
+class RbsGoose::IO::Example
+  @typed_ruby: untyped
+  @refined_rbs: untyped
+  def self.from_path: (ruby_path: untyped, rbs_path: untyped, refined_rbs_dir: untyped, base_path: untyped) -> untyped
+  def initialize: (typed_ruby: untyped, refined_rbs: untyped) -> void
+  def to_h: () -> { typed_ruby: untyped, refined_rbs: untyped }
+  attr_reader typed_ruby: untyped
+  attr_reader refined_rbs: untyped
+end
+```
+
+```ruby:lib/rbs_goose/io/example_group.rb
+# frozen_string_literal: true
+
+module RbsGoose
+  module IO
+    class ExampleGroup < Array
+      attr_accessor :error_messages
+
+      class << self
+        def load_from(base_path, code_dir: 'lib', sig_dir: 'sig', refined_dir: 'refined')
+          new.tap do |group|
+            Dir.glob('**/*.rb', base: ::File.join(base_path, code_dir)).each do |path|
+              group << load_example(base_path, code_dir, path, refined_dir, sig_dir)
+            end
+            # Read error messages if exists
+            error_path = ::File.join(base_path, 'error_messages.txt')
+            group.error_messages = ::File.read(error_path).strip if ::File.exist?(error_path)
+          end
+        end
+
+        def default_examples
+          example_dir = ::File.join(__dir__.to_s, '../../../examples')
+          @default_examples ||= Dir.glob('*', base: example_dir).to_h do |dir|
+            [dir.to_sym, load_from(::File.join(example_dir, dir))]
+          end
+        end
+
+        private
+
+        def load_example(base_path, code_dir, path, refined_dir, sig_dir)
+          Example.from_path(
+            ruby_path: ::File.join(code_dir, path),
+            rbs_path: to_rbs_path(path, sig_dir),
+            refined_rbs_dir: refined_dir,
+            base_path:
+          )
+        end
+
+        def to_rbs_path(path, sig_dir)
+          ::File.join(sig_dir, "#{path}s")
+        end
+      end
+
+      def to_target_group
+        TargetGroup.new.tap do |g|
+          each { g << _1.typed_ruby }
+        end
+      end
+
+      def to_refined_rbs_list
+        map(&:refined_rbs)
+      end
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/io/example_group.rbs
+class RbsGoose::IO::ExampleGroup < ::Array[untyped]
+  self.@default_examples: untyped
+  attr_accessor error_messages: untyped
+  def self.load_from: (untyped base_path, ?code_dir: ::String, ?sig_dir: ::String, ?refined_dir: ::String) -> untyped
+  def self.default_examples: () -> untyped
+  private def self.load_example: (untyped base_path, untyped code_dir, untyped path, untyped refined_dir, untyped sig_dir) -> untyped
+  private def self.to_rbs_path: (untyped path, untyped sig_dir) -> untyped
+  def to_target_group: () -> untyped
+  def to_refined_rbs_list: () -> untyped
+end
+```
+
+```ruby:lib/rbs_goose/io/file.rb
+# frozen_string_literal: true
+
+module RbsGoose
+  module IO
+    class File
+      MARKDOWN_REGEXP = /\A```(?<type>ruby|rbs):(?<path>.+)\n(?<content>[\s\S]+)```\Z/
+
+      class << self
+        def from_markdown(markdown)
+          parsed = markdown.match(MARKDOWN_REGEXP)
+          raise ArgumentError, "Ruby or RBS Markdown parsing failed.\n#{markdown}" unless parsed
+
+          new(path: parsed[:path].to_s, content: parsed[:content].to_s)
+        end
+      end
+
+      def initialize(path:, content: nil, base_path: nil)
+        @path = path
+        @base_path = base_path
+        @content = content&.strip
+        load_content if @content.nil?
+      end
+
+      def load_content
+        @content = ::File.read(absolute_path).strip
+      end
+
+      def absolute_path
+        base_path ? ::File.join(base_path, path) : path
+      end
+
+      def type
+        @type ||= case path
+                  in /\.rb\z/
+                    :ruby
+                  in /\.rbs\z/
+                    :rbs
+                  else
+                    raise ArgumentError, "Unknown file type: #{path}"
+                  end
+      end
+
+      def to_s
+        "```#{type}:#{path}\n#{content}\n```\n"
+      end
+
+      def content=(content)
+        @content = content.strip
+      end
+
+      def write
+        ::File.write(path, content)
+      end
+
+      def ==(other)
+        self.class == other.class &&
+          @path == other.path &&
+          @content == other.content
+      end
+
+      attr_reader :path, :content, :base_path
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/io/file.rbs
+class RbsGoose::IO::File
+  @path: untyped
+  @base_path: untyped
+  @content: untyped
+  @type: untyped
+  MARKDOWN_REGEXP: ::Regexp
+  def self.from_markdown: (untyped markdown) -> untyped
+  def initialize: (path: untyped, ?content: untyped?, ?base_path: untyped?) -> void
+  def load_content: () -> untyped
+  def absolute_path: () -> untyped
+  def type: () -> untyped
+  def to_s: () -> ::String
+  def content=: (untyped content) -> untyped
+  def write: () -> untyped
+  def ==: (untyped other) -> untyped
+  attr_reader path: untyped
+  attr_reader content: untyped
+  attr_reader base_path: untyped
+end
+```
+
+```ruby:lib/rbs_goose/io/target_group.rb
+# frozen_string_literal: true
+
+module RbsGoose
+  module IO
+    class TargetGroup < Array
+      class << self
+        def load_from(base_path, code_dir: 'lib', sig_dir: 'sig')
+          new.tap do |group|
+            Dir.glob('**/*.rb', base: ::File.join(base_path, code_dir)).each do |path|
+              group << TypedRuby.from_path(
+                ruby_path: ::File.join(code_dir, path),
+                rbs_path: ::File.join(sig_dir, "#{path}s"),
+                base_path:
+              )
+            end
+          end
+        end
+      end
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/io/target_group.rbs
+class RbsGoose::IO::TargetGroup < ::Array[untyped]
+  def self.load_from: (untyped base_path, ?code_dir: ::String, ?sig_dir: ::String) -> untyped
+end
+```
+
+```ruby:lib/rbs_goose/io/typed_ruby.rb
+# frozen_string_literal: true
+
+module RbsGoose
+  module IO
+    class TypedRuby
+      class << self
+        def from_path(ruby_path:, rbs_path:, base_path:)
+          ruby = File.new(path: ruby_path, base_path:)
+          rbs = begin
+            File.new(path: rbs_path, base_path:)
+          rescue StandardError
+            nil
+          end
+          new(ruby:, rbs:)
+        end
+      end
+
+      def initialize(ruby:, rbs:)
+        raise ArgumentError, 'ruby must have ".rb" extension' unless ruby.type == :ruby
+        raise ArgumentError, 'rbs must have ".rbs" extension' if !rbs.nil? && rbs.type != :rbs
+
+        @ruby = ruby
+        @rbs = rbs
+      end
+
+      def to_s
+        rbs.nil? ? ruby.to_s : "#{ruby}\n#{rbs}"
+      end
+
+      attr_reader :ruby, :rbs
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/io/typed_ruby.rbs
+class RbsGoose::IO::TypedRuby
+  @ruby: untyped
+  @rbs: untyped
+  def self.from_path: (ruby_path: untyped, rbs_path: untyped, base_path: untyped) -> untyped
+  def initialize: (ruby: untyped, rbs: untyped) -> void
+  def to_s: () -> (untyped | ::String)
+  attr_reader ruby: untyped
+  attr_reader rbs: untyped
+end
+```
+
+```ruby:lib/rbs_goose/io.rb
+# frozen_string_literal: true
+
+require_relative 'io/example'
+require_relative 'io/example_group'
+require_relative 'io/file'
+require_relative 'io/target_group'
+require_relative 'io/typed_ruby'
+
+module RbsGoose
+  module IO
+  end
+end
+```
+
+```rbs:sig/rbs_goose/io.rbs
+module RbsGoose::IO
+end
+```
+
+```ruby:lib/rbs_goose/orthoses/fix_error.rb
+# frozen_string_literal: true
+
+require 'orthoses/outputable'
+
+module RbsGoose
+  module Orthoses
+    # Call RbsGoose::TypeInferrer to fix steep type errors.
+    #   use TbsGoose::Orthoses::FixError, code_dir: 'lib', sig_dir: 'sig' do |config|
+    #     config.use_open_ai('open_ai_access_token')
+    #   end
+    class FixError
+      def initialize(loader, code_dir: 'lib', sig_dir: 'sig', &)
+        @loader = loader
+        @code_dir = code_dir
+        @sig_dir = sig_dir
+        RbsGoose.configure(&) if block_given?
+      end
+
+      def call
+        @loader.call.tap do
+          RbsGoose.fix_error(code_dir: @code_dir, sig_dir: @sig_dir)
+        end
+      end
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/orthoses/fix_error.rbs
+# Call RbsGoose::TypeInferrer to fix steep type errors.
+#   use TbsGoose::Orthoses::FixError, code_dir: 'lib', sig_dir: 'sig' do |config|
+#     config.use_open_ai('open_ai_access_token')
+#   end
+class RbsGoose::Orthoses::FixError
+  @loader: untyped
+  @code_dir: untyped
+  @sig_dir: untyped
+  def initialize: (untyped loader, ?code_dir: ::String, ?sig_dir: ::String) ?{ () -> untyped } -> void
+  def call: () -> untyped
+end
+```
+
+```ruby:lib/rbs_goose/orthoses/infer.rb
+# frozen_string_literal: true
+
+require 'orthoses/outputable'
+
+module RbsGoose
+  module Orthoses
+    # Call RbsGoose::TypeInferrer to infer RBS type signatures.
+    #   use TbsGoose::Orthoses::Infer, code_dir: 'lib', sig_dir: 'sig' do |config|
+    #     config.use_open_ai('open_ai_access_token')
+    #   end
+    class Infer
+      def initialize(loader, code_dir: 'lib', sig_dir: 'sig', &)
+        @loader = loader
+        @code_dir = code_dir
+        @sig_dir = sig_dir
+        RbsGoose.configure(&) if block_given?
+      end
+
+      def call
+        @loader.call.tap do
+          RbsGoose.run(code_dir: @code_dir, sig_dir: @sig_dir)
+        end
+      end
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/orthoses/infer.rbs
+# Call RbsGoose::TypeInferrer to infer RBS type signatures.
+#   use TbsGoose::Orthoses::Infer, code_dir: 'lib', sig_dir: 'sig' do |config|
+#     config.use_open_ai('open_ai_access_token')
+#   end
+class RbsGoose::Orthoses::Infer
+  @loader: untyped
+  @code_dir: untyped
+  @sig_dir: untyped
+  def initialize: (untyped loader, ?code_dir: ::String, ?sig_dir: ::String) ?{ () -> untyped } -> void
+  def call: () -> untyped
+end
+```
+
+```ruby:lib/rbs_goose/orthoses.rb
+# frozen_string_literal: true
+
+require_relative 'orthoses/fix_error'
+require_relative 'orthoses/infer'
+
+module RbsGoose
+  module Orthoses
+  end
+end
+```
+
+```rbs:sig/rbs_goose/orthoses.rbs
+module RbsGoose::Orthoses
+end
+```
+
+```ruby:lib/rbs_goose/templates/base.rb
+# frozen_string_literal: true
+
+require 'langchain'
+
+module RbsGoose
+  module Templates
+    class Base
+      def initialize(instruction:, example_groups:)
+        @instruction = instruction
+        @example_groups = example_groups
+      end
+
+      def format(**args)
+        Langchain::Prompt::FewShotPromptTemplate.new(
+          prefix:,
+          suffix:,
+          example_prompt:,
+          examples: example_groups.map { transform_example_group(_1) },
+          input_variables:
+        ).format(**format_args(args)).strip
+      end
+
+      def format_system_prompt
+        prefix.strip
+      end
+
+      def format_user_prompt(**args)
+        Langchain::Prompt::FewShotPromptTemplate.new(
+          prefix: '',
+          suffix:,
+          example_prompt:,
+          examples: example_groups.map { transform_example_group(_1) },
+          input_variables:
+        ).format(**format_args(args)).strip
+      end
+
+      def parse_result(result)
+        result.scan(/```.+?```/m).map { IO::File.from_markdown(_1) }
+      end
+
+      private
+
+      def input_template_string
+        raise NotImplementedError
+      end
+
+      def input_variables
+        raise NotImplementedError
+      end
+
+      def transform_example_group(example_group)
+        raise NotImplementedError
+      end
+
+      def format_args(args)
+        raise NotImplementedError
+      end
+
+      def prefix
+        instruction
+      end
+
+      def suffix
+        "#{input_template_string}\n"
+      end
+
+      def example_prompt
+        Langchain::Prompt::PromptTemplate.new(
+          template: "#{input_template_string}\n{refined_rbs_list}",
+          input_variables: input_variables + ['refined_rbs_list']
+        )
+      end
+
+      attr_reader :instruction, :example_groups
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/templates/base.rbs
+class RbsGoose::Templates::Base
+  @instruction: untyped
+  @example_groups: untyped
+  def initialize: (instruction: untyped, example_groups: untyped) -> void
+  def format: (**untyped args) -> untyped
+  def format_system_prompt: () -> untyped
+  def format_user_prompt: (**untyped args) -> untyped
+  def parse_result: (untyped result) -> untyped
+  private def input_template_string: () -> untyped
+  private def input_variables: () -> untyped
+  private def transform_example_group: (untyped example_group) -> untyped
+  private def format_args: (untyped args) -> untyped
+  private def prefix: () -> untyped
+  private def suffix: () -> ::String
+  private def example_prompt: () -> untyped
+  private attr_reader instruction: untyped
+  private attr_reader example_groups: untyped
+end
+```
+
+```ruby:lib/rbs_goose/templates/fix_error_template.rb
+# frozen_string_literal: true
+
+require 'langchain'
+
+module RbsGoose
+  module Templates
+    class FixErrorTemplate < Base
+      private
+
+      def input_variables
+        %w[typed_ruby_list error_messages]
+      end
+
+      def input_template_string
+        <<~TEMPLATE.strip
+          ========Input========
+          {typed_ruby_list}
+
+          ========Errors========
+          {error_messages}
+
+
+          ========Output========
+        TEMPLATE
+      end
+
+      def format_args(args)
+        {
+          typed_ruby_list: args[:typed_ruby_list].join("\n"),
+          error_messages: args[:error_messages]
+        }
+      end
+
+      def transform_example_group(example_group)
+        {
+          typed_ruby_list: example_group.map(&:typed_ruby).join("\n"),
+          error_messages: example_group.error_messages,
+          refined_rbs_list: example_group.map(&:refined_rbs).join("\n")
+        }
+      end
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/templates/fix_error_template.rbs
+class RbsGoose::Templates::FixErrorTemplate < ::RbsGoose::Templates::Base
+  private def input_variables: () -> ::Array["typed_ruby_list" | "error_messages"]
+  private def input_template_string: () -> untyped
+  private def format_args: (untyped args) -> { typed_ruby_list: untyped, error_messages: untyped }
+  private def transform_example_group: (untyped example_group) -> { typed_ruby_list: untyped, error_messages: untyped, refined_rbs_list: untyped }
+end
+```
+
+```ruby:lib/rbs_goose/templates/infer_template.rb
+# frozen_string_literal: true
+
+require 'langchain'
+
+module RbsGoose
+  module Templates
+    class InferTemplate < Base
+      private
+
+      def input_variables
+        %w[typed_ruby_list]
+      end
+
+      def input_template_string
+        "========Input========\n{typed_ruby_list}\n\n========Output========"
+      end
+
+      def format_args(args)
+        { typed_ruby_list: args[:typed_ruby_list].join("\n") }
+      end
+
+      def transform_example_group(example_group)
+        {
+          typed_ruby_list: example_group.map(&:typed_ruby).join("\n"),
+          refined_rbs_list: example_group.map(&:refined_rbs).join("\n")
+        }
+      end
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/templates/infer_template.rbs
+class RbsGoose::Templates::InferTemplate < ::RbsGoose::Templates::Base
+  private def input_variables: () -> ::Array["typed_ruby_list"]
+  private def input_template_string: () -> "========Input========\n{typed_ruby_list}\n\n========Output========"
+  private def format_args: (untyped args) -> { typed_ruby_list: untyped }
+  private def transform_example_group: (untyped example_group) -> { typed_ruby_list: untyped, refined_rbs_list: untyped }
+end
+```
+
+```ruby:lib/rbs_goose/templates.rb
+# frozen_string_literal: true
+
+require_relative 'templates/base'
+require_relative 'templates/fix_error_template'
+require_relative 'templates/infer_template'
+
+module RbsGoose
+  module Templates
+  end
+end
+```
+
+```rbs:sig/rbs_goose/templates.rbs
+module RbsGoose::Templates
+end
+```
+
+```ruby:lib/rbs_goose/type_inferrer.rb
+# frozen_string_literal: true
+
+require 'steep'
+require 'steep/cli'
+require 'benchmark'
+
+require_relative 'templates'
+
+module RbsGoose
+  class TypeInferrer
+    def infer(target_group)
+      call_llm(RbsGoose.infer_template, { typed_ruby_list: target_group })
+    end
+
+    def fix_error(target_group)
+      error_messages = steep_check
+      call_llm(RbsGoose.fix_error_template, { typed_ruby_list: target_group, error_messages: })
+    end
+
+    private
+
+    def call_llm(template, format_args)
+      result =
+        case RbsGoose.llm_mode.to_sym
+        when :complete
+          call_llm_complete(format_args, template)
+        when :chat
+          call_llm_chat(format_args, template)
+        else
+          raise "Invalid LLM mode: #{RbsGoose.llm_mode}"
+        end
+      template.parse_result(result)
+    end
+
+    def call_llm_complete(format_args, template)
+      prompt = template.format(**format_args)
+      llm_debug(prompt) do
+        RbsGoose.llm.complete(prompt:)
+      end.completion
+    end
+
+    def call_llm_chat(format_args, template)
+      messages = [
+        { role: 'user', content: template.format(**format_args) }
+      ]
+      llm_debug(messages.map { "role: #{_1[:role]}\ncontent:\n#{_1[:content]}" }.join("\n")) do
+        RbsGoose.llm.chat(messages:)
+      end.chat_completion
+    end
+
+    def llm_debug(prompt)
+      return yield if ENV['DEBUG'].nil?
+
+      puts "!!!!!!!! Prompt !!!!!!!!\n\n#{prompt}\n\n"
+      result = nil
+      sec = Benchmark.realtime do
+        result = yield
+      end
+      puts "!!!!!!!! Stats !!!!!!!!\n\n  spend: #{sec}[s]\n  prompt_tokens: #{result.prompt_tokens}\n  completion_tokens: #{result.completion_tokens}\n"
+      puts "!!!!!!!! Result !!!!!!!!\n\n#{result.chat_completion}\n\n"
+      result
+    end
+
+    def steep_check
+      stdin, stdout, stderr = io_stubs
+      disable_rainbow do
+        steep_cli = Steep::CLI.new(stdout:, stdin:, stderr:, argv: [])
+        steep_cli.process_check
+      end
+      stdout.string
+    end
+
+    def io_stubs
+      [StringIO.new(''), StringIO.new(+'', 'w+'), StringIO.new(+'', 'w+')]
+    end
+
+    def disable_rainbow
+      rainbow_enabled = Rainbow.enabled
+      Rainbow.enabled = false
+      yield
+      Rainbow.enabled = rainbow_enabled
+    end
+  end
+end
+```
+
+```rbs:sig/rbs_goose/type_inferrer.rbs
+class RbsGoose::TypeInferrer
+  def infer: (untyped target_group) -> untyped
+  def fix_error: (untyped target_group) -> untyped
+  private def call_llm: (untyped template, untyped format_args) -> untyped
+  private def call_llm_complete: (untyped format_args, untyped template) -> untyped
+  private def call_llm_chat: (untyped format_args, untyped template) -> untyped
+  private def llm_debug: (untyped prompt) { () -> untyped } -> untyped
+  private def steep_check: () -> untyped
+  private def io_stubs: () -> ::Array[untyped]
+  private def disable_rainbow: () { () -> untyped } -> untyped
+end
+```
+
+```ruby:lib/rbs_goose/version.rb
+# frozen_string_literal: true
+
+module RbsGoose
+  VERSION = '0.1.1'
+end
+```
+
+```ruby:lib/rbs_goose.rb
+# frozen_string_literal: true
+
+require_relative 'rbs_goose/configuration'
+require_relative 'rbs_goose/io'
+require_relative 'rbs_goose/orthoses'
+require_relative 'rbs_goose/type_inferrer'
+require_relative 'rbs_goose/version'
+
+require 'forwardable'
+
+module RbsGoose
+  class Error < StandardError; end
+
+  class << self
+    extend Forwardable
+
+    def configure(&)
+      @configuration = Configuration.new(&)
+    end
+
+    def reset_configuration
+      @configuration = nil
+    end
+
+    def run(code_dir: 'lib', sig_dir: 'sig', base_path: ::Dir.pwd)
+      puts "Run RbsGoose.(Code Directory: #{code_dir}, Signature Directory: #{sig_dir})"
+      target_group = RbsGoose::IO::TargetGroup.load_from(base_path, code_dir:, sig_dir:)
+      RbsGoose::TypeInferrer.new.infer(target_group).each do |refined_rbs|
+        puts "write refined rbs to #{refined_rbs.path}\n"
+        refined_rbs.write
+        puts "done.\n\n"
+      end
+    end
+
+    def fix_error(code_dir: 'lib', sig_dir: 'sig', base_path: ::Dir.pwd)
+      puts "Run FixError.(Code Directory: #{code_dir}, Signature Directory: #{sig_dir})"
+      target_group = RbsGoose::IO::TargetGroup.load_from(base_path, code_dir:, sig_dir:)
+      RbsGoose::TypeInferrer.new.fix_error(target_group).each do |refined_rbs|
+        puts "write refined rbs to #{refined_rbs.path}\n"
+        refined_rbs.write
+        puts "done.\n\n"
+      end
+    end
+
+    def infer_template
+      configuration.infer_template.build_template
+    end
+
+    def fix_error_template
+      configuration.fix_error_template.build_template
+    end
+
+    attr_reader :configuration
+
+    def_delegators :configuration, :infer_instruction, :infer_example_groups, :llm_mode
+    def_delegator :configuration, :llm_client, :llm
+  end
+end
+```
+
+```rbs:sig/rbs_goose.rbs
+module RbsGoose
+  VERSION: "0.1.1"
+
+  self.@configuration: untyped
+
+  extend Forwardable
+
+  def self.configure: () { () -> untyped } -> untyped
+
+  def self.reset_configuration: () -> untyped
+
+  def self.run: (?code_dir: ::String, ?sig_dir: ::String, ?base_path: untyped) -> untyped
+
+  def self.fix_error: (?code_dir: ::String, ?sig_dir: ::String, ?base_path: untyped) -> untyped
+
+  def self.infer_template: () -> untyped
+
+  def self.fix_error_template: () -> untyped
+
+  attr_reader self.configuration: untyped
+end
+```
+
+
+========Output========
+
+!!!!!!!! Stats !!!!!!!!
+
+  spend: 102.75029300013557[s]
+  prompt_tokens: 8071
+  completion_tokens: 1519
+!!!!!!!! Result !!!!!!!!
+
+```rbs:sig/rbs_goose/configuration.rbs
+class RbsGoose::Configuration
+  @llm: RbsGoose::Configuration::LLMConfig
+  extend Forwardable
+  LLMConfig: RbsGoose::Configuration::LLMConfig
+  TemplateConfig: RbsGoose::Configuration::TemplateConfig
+  def initialize: () ?{ () -> void } -> void
+  attr_accessor llm: RbsGoose::Configuration::LLMConfig
+  attr_accessor infer_template: RbsGoose::Configuration::TemplateConfig
+  attr_accessor fix_error_template: RbsGoose::Configuration::TemplateConfig
+  def use_open_ai: (String open_ai_access_token, ?model_name: ::String, ?mode: ::Symbol, ?llm_options: ::Hash[Symbol, untyped], ?default_options: ::Hash[Symbol, untyped]) -> void
+  def use_anthropic: (String access_token, ?model_name: ::String, ?mode: ::Symbol, ?default_options: ::Hash[Symbol, untyped]) -> void
+  def use_ollama: (?url: ::String, ?model_name: ::String, ?mode: ::Symbol, ?default_options: ::Hash[Symbol, untyped]) -> void
+  private def default_infer_template: () -> RbsGoose::Configuration::TemplateConfig
+  private def default_fix_error_template: () -> RbsGoose::Configuration::TemplateConfig
+  private def default_infer_instruction: () -> String
+  private def default_infer_example_groups: () -> ::Array[RbsGoose::IO::ExampleGroup]
+  private def default_fix_error_instruction: () -> String
+  private def default_fix_error_example_groups: () -> ::Array[RbsGoose::IO::ExampleGroup]
+end
+```
+
+```rbs:sig/rbs_goose/io/example.rbs
+class RbsGoose::IO::Example
+  @typed_ruby: RbsGoose::IO::TypedRuby
+  @refined_rbs: RbsGoose::IO::File
+  def self.from_path: (ruby_path: String, rbs_path: String, refined_rbs_dir: String, base_path: String) -> RbsGoose::IO::Example
+  def initialize: (typed_ruby: RbsGoose::IO::TypedRuby, refined_rbs: RbsGoose::IO::File) -> void
+  def to_h: () -> { typed_ruby: RbsGoose::IO::TypedRuby, refined_rbs: RbsGoose::IO::File }
+  attr_reader typed_ruby: RbsGoose::IO::TypedRuby
+  attr_reader refined_rbs: RbsGoose::IO::File
+end
+```
+
+```rbs:sig/rbs_goose/io/example_group.rbs
+class RbsGoose::IO::ExampleGroup < ::Array[RbsGoose::IO::Example]
+  self.@default_examples: ::Hash[Symbol, RbsGoose::IO::ExampleGroup]
+  attr_accessor error_messages: String
+  def self.load_from: (String base_path, ?code_dir: ::String, ?sig_dir: ::String, ?refined_dir: ::String) -> RbsGoose::IO::ExampleGroup
+  def self.default_examples: () -> ::Hash[Symbol, RbsGoose::IO::ExampleGroup]
+  private def self.load_example: (String base_path, String code_dir, String path, String refined_dir, String sig_dir) -> RbsGoose::IO::Example
+  private def self.to_rbs_path: (String path, String sig_dir) -> String
+  def to_target_group: () -> RbsGoose::IO::TargetGroup
+  def to_refined_rbs_list: () -> ::Array[RbsGoose::IO::File]
+end
+```
+
+```rbs:sig/rbs_goose/io/file.rbs
+class RbsGoose::IO::File
+  @path: String
+  @base_path: String?
+  @content: String
+  @type: Symbol
+  MARKDOWN_REGEXP: ::Regexp
+  def self.from_markdown: (String markdown) -> RbsGoose::IO::File
+  def initialize: (path: String, ?content: String?, ?base_path: String?) -> void
+  def load_content: () -> void
+  def absolute_path: () -> String
+  def type: () -> Symbol
+  def to_s: () -> String
+  def content=: (String content) -> void
+  def write: () -> void
+  def ==: (RbsGoose::IO::File other) -> bool
+  attr_reader path: String
+  attr_reader content: String
+  attr_reader base_path: String?
+end
+```
+
+```rbs:sig/rbs_goose/io/target_group.rbs
+class RbsGoose::IO::TargetGroup < ::Array[RbsGoose::IO::TypedRuby]
+  def self.load_from: (String base_path, ?code_dir: ::String, ?sig_dir: ::String) -> RbsGoose::IO::TargetGroup
+end
+```
+
+```rbs:sig/rbs_goose/io/typed_ruby.rbs
+class RbsGoose::IO::TypedRuby
+  @ruby: RbsGoose::IO::File
+  @rbs: RbsGoose::IO::File?
+  def self.from_path: (ruby_path: String, rbs_path: String, base_path: String) -> RbsGoose::IO::TypedRuby
+  def initialize: (ruby: RbsGoose::IO::File, rbs: RbsGoose::IO::File?) -> void
+  def to_s: () -> String
+  attr_reader ruby: RbsGoose::IO::File
+  attr_reader rbs: RbsGoose::IO::File?
+end
+```
+
+```rbs:sig/rbs_goose/type_inferrer.rbs
+class RbsGoose::TypeInferrer
+  def infer: (RbsGoose::IO::TargetGroup target_group) -> ::Array[RbsGoose::IO::File]
+  def fix_error: (RbsGoose::IO::TargetGroup target_group) -> ::Array[RbsGoose::IO::File]
+  private def call_llm: (RbsGoose::Templates::Base template, ::Hash[Symbol, untyped] format_args) -> ::Array[RbsGoose::IO::File]
+  private def call_llm_complete: (::Hash[Symbol, untyped] format_args, RbsGoose::Templates::Base template) -> String
+  private def call_llm_chat: (::Hash[Symbol, untyped] format_args, RbsGoose::Templates::Base template) -> String
+  private def llm_debug: (String prompt) { () -> untyped } -> untyped
+  private def steep_check: () -> String
+  private def io_stubs: () -> ::Array[StringIO]
+  private def disable_rainbow: () { () -> untyped } -> untyped
+end
+```
+
+write refined rbs to sig/rbs_goose/configuration.rbs
+done.
+
+write refined rbs to sig/rbs_goose/io/example.rbs
+done.
+
+write refined rbs to sig/rbs_goose/io/example_group.rbs
+done.
+
+write refined rbs to sig/rbs_goose/io/file.rbs
+done.
+
+write refined rbs to sig/rbs_goose/io/target_group.rbs
+done.
+
+write refined rbs to sig/rbs_goose/io/typed_ruby.rbs
+done.
+
+write refined rbs to sig/rbs_goose/type_inferrer.rbs
+done.
+
+I, [2024-05-08T16:26:25.992931 #67754]  INFO -- : [RbsGoose::Orthoses::Infer]#call end
