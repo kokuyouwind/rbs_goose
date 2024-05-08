@@ -7,6 +7,7 @@ require 'langchain'
 require 'rbs_goose'
 require 'steep'
 require 'steep/cli'
+require 'benchmark'
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
@@ -33,8 +34,8 @@ def steep_check
   Rainbow.enabled = rainbow_enabled
 end
 
-def llm
-  @llm ||= Langchain::LLM::OpenAI.new(
+def gpt_3_5_turbo
+  @gpt_3_5_turbo ||= Langchain::LLM::OpenAI.new(
     api_key: ENV.fetch('OPENAI_ACCESS_TOKEN', nil),
     default_options: {
       completion_model_name: 'gpt-3.5-turbo-0613',
@@ -43,8 +44,8 @@ def llm
   )
 end
 
-def anthropic
-  @anthropic ||= Langchain::LLM::Anthropic.new(
+def claude_3_sonnet
+  @claude_3_sonnet ||= Langchain::LLM::Anthropic.new(
     api_key: ENV.fetch('ANTHROPIC_API_KEY', nil),
     default_options: {
       chat_completion_model_name: 'claude-3-sonnet-20240229',
@@ -53,8 +54,8 @@ def anthropic
   )
 end
 
-def ollama
-  @ollama ||= Langchain::LLM::Ollama.new(
+def ollama_codegemma
+  @ollama_codegemma ||= Langchain::LLM::Ollama.new(
     url: ENV.fetch('OLLAMA_URL', 'http://localhost:11434'),
     default_options: {
       temperature: 0.0,
@@ -168,8 +169,73 @@ def infer_user_factory
   prompt = few_shot_template.format(ruby: user_factory_code, rbs: user_factory_rbs)
   puts "========Prompt========\n#{prompt}\n\n"
 
-  complete = llm.complete(prompt:).completion
+  complete = gpt_3_5_turbo.complete(prompt:).completion
   puts "========Completion========\n#{complete}\n\n"
+end
+
+def fixture_path(path)
+  File.join((File.dirname __FILE__), '../spec/fixtures', path)
+end
+
+def example_group
+  @example_group ||= RbsGoose::IO::ExampleGroup.load_from(fixture_path('examples/user_factory'))
+end
+
+def type_inferrer
+  @type_inferrer ||= RbsGoose::TypeInferrer.new
+end
+
+def target_group
+  example_group.to_target_group
+end
+
+def refined_rbs_list
+  example_group.to_refined_rbs_list
+end
+
+def record_benchmark(model_name) # rubocop:disable Metrics/MethodLength
+  res = nil
+  sec = Benchmark.realtime do
+    res = type_inferrer.infer(target_group)
+  rescue StandardError
+    puts "error with #{model_name}"
+    res = []
+  end
+  puts <<~RESULT
+    ==== #{model_name} ====
+      process time: #{sec}[sec]
+      Expected Result?: #{res == refined_rbs_list}#{' '}
+
+  RESULT
+end
+
+def benchmark # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+  # Ollama
+  # %w[codellama qwen llama3 phi3 wizardlm2 mistral gemma codegemma].shuffle.each do |model_name|
+  %w[codegemma].shuffle.each do |model_name|
+    RbsGoose.configure do |c|
+      c.use_ollama(model_name:)
+    end
+    # APIを一度実行して、モデルをロードさせておく
+    RbsGoose.configuration.llm.client.chat(messages: [{ role: 'user', content: 'hello.' }])
+    record_benchmark(model_name)
+  end
+
+  # OpenAI
+  %w[gpt-3.5-turbo-0125 gpt-4-turbo-2024-04-09].shuffle.each do |model_name|
+    RbsGoose.configure do |c|
+      c.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'), model_name:)
+    end
+    record_benchmark(model_name)
+  end
+
+  # Anthropic
+  %w[claude-3-haiku-20240307 claude-3-sonnet-20240229 claude-3-opus-20240229].shuffle.each do |model_name|
+    RbsGoose.configure do |c|
+      c.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name:)
+    end
+    record_benchmark(model_name)
+  end
 end
 
 require 'irb'
