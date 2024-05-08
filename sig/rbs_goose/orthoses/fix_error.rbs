@@ -1,4 +1,4 @@
-class RbsGoose::Orthoses::Infer
+class RbsGoose::Orthoses::FixError
   @loader: untyped
   @code_dir: String
   @sig_dir: String
