@@ -31,21 +31,14 @@ namespace :sig do
     require_relative 'lib/rbs_goose'
 
     Orthoses::Builder.new do
-      use RbsGoose::Orthoses::FixError
+      # use RbsGoose::Orthoses::FixError
       use RbsGoose::Orthoses::Infer do |config|
-        config.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'))
-        config.infer_template.example_groups = [
-          RbsGoose::IO::ExampleGroup.default_examples[:rbs_samples],
-          RbsGoose::IO::ExampleGroup.default_examples[:rbs_syntax]
-        ]
-        config.infer_template.instruction = <<~INSTRUCTION
-          You are a highly skilled programmer.
-          Based on the following Ruby code and the RBS code that is a type definition, rewrite the RBS that you think is better and output it.
-          Use how it is called in Ruby code, class names, method names, etc., to guess.
-          You may add type definitions or introduce new types as needed.
-          Do not leave untyped in the RBS.
-          Each file should be split in markdown code format.
-        INSTRUCTION
+        # config.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'), model_name: 'gpt-3.5-turbo-0125')
+        # config.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'), model_name: 'gpt-4-turbo-2024-04-09')
+        # config.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name: 'claude-3-haiku-20240307')
+        # config.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name: 'claude-3-sonnet-20240229')
+        config.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name: 'claude-3-opus-20240229')
+        # config.use_ollama(model_name: 'codegemma')
       end
       use Orthoses::CreateFileByName,
           to: 'sig',
@@ -56,6 +49,20 @@ namespace :sig do
       end
       use Orthoses::Mixin
       use Orthoses::RBSPrototypeRB, paths: Dir.glob('lib/**/*.rb')
+      run -> {}
+    end.call
+  end
+
+  desc 'fix RBS'
+  task :fix do
+    require 'orthoses'
+    require_relative 'lib/rbs_goose'
+
+    Orthoses::Builder.new do
+      use RbsGoose::Orthoses::FixError do |config|
+        config.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name: 'claude-3-opus-20240229')
+        # config.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'), model_name: 'gpt-4-turbo-2024-04-09')
+      end
       run -> {}
     end.call
   end

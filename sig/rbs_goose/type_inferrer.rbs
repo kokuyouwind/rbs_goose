@@ -1,3 +1,11 @@
 class RbsGoose::TypeInferrer
-  def infer: (untyped) -> untyped
+  def infer: (RbsGoose::IO::TargetGroup target_group) -> Array[RbsGoose::IO::File]
+  def fix_error: (RbsGoose::IO::TargetGroup target_group) -> Array[RbsGoose::IO::File]
+  private def call_llm: (RbsGoose::Templates::Base template, Hash[String, untyped] format_args) -> Array[RbsGoose::IO::File]
+  private def call_llm_complete: (Hash[String, untyped] format_args, RbsGoose::Templates::Base template) -> String
+  private def call_llm_chat: (Hash[String, untyped] format_args, RbsGoose::Templates::Base template) -> String
+  private def llm_debug: (String prompt) { () -> Langchain::LLM::Result } -> Langchain::LLM::Result
+  private def steep_check: () -> String
+  private def io_stubs: () -> Array[StringIO]
+  private def disable_rainbow: () { () -> void } -> void
 end

@@ -1,0 +1,18 @@
+class RbsGoose::Templates::Base
+  @instruction: String
+  @example_groups: Array[RbsGoose::IO::ExampleGroup]
+  def initialize: (instruction: String, example_groups: Array[RbsGoose::IO::ExampleGroup]) -> void
+  def format: (**untyped args) -> String
+  def format_system_prompt: () -> String
+  def format_user_prompt: (**untyped args) -> String
+  def parse_result: (String result) -> Array[RbsGoose::IO::File]
+  private def input_template_string: () -> String
+  private def input_variables: () -> Array[String]
+  private def transform_example_group: (RbsGoose::IO::ExampleGroup example_group) -> Hash[String, String]
+  private def format_args: (untyped args) -> Hash[String, String]
+  private def prefix: () -> String
+  private def suffix: () -> String
+  private def example_prompt: () -> Langchain::Prompt::PromptTemplate
+  private attr_reader instruction: String
+  private attr_reader example_groups: Array[RbsGoose::IO::ExampleGroup]
+end

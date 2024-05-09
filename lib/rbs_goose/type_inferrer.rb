@@ -2,6 +2,7 @@
 
 require 'steep'
 require 'steep/cli'
+require 'benchmark'
 
 require_relative 'templates'
 
@@ -34,25 +35,29 @@ module RbsGoose
     def call_llm_complete(format_args, template)
       prompt = template.format(**format_args)
       llm_debug(prompt) do
-        RbsGoose.llm.complete(prompt:).completion
-      end
+        RbsGoose.llm.complete(prompt:)
+      end.completion
     end
 
     def call_llm_chat(format_args, template)
       messages = [
         { role: 'user', content: template.format(**format_args) }
       ]
-      llm_debug(messages) do
-        RbsGoose.llm.chat(messages:).chat_completion
-      end
+      llm_debug(messages.map { "role: #{_1[:role]}\ncontent:\n#{_1[:content]}" }.join("\n")) do
+        RbsGoose.llm.chat(messages:)
+      end.chat_completion
     end
 
     def llm_debug(prompt)
       return yield if ENV['DEBUG'].nil?
 
       puts "!!!!!!!! Prompt !!!!!!!!\n\n#{prompt}\n\n"
-      result = yield
-      puts "!!!!!!!! Result !!!!!!!!\n\n#{result}\n\n"
+      result = nil
+      sec = Benchmark.realtime do
+        result = yield
+      end
+      puts "!!!!!!!! Stats !!!!!!!!\n\n  spend: #{sec}[s]\n  prompt_tokens: #{result.prompt_tokens}\n  completion_tokens: #{result.completion_tokens}\n" # rubocop:disable Layout/LineLength
+      puts "!!!!!!!! Result !!!!!!!!\n\n#{result.chat_completion}\n\n"
       result
     end
 

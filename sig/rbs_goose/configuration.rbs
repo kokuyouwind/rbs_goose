@@ -1,14 +1,22 @@
 class RbsGoose::Configuration
-  @llm: Langchain::LLM::OpenAI
-  @template: Langchain::Prompt::FewShotPromptTemplate
-  def initialize: () ?{ (RbsGoose::Configuration)[self: RbsGoose::Configuration] -> void } -> void
-  attr_accessor llm: Langchain::LLM::OpenAI
-  attr_accessor instruction: String
-  attr_accessor example_groups: Array[untyped]
-  attr_accessor template_class: singleton(RbsGoose::Templates::DefaultTemplate)
-  def use_open_ai: (String open_ai_access_token, ?default_options: ::Hash[untyped, untyped]) -> untyped
-  def template: () -> RbsGoose::Templates::DefaultTemplate
-  private def default_template_class: () -> singleton(RbsGoose::Templates::DefaultTemplate)
-  private def default_instruction: () -> String
-  private def default_example_groups: () -> Array[untyped]
+  @llm: LLMConfig
+  extend Forwardable
+  class LLMConfig
+  end
+  class TemplateConfig
+    def build_template: () -> Templates::Base
+  end
+  def initialize: () ?{ () -> void } -> void
+  attr_accessor llm: LLMConfig
+  attr_accessor infer_template: TemplateConfig
+  attr_accessor fix_error_template: TemplateConfig
+  def use_open_ai: (String open_ai_access_token, ?model_name: String, ?mode: Symbol, ?llm_options: Hash[Symbol, untyped], ?default_options: Hash[Symbol, untyped]) -> void
+  def use_anthropic: (String access_token, ?model_name: String, ?mode: Symbol, ?default_options: Hash[Symbol, untyped]) -> void
+  def use_ollama: (?url: String, ?model_name: String, ?mode: Symbol, ?default_options: Hash[Symbol, untyped]) -> void
+  private def default_infer_template: () -> TemplateConfig
+  private def default_fix_error_template: () -> TemplateConfig
+  private def default_infer_instruction: () -> String
+  private def default_infer_example_groups: () -> Array[RbsGoose::IO::ExampleGroup]
+  private def default_fix_error_instruction: () -> String
+  private def default_fix_error_example_groups: () -> Array[RbsGoose::IO::ExampleGroup]
 end

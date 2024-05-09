@@ -10,7 +10,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d2e93d426c927fdab90ef12e30a9875aa05d60d6
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: addressable
@@ -18,7 +18,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: adf714d4ee13c7be91a3605adf28c9fe674ca9e0
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: ast
@@ -26,7 +26,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d2e93d426c927fdab90ef12e30a9875aa05d60d6
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: baran
@@ -46,7 +46,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d2e93d426c927fdab90ef12e30a9875aa05d60d6
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: connection_pool
@@ -54,7 +54,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d2e93d426c927fdab90ef12e30a9875aa05d60d6
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: csv
@@ -74,7 +74,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: adf714d4ee13c7be91a3605adf28c9fe674ca9e0
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: fileutils
@@ -90,7 +90,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d2e93d426c927fdab90ef12e30a9875aa05d60d6
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: json
@@ -102,7 +102,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d2e93d426c927fdab90ef12e30a9875aa05d60d6
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: logger
@@ -142,7 +142,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d2e93d426c927fdab90ef12e30a9875aa05d60d6
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: pathname
@@ -154,7 +154,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: d2e93d426c927fdab90ef12e30a9875aa05d60d6
+    revision: 7a105f52053ce1c708b605dfa9c1ab8473424036
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rbs
@@ -182,7 +182,7 @@ gems:
   source:
     type: stdlib
 - name: tiktoken_ruby
-  version: 0.0.6
+  version: 0.0.8
   source:
     type: rubygems
 - name: time
