@@ -1,9 +1,9 @@
 class RbsGoose::IO::Example
-  @typed_ruby: untyped
-  @refined_rbs: untyped
-  def self.from_path: (ruby_path: untyped, rbs_path: untyped, refined_rbs_dir: untyped, base_path: untyped) -> untyped
-  def initialize: (typed_ruby: untyped, refined_rbs: untyped) -> void
-  def to_h: () -> { typed_ruby: untyped, refined_rbs: untyped }
-  attr_reader typed_ruby: untyped
-  attr_reader refined_rbs: untyped
+  @typed_ruby: RbsGoose::IO::TypedRuby
+  @refined_rbs: RbsGoose::IO::File
+  def self.from_path: (String ruby_path, String rbs_path, String refined_rbs_dir, String base_path) -> RbsGoose::IO::Example
+  def initialize: (RbsGoose::IO::TypedRuby typed_ruby, RbsGoose::IO::File refined_rbs) -> void
+  def to_h: () -> { typed_ruby: RbsGoose::IO::TypedRuby, refined_rbs: RbsGoose::IO::File }
+  attr_reader typed_ruby: RbsGoose::IO::TypedRuby
+  attr_reader refined_rbs: RbsGoose::IO::File
 end
