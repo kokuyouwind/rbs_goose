@@ -48,7 +48,7 @@ module RbsGoose
       end.chat_completion
     end
 
-    def llm_debug(prompt)
+    def llm_debug(prompt) # rubocop:disable Metrics/MethodLength
       return yield if ENV['DEBUG'].nil?
 
       puts "!!!!!!!! Prompt !!!!!!!!\n\n#{prompt}\n\n"
@@ -56,8 +56,20 @@ module RbsGoose
       sec = Benchmark.realtime do
         result = yield
       end
-      puts "!!!!!!!! Stats !!!!!!!!\n\n  spend: #{sec}[s]\n  prompt_tokens: #{result.prompt_tokens}\n  completion_tokens: #{result.completion_tokens}\n" # rubocop:disable Layout/LineLength
-      puts "!!!!!!!! Result !!!!!!!!\n\n#{result.chat_completion}\n\n"
+      puts "!!!!!!!! Stats !!!!!!!!\n\n  spend: #{sec}[s]"
+      # prompt_token はOllamaなどでサポートされないため、rescueして無視する
+      begin
+        puts "  prompt_tokens: #{result.prompt_tokens}\n  completion_tokens: #{result.completion_tokens}\n"
+      rescue NoMethodError
+        nil
+      end
+
+      # Ollama ではchat_completionではなくcompletionなのでrescueでフォールバックする
+      begin
+        puts "!!!!!!!! Result !!!!!!!!\n\n#{result.chat_completion}\n\n"
+      rescue NoMethodError
+        puts "!!!!!!!! Result !!!!!!!!\n\n#{result.completion}\n\n"
+      end
       result
     end
 
