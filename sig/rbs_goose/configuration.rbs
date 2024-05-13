@@ -1,22 +1,19 @@
 class RbsGoose::Configuration
-  @llm: LLMConfig
+  @llm: untyped
   extend Forwardable
-  class LLMConfig
-  end
-  class TemplateConfig
-    def build_template: () -> Templates::Base
-  end
-  def initialize: () ?{ () -> void } -> void
-  attr_accessor llm: LLMConfig
-  attr_accessor infer_template: TemplateConfig
-  attr_accessor fix_error_template: TemplateConfig
-  def use_open_ai: (String open_ai_access_token, ?model_name: String, ?mode: Symbol, ?llm_options: Hash[Symbol, untyped], ?default_options: Hash[Symbol, untyped]) -> void
-  def use_anthropic: (String access_token, ?model_name: String, ?mode: Symbol, ?default_options: Hash[Symbol, untyped]) -> void
-  def use_ollama: (?url: String, ?model_name: String, ?mode: Symbol, ?default_options: Hash[Symbol, untyped]) -> void
-  private def default_infer_template: () -> TemplateConfig
-  private def default_fix_error_template: () -> TemplateConfig
-  private def default_infer_instruction: () -> String
-  private def default_infer_example_groups: () -> Array[RbsGoose::IO::ExampleGroup]
-  private def default_fix_error_instruction: () -> String
-  private def default_fix_error_example_groups: () -> Array[RbsGoose::IO::ExampleGroup]
+  LLMConfig: untyped
+  TemplateConfig: untyped
+  def initialize: () ?{ () -> untyped } -> void
+  attr_accessor llm: untyped
+  attr_accessor infer_template: untyped
+  attr_accessor fix_error_template: untyped
+  def use_open_ai: (untyped open_ai_access_token, ?model_name: ::String, ?mode: ::Symbol, ?llm_options: ::Hash[untyped, untyped], ?default_options: ::Hash[untyped, untyped]) -> untyped
+  def use_anthropic: (untyped access_token, ?model_name: ::String, ?mode: ::Symbol, ?default_options: ::Hash[untyped, untyped]) -> untyped
+  def use_ollama: (?url: ::String, ?model_name: ::String, ?mode: ::Symbol, ?default_options: ::Hash[untyped, untyped]) -> untyped
+  private def default_infer_template: () -> untyped
+  private def default_fix_error_template: () -> untyped
+  private def default_infer_instruction: () -> "Act as Ruby type inferrer.\nWhen ruby source codes and RBS type signatures are given, refine each RBS type signatures. Each file should be split in markdown code format.\nUse class names, variable names, etc., to infer type.\n"
+  private def default_infer_example_groups: () -> ::Array[untyped]
+  private def default_fix_error_instruction: () -> "You are a highly skilled programmer.\nBased on the following Ruby code, the RBS code that is a type definition, and the type checking error messages for them, modify the RBS code and output it.\nAll RBS files should be output, regardless of whether they have been modified or not.\n"
+  private def default_fix_error_example_groups: () -> ::Array[untyped]
 end
