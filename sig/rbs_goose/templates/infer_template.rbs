@@ -1,6 +1,6 @@
-class RbsGoose::Templates::InferTemplate < ::RbsGoose::Templates::Base
-  private def input_variables: () -> ::Array["typed_ruby_list"]
-  private def input_template_string: () -> "========Input========\n{typed_ruby_list}\n\n========Output========"
-  private def format_args: (untyped args) -> { typed_ruby_list: untyped }
-  private def transform_example_group: (untyped example_group) -> { typed_ruby_list: untyped, refined_rbs_list: untyped }
+class RbsGoose::Templates::InferTemplate < RbsGoose::Templates::Base
+  private def input_variables: () -> Array[String]
+  private def input_template_string: () -> String
+  private def format_args: (untyped args) -> { typed_ruby_list: String }
+  private def transform_example_group: (RbsGoose::IO::ExampleGroup example_group) -> { typed_ruby_list: String, refined_rbs_list: String }
 end

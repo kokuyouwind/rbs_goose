@@ -1,10 +1,12 @@
-class RbsGoose::IO::ExampleGroup < ::Array[untyped]
-  self.@default_examples: untyped
-  attr_accessor error_messages: untyped
-  def self.load_from: (untyped base_path, ?code_dir: ::String, ?sig_dir: ::String, ?refined_dir: ::String) -> untyped
-  def self.default_examples: () -> untyped
-  private def self.load_example: (untyped base_path, untyped code_dir, untyped path, untyped refined_dir, untyped sig_dir) -> untyped
-  private def self.to_rbs_path: (untyped path, untyped sig_dir) -> untyped
-  def to_target_group: () -> untyped
-  def to_refined_rbs_list: () -> untyped
+class RbsGoose::IO::ExampleGroup < Array[RbsGoose::IO::Example]
+  self.@default_examples: Hash[Symbol, RbsGoose::IO::ExampleGroup]
+  attr_accessor error_messages: String?
+
+  def self.load_from: (String base_path, ?code_dir: String, ?sig_dir: String, ?refined_dir: String) -> RbsGoose::IO::ExampleGroup
+  def self.default_examples: () -> Hash[Symbol, RbsGoose::IO::ExampleGroup]
+  private def self.load_example: (String base_path, String code_dir, String path, String refined_dir, String sig_dir) -> RbsGoose::IO::Example
+  private def self.to_rbs_path: (String path, String sig_dir) -> String
+
+  def to_target_group: () -> RbsGoose::IO::TargetGroup
+  def to_refined_rbs_list: () -> Array[RbsGoose::IO::File]
 end
