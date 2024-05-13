@@ -6,6 +6,6 @@ class RbsGoose::TypeInferrer
   private def call_llm_chat: (untyped format_args, untyped template) -> untyped
   private def llm_debug: (untyped prompt) { () -> untyped } -> untyped
   private def steep_check: () -> untyped
-  private def io_stubs: () -> ::Array[untyped]
+  private def io_stubs: () -> Array[untyped]
   private def disable_rainbow: () { () -> untyped } -> untyped
 end

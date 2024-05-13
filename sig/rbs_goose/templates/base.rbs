@@ -11,7 +11,7 @@ class RbsGoose::Templates::Base
   private def transform_example_group: (untyped example_group) -> untyped
   private def format_args: (untyped args) -> untyped
   private def prefix: () -> untyped
-  private def suffix: () -> ::String
+  private def suffix: () -> String
   private def example_prompt: () -> untyped
   private attr_reader instruction: untyped
   private attr_reader example_groups: untyped

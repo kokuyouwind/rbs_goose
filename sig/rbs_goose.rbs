@@ -9,9 +9,9 @@ module RbsGoose
 
   def self.reset_configuration: () -> untyped
 
-  def self.run: (?code_dir: ::String, ?sig_dir: ::String, ?base_path: untyped) -> untyped
+  def self.run: (?code_dir: String, ?sig_dir: String, ?base_path: untyped) -> untyped
 
-  def self.fix_error: (?code_dir: ::String, ?sig_dir: ::String, ?base_path: untyped) -> untyped
+  def self.fix_error: (?code_dir: String, ?sig_dir: String, ?base_path: untyped) -> untyped
 
   def self.infer_template: () -> untyped
 

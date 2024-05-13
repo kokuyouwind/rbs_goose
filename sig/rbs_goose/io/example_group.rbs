@@ -1,7 +1,7 @@
-class RbsGoose::IO::ExampleGroup < ::Array[untyped]
+class RbsGoose::IO::ExampleGroup < Array[untyped]
   self.@default_examples: untyped
   attr_accessor error_messages: untyped
-  def self.load_from: (untyped base_path, ?code_dir: ::String, ?sig_dir: ::String, ?refined_dir: ::String) -> untyped
+  def self.load_from: (untyped base_path, ?code_dir: String, ?sig_dir: String, ?refined_dir: String) -> untyped
   def self.default_examples: () -> untyped
   private def self.load_example: (untyped base_path, untyped code_dir, untyped path, untyped refined_dir, untyped sig_dir) -> untyped
   private def self.to_rbs_path: (untyped path, untyped sig_dir) -> untyped

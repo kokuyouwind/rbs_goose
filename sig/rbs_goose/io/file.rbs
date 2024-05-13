@@ -3,13 +3,13 @@ class RbsGoose::IO::File
   @base_path: untyped
   @content: untyped
   @type: untyped
-  MARKDOWN_REGEXP: ::Regexp
+  MARKDOWN_REGEXP: Regexp
   def self.from_markdown: (untyped markdown) -> untyped
   def initialize: (path: untyped, ?content: untyped?, ?base_path: untyped?) -> void
   def load_content: () -> untyped
   def absolute_path: () -> untyped
   def type: () -> untyped
-  def to_s: () -> ::String
+  def to_s: () -> String
   def content=: (untyped content) -> untyped
   def write: () -> untyped
   def ==: (untyped other) -> untyped
