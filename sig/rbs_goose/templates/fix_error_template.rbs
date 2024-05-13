@@ -1,6 +1,6 @@
 class RbsGoose::Templates::FixErrorTemplate < ::RbsGoose::Templates::Base
-  private def input_variables: () -> ::Array["typed_ruby_list" | "error_messages"]
-  private def input_template_string: () -> untyped
-  private def format_args: (untyped args) -> { typed_ruby_list: untyped, error_messages: untyped }
-  private def transform_example_group: (untyped example_group) -> { typed_ruby_list: untyped, error_messages: untyped, refined_rbs_list: untyped }
+  private def input_variables: () -> Array["typed_ruby_list", "error_messages"]
+  private def input_template_string: () -> String
+  private def format_args: (untyped args) -> { typed_ruby_list: String, error_messages: String }
+  private def transform_example_group: (ExampleGroup example_group) -> { typed_ruby_list: String, error_messages: String?, refined_rbs_list: String }
 end
