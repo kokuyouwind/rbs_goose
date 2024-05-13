@@ -3,9 +3,9 @@
 #     config.use_open_ai('open_ai_access_token')
 #   end
 class RbsGoose::Orthoses::Infer
-  @loader: untyped
-  @code_dir: untyped
-  @sig_dir: untyped
-  def initialize: (untyped loader, ?code_dir: ::String, ?sig_dir: ::String) ?{ () -> untyped } -> void
+  @loader: Proc
+  @code_dir: String
+  @sig_dir: String
+  def initialize: (Proc loader, ?code_dir: String, ?sig_dir: String) ?{ (RbsGoose::Configuration) -> void } -> void
   def call: () -> untyped
 end

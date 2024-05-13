@@ -1,11 +1,11 @@
 class RbsGoose::TypeInferrer
-  def infer: (untyped target_group) -> untyped
-  def fix_error: (untyped target_group) -> untyped
-  private def call_llm: (untyped template, untyped format_args) -> untyped
-  private def call_llm_complete: (untyped format_args, untyped template) -> untyped
-  private def call_llm_chat: (untyped format_args, untyped template) -> untyped
-  private def llm_debug: (untyped prompt) { () -> untyped } -> untyped
-  private def steep_check: () -> untyped
-  private def io_stubs: () -> ::Array[untyped]
-  private def disable_rainbow: () { () -> untyped } -> untyped
+  def infer: (RbsGoose::IO::TargetGroup target_group) -> Array[RbsGoose::IO::File]
+  def fix_error: (RbsGoose::IO::TargetGroup target_group) -> Array[RbsGoose::IO::File]
+  private def call_llm: (RbsGoose::Templates::Base template, Hash[Symbol, untyped] format_args) -> Array[RbsGoose::IO::File]
+  private def call_llm_complete: (Hash[Symbol, untyped] format_args, RbsGoose::Templates::Base template) -> String
+  private def call_llm_chat: (Hash[Symbol, untyped] format_args, RbsGoose::Templates::Base template) -> String
+  private def llm_debug: (String prompt) { () -> Langchain::LLM::Result } -> Langchain::LLM::Result
+  private def steep_check: () -> String
+  private def io_stubs: () -> Array[StringIO]
+  private def disable_rainbow: () { () -> void } -> void
 end
