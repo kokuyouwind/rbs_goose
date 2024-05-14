@@ -4,8 +4,8 @@
 #   end
 class RbsGoose::Orthoses::Infer
   @loader: untyped
-  @code_dir: untyped
-  @sig_dir: untyped
-  def initialize: (untyped loader, ?code_dir: ::String, ?sig_dir: ::String) ?{ () -> untyped } -> void
+  @code_dir: String
+  @sig_dir: String
+  def initialize: (untyped loader, ?code_dir: String, ?sig_dir: String) ?{ () -> void } -> void
   def call: () -> untyped
 end
