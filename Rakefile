@@ -38,8 +38,8 @@ namespace :sig do
         # config.use_open_ai(ENV.fetch('OPENAI_ACCESS_TOKEN'), model_name: 'gpt-4o-2024-05-13')
         # config.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name: 'claude-3-haiku-20240307')
         # config.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name: 'claude-3-sonnet-20240229')
-        config.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name: 'claude-3-opus-20240229')
-        # config.use_ollama(model_name: 'codegemma')
+        # config.use_anthropic(ENV.fetch('ANTHROPIC_API_KEY', nil), model_name: 'claude-3-opus-20240229')
+        config.use_ollama(model_name: 'codegemma')
       end
       use Orthoses::CreateFileByName,
           to: 'sig',
