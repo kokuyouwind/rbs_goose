@@ -1,0 +1,7 @@
+module Search
+  extend ActiveSupport::Concern
+
+  module ClassMethods
+    def search_id: (targets: untyped, id: untyped) -> untyped
+  end
+end

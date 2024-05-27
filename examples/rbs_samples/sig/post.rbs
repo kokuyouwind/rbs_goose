@@ -1,0 +1,3 @@
+class Post < ActiveRecord::Base
+  def self.popular_posts: () -> untyped
+end

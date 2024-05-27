@@ -1,0 +1,9 @@
+module Search
+  extend ActiveSupport::Concern
+
+  module ClassMethods
+    def search_id: (targets: ActiveRecord::Relation, id: Integer) -> ActiveRecord::Relation
+
+    def where: (*untyped) -> ActiveRecord::Relation
+  end
+end
