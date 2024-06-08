@@ -106,7 +106,8 @@ GEM
     rbs (3.5.1)
       logger
     regexp_parser (2.9.2)
-    rexml (3.2.6)
+    rexml (3.2.8)
+      strscan (>= 3.0.9)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -135,7 +136,7 @@ GEM
       parser (>= 3.3.1.0)
     rubocop-capybara (2.20.0)
       rubocop (~> 1.41)
-    rubocop-factory_bot (2.25.1)
+    rubocop-factory_bot (2.26.0)
       rubocop (~> 1.41)
     rubocop-rake (0.6.0)
       rubocop (~> 1.0)
@@ -208,7 +209,7 @@ DEPENDENCIES
   rbs_goose!
   rspec (~> 3.0)
   rubocop (~> 1.21)
-  rubocop-factory_bot (~> 2.25.1)
+  rubocop-factory_bot (~> 2.26.0)
   rubocop-rake (~> 0.6.0)
   rubocop-rspec (~> 2.22)
   ruby-openai (~> 7.0.0)
