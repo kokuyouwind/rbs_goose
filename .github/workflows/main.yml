@@ -29,7 +29,7 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
     - name: Run the default task
-      uses: paambaati/codeclimate-action@v6.0.0
+      uses: paambaati/codeclimate-action@v7.0.0
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         SIMPLECOV_INLINE_ASSETS: 1
