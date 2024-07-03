@@ -10,7 +10,7 @@ group :development, :test do
   gem 'dotenv', '~> 3.1.0', require: false
   gem 'factory_bot', '~> 6.4.5', require: false
   gem 'faraday', '~> 2.9.0', require: false
-  gem 'orthoses', '~> 1.13.0', require: false
+  gem 'orthoses', '~> 1.14.0', require: false
   gem 'rake', '~> 13.0', require: false
   gem 'rspec', '~> 3.0', require: false
   gem 'rubocop', '~> 1.21', require: false
