@@ -188,7 +188,7 @@ GEM
     unicode (0.4.4.4)
     unicode-display_width (2.5.0)
     uri (0.13.0)
-    vcr (6.3.0)
+    vcr (6.3.1)
       base64
     webmock (3.23.1)
       addressable (>= 2.8.0)
