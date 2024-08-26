@@ -52,12 +52,12 @@ GEM
     event_stream_parser (1.0.0)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
-    faraday (2.10.1)
-      faraday-net_http (>= 2.0, < 3.2)
+    faraday (2.11.0)
+      faraday-net_http (>= 2.0, < 3.4)
       logger
     faraday-multipart (1.0.4)
       multipart-post (~> 2)
-    faraday-net_http (3.1.1)
+    faraday-net_http (3.3.0)
       net-http
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
@@ -205,7 +205,7 @@ DEPENDENCIES
   anthropic (~> 0.2.0)
   dotenv (~> 3.1.0)
   factory_bot (~> 6.4.5)
-  faraday (~> 2.10.0)
+  faraday (~> 2.11.0)
   orthoses (~> 1.14.0)
   rake (~> 13.0)
   rbs_goose!
