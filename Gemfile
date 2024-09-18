@@ -9,7 +9,7 @@ group :development, :test do
   gem 'anthropic', '~> 0.2.0', require: false
   gem 'dotenv', '~> 3.1.0', require: false
   gem 'factory_bot', '~> 6.5.0', require: false
-  gem 'faraday', '~> 2.11.0', require: false
+  gem 'faraday', '~> 2.12.0', require: false
   gem 'orthoses', '~> 1.14.0', require: false
   gem 'rake', '~> 13.0', require: false
   gem 'rspec', '~> 3.0', require: false
