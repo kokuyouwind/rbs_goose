@@ -90,7 +90,7 @@ GEM
     multipart-post (2.4.1)
     net-http (0.4.1)
       uri
-    orthoses (1.14.0)
+    orthoses (1.15.0)
       rbs (~> 3.0)
     parallel (1.24.0)
     parser (3.3.5.0)
@@ -206,7 +206,7 @@ DEPENDENCIES
   dotenv (~> 3.1.0)
   factory_bot (~> 6.5.0)
   faraday (~> 2.12.0)
-  orthoses (~> 1.14.0)
+  orthoses (~> 1.15.0)
   rake (~> 13.0)
   rbs_goose!
   rspec (~> 3.0)
