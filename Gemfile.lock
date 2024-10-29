@@ -67,7 +67,7 @@ GEM
     hashdiff (1.1.1)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
-    json (2.7.3)
+    json (2.7.4)
     json-schema (4.0.0)
       addressable (>= 2.8)
     langchainrb (0.12.0)
@@ -162,7 +162,7 @@ GEM
       rexml
       simplecov (~> 0.19)
     simplecov_json_formatter (0.1.4)
-    steep (1.8.2)
+    steep (1.8.3)
       activesupport (>= 5.1)
       concurrent-ruby (>= 1.1.10)
       csv (>= 3.0.9)
