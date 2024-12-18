@@ -38,7 +38,7 @@ jobs:
         coverageLocations: |
           ${{github.workspace}}/tmp/coverage/coverage.xml:cobertura
     - name: Upload Coverage Report HTML
-      uses: actions/upload-artifact@v4.4.3
+      uses: actions/upload-artifact@v4.5.0
       with:
         name: coverage
         path: tmp/coverage/index.html
