@@ -63,7 +63,8 @@ GEM
       multipart-post (~> 2)
     faraday-net_http (3.3.0)
       net-http
-    ffi (1.17.0)
+    ffi (1.17.1-arm64-darwin)
+    ffi (1.17.1-x86_64-linux-gnu)
     fileutils (1.7.3)
     hashdiff (1.1.1)
     i18n (1.14.6)
