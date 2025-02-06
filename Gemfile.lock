@@ -66,7 +66,7 @@ GEM
     ffi (1.17.1-arm64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
     fileutils (1.7.3)
-    hashdiff (1.1.1)
+    hashdiff (1.1.2)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     json (2.9.1)
@@ -110,7 +110,7 @@ GEM
     rbs (3.8.1)
       logger
     regexp_parser (2.9.2)
-    rexml (3.3.8)
+    rexml (3.4.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -193,7 +193,7 @@ GEM
     uri (0.13.1)
     vcr (6.3.1)
       base64
-    webmock (3.24.0)
+    webmock (3.25.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -223,7 +223,7 @@ DEPENDENCIES
   simplecov-html!
   steep (~> 1.9.0)
   vcr (~> 6.3.0)
-  webmock (~> 3.24.0)
+  webmock (~> 3.25.0)
 
 BUNDLED WITH
    2.4.10
