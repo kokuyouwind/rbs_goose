@@ -59,17 +59,17 @@ GEM
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-multipart (1.0.4)
-      multipart-post (~> 2)
-    faraday-net_http (3.3.0)
-      net-http
+    faraday-multipart (1.1.0)
+      multipart-post (~> 2.0)
+    faraday-net_http (3.4.0)
+      net-http (>= 0.5.0)
     ffi (1.17.1-arm64-darwin)
     ffi (1.17.1-x86_64-linux-gnu)
     fileutils (1.7.3)
     hashdiff (1.1.2)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    json (2.9.1)
+    json (2.10.1)
     json-schema (4.0.0)
       addressable (>= 2.8)
     langchainrb (0.12.0)
@@ -90,7 +90,7 @@ GEM
     matrix (0.4.2)
     minitest (5.25.4)
     multipart-post (2.4.1)
-    net-http (0.4.1)
+    net-http (0.6.0)
       uri
     orthoses (1.18.0)
       rbs (~> 3.0)
@@ -150,7 +150,7 @@ GEM
       rubocop-rspec_rails (~> 2.28)
     rubocop-rspec_rails (2.28.3)
       rubocop (~> 1.40)
-    ruby-openai (7.3.1)
+    ruby-openai (7.4.0)
       event_stream_parser (>= 0.3.0, < 2.0.0)
       faraday (>= 1)
       faraday-multipart (>= 1)
@@ -217,7 +217,7 @@ DEPENDENCIES
   rubocop-factory_bot (~> 2.26.0)
   rubocop-rake (~> 0.6.0)
   rubocop-rspec (~> 2.22)
-  ruby-openai (~> 7.3.0)
+  ruby-openai (~> 7.4.0)
   simplecov
   simplecov-cobertura
   simplecov-html!
