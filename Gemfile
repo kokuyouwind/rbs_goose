@@ -21,7 +21,7 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'simplecov-cobertura', require: false
   gem 'simplecov-html', github: 'kokuyouwind/simplecov-html', ref: '132805391cda353'
-  gem 'steep', '~> 1.9.0', require: false
+  gem 'steep', '~> 1.10.0', require: false
   gem 'vcr', '~> 6.3.0', require: false
   gem 'webmock', '~> 3.25.0', require: false
 end
