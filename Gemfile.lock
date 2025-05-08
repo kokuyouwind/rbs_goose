@@ -33,7 +33,8 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
-    anthropic (0.2.0)
+    anthropic (0.4.0)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
       faraday (>= 1)
       faraday-multipart (>= 1)
     ast (2.4.2)
@@ -207,7 +208,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  anthropic (~> 0.2.0)
+  anthropic (~> 0.4.0)
   dotenv (~> 3.1.0)
   factory_bot (~> 6.5.0)
   faraday (~> 2.13.0)
