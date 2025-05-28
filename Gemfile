@@ -14,8 +14,8 @@ group :development, :test do
   gem 'rake', '~> 13.0', require: false
   gem 'rspec', '~> 3.0', require: false
   gem 'rubocop', '~> 1.21', require: false
-  gem 'rubocop-factory_bot', '~> 2.26.0', require: false
-  gem 'rubocop-rake', '~> 0.6.0', require: false
+  gem 'rubocop-factory_bot', '~> 2.27.0', require: false
+  gem 'rubocop-rake', '~> 0.7.0', require: false
   gem 'rubocop-rspec', '~> 2.22', require: false
   gem 'ruby-openai', '~> 7.4.0', require: false
   gem 'simplecov', require: false
