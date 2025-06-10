@@ -22,4 +22,4 @@ jobs:
         env:
           OPENAI_ACCESS_TOKEN: ${{ secrets.OPENAI_API_KEY_FOR_ACTIONS }}
       - name: Commit Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
