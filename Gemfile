@@ -17,7 +17,7 @@ group :development, :test do
   gem 'rubocop-factory_bot', '~> 2.26.0', require: false
   gem 'rubocop-rake', '~> 0.6.0', require: false
   gem 'rubocop-rspec', '~> 2.22', require: false
-  gem 'ruby-openai', '~> 7.4.0', require: false
+  gem 'ruby-openai', '~> 8.1.0', require: false
   gem 'simplecov', require: false
   gem 'simplecov-cobertura', require: false
   gem 'simplecov-html', github: 'kokuyouwind/simplecov-html', ref: '132805391cda353'
