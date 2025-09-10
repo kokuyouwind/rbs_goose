@@ -6,6 +6,7 @@
   "labels": [
     "dependencies"
   ],
+  "minimumReleaseAge": "7 days",
   "packageRules": [
     {
       "groupName": "rubocop",
