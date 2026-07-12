@@ -50,7 +50,7 @@ GEM
     csv (3.3.2)
     diff-lcs (1.5.1)
     docile (1.4.0)
-    dotenv (3.1.8)
+    dotenv (3.2.0)
     drb (2.2.3)
     event_stream_parser (1.0.0)
     factory_bot (6.5.4)
@@ -208,7 +208,7 @@ PLATFORMS
 
 DEPENDENCIES
   anthropic (~> 0.2.0)
-  dotenv (~> 3.1.0)
+  dotenv (~> 3.2.0)
   factory_bot (~> 6.5.0)
   faraday (~> 2.13.0)
   orthoses (~> 1.20.0)
