@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'anthropic', '~> 0.2.0', require: false
+  gem 'anthropic', '~> 0.4.0', require: false
   gem 'dotenv', '~> 3.1.0', require: false
   gem 'factory_bot', '~> 6.5.0', require: false
   gem 'faraday', '~> 2.13.0', require: false
